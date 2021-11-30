@@ -3,7 +3,8 @@ import Header from "./components/header/Header";
 import SimpleBottomNavigation from "./components/menNav/MenNav";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {Container} from "@mui/material";
-import Trending from "./components/trending/Trending";
+// import Trending from "./components/trending/Trending";
+import Apartments from "./components/apartments/Apartments";
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
           <div className={'app'}>
               <Container>
                   <Switch>
-                      <Route path={'/'} component={Trending} exact/>
+                      <Route path={'/'} component={Apartments} exact/>
                       {/*<Route path={'/movies'} component={Movies}/>*/}
                       {/*<Route path={'/series'} component={Series}/>*/}
                       {/*<Route path={'/favorite'} component={Favorite}/>*/}
