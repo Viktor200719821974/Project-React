@@ -1,0 +1,16 @@
+.form_main{
+    margin: 10px 0 30px 720px;
+}
+.span_link{
+    margin-left: 450px;
+}
+.auth_link{
+    color: white;
+    text-decoration: none;
+}
+.btn{
+    border: 0;
+    padding: 5px 20px;
+    font-size: 14px;
+    margin-left: 10px;
+}

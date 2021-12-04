@@ -4,9 +4,10 @@ import './Apartment.css';
 function Apartment({id, photo, city, country, region}) {
     return (
         <div>
+
             <img className={'poster'}
-                 src="http://localhost:8000/media/admin%40gmail.com/photo_rooms/c42b6cfc-4405-11ec-9553-1c7508d2f1da.jfif"
-                 alt=""/>
+                 src="http://localhost:8000/media/vik200719821974@gmail.com/photo_rooms/0709715a-5367-11ec-a58f-1c7508d2f1da.png"
+                 alt="photo"/>
             <span className="subTitle">Country: {country}</span>
             <span className="subTitle">City: {city}</span>
             <span className="subTitle">Region: {region}</span>

@@ -1,17 +1,23 @@
 .header{
-    width: 100%;
-    cursor: pointer;
-    position: fixed;
     display: flex;
-    justify-content: center;
-    text-transform: uppercase;
+    width: 100%;
     background-color: #39445a;
+    box-sizing: border-box;
+    box-shadow: 0 1px 5px black;
+    position: fixed;
+    justify-content: center;
+}
+.header_span{
+    width: 70%;
+    cursor: pointer;
+    text-transform: uppercase;
     font-family: "Montserrat" , sans-serif;
     font-size: 5vw;
+    margin-left: 300px;
     /*padding-bottom: 15px;*/
-    box-sizing: border-box;
+
     /*padding-left: 320px;*/
-    box-shadow: 0 1px 5px black;
+
     color: white;
     z-index: 100;
 }
