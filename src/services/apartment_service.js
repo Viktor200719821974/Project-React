@@ -1,8 +1,9 @@
 
+const url = 'http://localhost:8000/api/v1/apartments';
 
 function getApartments() {
 
-    return fetch('http://localhost:8000/api/v1/apartments').then(value => value.json())
+    return fetch(url).then(value => value.json())
         .catch(err => alert(err))
 }
 

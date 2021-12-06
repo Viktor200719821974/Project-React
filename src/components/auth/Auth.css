@@ -1,6 +1,9 @@
 .form_main{
     margin: 10px 0 30px 720px;
 }
+.form_main2{
+    display: none;
+}
 .span_link{
     margin-left: 450px;
 }

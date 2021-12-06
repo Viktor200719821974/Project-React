@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import Apartment from "../apartment/Apartment";
 import {getApartments} from "../../services/apartment_service";
 import Auth from "../auth/Auth";
+import '../auth/Auth.css';
+import ApartmentContent from "../apartmentContent/ApartmentContent";
 
 function Apartments(props) {
     const [apartments, setApartments] = useState([]);
-    // const [photo, setPhoto] = useState([]);
 
     useEffect(()=> {
        getApartments().then(value => setApartments(value.data))
@@ -15,18 +15,17 @@ function Apartments(props) {
         <>
             <Auth/>
         <div className={'trending'}>
-            {apartments && apartments.map((c)=><Apartment
+            {apartments && apartments.map((c)=><ApartmentContent
                 key={c.id}
                 id={c.id}
                 photo={c.photo_rooms}
                 country={c.country}
                 city={c.city}
                 region={c.region}
+                price={c.price}
+                numbers_people={c.numbers_people}
             />)}
        </div>
-            {/*<div>*/}
-            {/*    {photo && photo.map((b, index)=><Apartment key={index} photo={b[0].url}/>)}*/}
-            {/*</div>*/}
         </>
     );
 }

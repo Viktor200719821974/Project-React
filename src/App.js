@@ -6,6 +6,8 @@ import {Container} from "@mui/material";
 // import Trending from "./components/trending/Trending";
 import Apartments from "./components/apartments/Apartments";
 import Registration from "./components/registration/Registration";
+import User from "./components/user/User";
+import Apartment from "./components/apartment/Apartment";
 
 function App() {
 
@@ -17,8 +19,8 @@ function App() {
                   <Switch>
                       <Route path={'/'} component={Apartments} exact/>
                       <Route path={'/registration'} component={Registration}/>
-                      {/*<Route path={'/series'} component={Series}/>*/}
-                      {/*<Route path={'/favorite'} component={Favorite}/>*/}
+                      <Route path={'/user'} component={User}/>
+                      <Route path={'/apartment'} component={Apartment}/>
                       {/*<Route path={'/search'} component={Search}/>*/}
                   </Switch>
               </Container>
