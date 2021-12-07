@@ -9,6 +9,8 @@ import './ApartmentModel.css';
 import {unavailable} from "../../constans/constans";
 import Carousel from "./carousel/Carousel";
 import CommentsApartment from "../comments_apartment/CommentsApartment";
+import noPicture from "./carousel/image/No_Picture.jpg";
+import StarsRating from "../starsRating/StarsRating";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
         // padding: theme.spacing(1, 1, 3),
     },
 }));
-export default function ApartmentModel({children,id}) {
+export default function ApartmentModel({children, id, photo}) {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [apartment, setApartment] = useState([]);
-    console.log(apartment);
+
     const handleOpen = () => {
         setOpen(true)
     };
@@ -77,12 +79,12 @@ export default function ApartmentModel({children,id}) {
                         <div className={classes.paper}>
                             <div className={'ApartmentModal'}>
 
-                                <img src="http://localhost:8000/media/vik200719821974@gmail.com/photo_rooms/0709715a-5367-11ec-a58f-1c7508d2f1da.png"
+                                <img src={photo.length !== 0 ? photo[0] : unavailable}
 
                                      alt='photo_rooms'
                                      className={'ApartmentModal__portrait'}
                                 />
-                                <img src="http://localhost:8000/media/vik200719821974@gmail.com/photo_rooms/0709715a-5367-11ec-a58f-1c7508d2f1da.png"
+                                <img src={photo.length !== 0 ? photo[0] : noPicture}
                                      alt='photo_rooms'
                                      className={'ApartmentModal__landscape'}
                                 />
@@ -98,16 +100,16 @@ export default function ApartmentModel({children,id}) {
 
                            </span>
                             {/*        {content.tagline && (<i className="tagline">{content.tagline}</i>)}*/}
-                            {/*        <StarsRating rating={content.vote_average} key={content.id}/>*/}
+                                    <StarsRating rating={apartment.id} key={apartment.id}/>
                             {/*        <span className={'ContentModal__description'}>*/}
                             {/*{content.overview}*/}
                             {/*   </span>*/}
                                     <div>
-                                        <Carousel id={id} key={id}/>
+                                        <Carousel id={apartment.id} key={apartment.id}/>
                                     </div>
 
                                     <div>
-                                        <CommentsApartment id={id} key={id}/>
+                                        <CommentsApartment id={apartment.id} key={apartment.id}/>
                                     </div>
                             {/*        <Button*/}
                             {/*            variant="contained"*/}

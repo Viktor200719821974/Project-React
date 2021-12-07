@@ -1,15 +1,16 @@
 import {Badge} from "@material-ui/core";
 import ApartmentModel from '../apartmentModel/ApartmentModel';
 import './ApartmentContent.css';
+import noPicture from './image/No_Picture.jpg';
 
-const ApartmentContent = ({id, country, city, region, price, numbers_people, photo:{url}}) => {
-    console.log(url);
+const ApartmentContent = ({id, country, city, region, price, numbers_people, photo}) => {
+
     return (
         <>
-            <ApartmentModel  id={id} key={id}>
+            <ApartmentModel  id={id} key={id} photo={photo}>
 
                 {/*<Badge badgeContent={vote_average} color={vote_average >6 ? "primary" : "secondary"}/>*/}
-                <img className={'poster'} src="http://localhost:8000/media/vik200719821974@gmail.com/photo_rooms/0709715a-5367-11ec-a58f-1c7508d2f1da.png"
+                <img className={'poster'} src={photo[0] || noPicture}
                 alt={'photo_rooms'}/>
                 <b className={'title'}>Country: {country}</b>
                 <span className="subTitle">City: {city}

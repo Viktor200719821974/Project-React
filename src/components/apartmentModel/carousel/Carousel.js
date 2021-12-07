@@ -8,12 +8,12 @@ import noPicture from './image/No_Picture.jpg';
 const handleDragStart = (e) => e.preventDefault();
 
 const Carousel = ({id}) => {
-    const [credits, setCredits] = useState();
-    const items =(credits && credits.map((c) => (
+    const [photo, setPhoto] = useState();
+    const items =(photo && photo.map((c) => (
         <div className={'carouselItem'}>
             <img
-                src={noPicture}
-                alt={c?.name}
+                src={c.url || noPicture}
+                alt='photo_rooms'
                 onDragStart={handleDragStart}
                 className={'carouselItem_img'}
             />
@@ -31,15 +31,15 @@ const Carousel = ({id}) => {
             items: 7,
         },
     };
-    const fetchCredits = async () => {
+    const fetchPhoto = async () => {
         const { data } = await axios(
             `http://localhost:8000/api/v1/apartments/${id}`
         );
-        setCredits(data.photo_rooms);
+        setPhoto(data.photo_rooms);
     };
 
     useEffect(() => {
-        fetchCredits();
+        fetchPhoto();
         // eslint-disable-next-line
     }, []);
 
