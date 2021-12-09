@@ -3,7 +3,6 @@ import Header from "./components/header/Header";
 import SimpleBottomNavigation from "./components/menNav/MenNav";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {Container} from "@mui/material";
-// import Trending from "./components/trending/Trending";
 import Apartments from "./components/apartments/Apartments";
 import Registration from "./components/registration/Registration";
 import User from "./components/user/User";

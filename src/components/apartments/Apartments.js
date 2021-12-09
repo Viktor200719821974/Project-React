@@ -7,13 +7,10 @@ import ApartmentContent from "../apartmentContent/ApartmentContent";
 function Apartments(props) {
     const [apartments, setApartments] = useState([]);
     const [photo, setPhoto] = useState([]);
-    console.log(photo);
     useEffect(()=> {
        getApartments().then(value => setApartments(value.data))
-       //  getApartments().then(value => setPhoto(value.data.photo_rooms))
     },[])
     useEffect(()=> {
-        // getApartments().then(value => setApartments(value.data))
          getApartments().then(value => setPhoto(value.data.photo_rooms))
     },[])
 
@@ -31,7 +28,6 @@ function Apartments(props) {
                 price={c.price}
                 numbers_people={c.numbers_people}
             />)}
-            {/*{photo && photo.map((c, index)=><ApartmentContent key={index} photo={c.url}/>)}*/}
             </div>
         </>
     );

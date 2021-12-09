@@ -17,7 +17,6 @@ function Registration(props) {
     }
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const [profile, setProfile] = useState({});
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const [age, setAge] = useState('');

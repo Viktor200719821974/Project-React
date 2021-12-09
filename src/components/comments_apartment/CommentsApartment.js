@@ -17,12 +17,14 @@ function CommentsApartment({id}) {
             {
                 filter && filter.map((c) =>
                 <ul>
-                <li >
-                    {c.comments}
+                <li className={'li_comments_apartment'}>
+                    <h3 className={'li_text'}>{c.comments}</h3>
                     <img className={'comments_photo'}
                          src={c.photo_comments_apartment.map(x=> x["url"]) !== undefined
                              ? c.photo_comments_apartment.map(x=> x["url"]) : 'null'} alt="photo_comments_apartment"/>
                 </li>
+
+
                 </ul>
                 )
             }

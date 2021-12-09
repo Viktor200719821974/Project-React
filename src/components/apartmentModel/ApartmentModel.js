@@ -11,7 +11,53 @@ import Carousel from "./carousel/Carousel";
 import CommentsApartment from "../comments_apartment/CommentsApartment";
 import noPicture from "./carousel/image/No_Picture.jpg";
 import StarsRating from "../starsRating/StarsRating";
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    bgcolor: '#39445a',
+    border: '2px solid #000',
+    boxShadow: 24,
+    color: 'white',
+    pt: 2,
+    px: 4,
+    pb: 3,
+};
+
+function ChildModal({id}) {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    return (
+        <React.Fragment>
+            <Button onClick={handleOpen}>Open comments</Button>
+            <Modal
+                hideBackdrop
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="child-modal-title"
+                aria-describedby="child-modal-description"
+                disableScrollLock={true}
+            >
+                <Box sx={{ ...style, width: 600 }}>
+                    {/*<h2 id="child-modal-title">Comments</h2>*/}
+                    <CommentsApartment key={id} id={id}/>
+                    <Button onClick={handleClose}>Closed comments</Button>
+                </Box>
+            </Modal>
+        </React.Fragment>
+    );
+}
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -26,8 +72,6 @@ const useStyles = makeStyles((theme) => ({
         border: "1px solid #282c34",
         borderRadius: 10,
         color: "white",
-        // boxShadow: theme.shadows[5],
-        // padding: theme.spacing(1, 1, 3),
     },
 }));
 export default function ApartmentModel({children, id, photo}) {
@@ -59,7 +103,6 @@ export default function ApartmentModel({children, id, photo}) {
     return (
         <>
             <div className={'media'} onClick={handleOpen}>
-                {/*<Button ></Button>*/}
                 {children}
             </div>
             <Modal
@@ -97,29 +140,10 @@ export default function ApartmentModel({children, id, photo}) {
                                   <li>Number of rooms: {apartment.numbers_rooms}</li>
                                   <li>Number of squares: {apartment.numbers_squares}</li>
                                   <li>Price: {apartment.price} UAH</li>
-
+                            <StarsRating id={id} key={id}/>
+                                   <Carousel id={apartment.id} key={apartment.id}/>
+                                    <ChildModal key={apartment.id} id={apartment.id}/>
                            </span>
-                            {/*        {content.tagline && (<i className="tagline">{content.tagline}</i>)}*/}
-                                    <StarsRating rating={apartment.id} key={apartment.id}/>
-                            {/*        <span className={'ContentModal__description'}>*/}
-                            {/*{content.overview}*/}
-                            {/*   </span>*/}
-                                    <div>
-                                        <Carousel id={apartment.id} key={apartment.id}/>
-                                    </div>
-
-                                    <div>
-                                        <CommentsApartment id={apartment.id} key={apartment.id}/>
-                                    </div>
-                            {/*        <Button*/}
-                            {/*            variant="contained"*/}
-                            {/*            startIcon={<YouTubeIcon />}*/}
-                            {/*            color="secondary"*/}
-                            {/*            target="__blank"*/}
-                            {/*            href={`https://www.youtube.com/watch?v=${video}`}*/}
-                            {/*        >*/}
-                            {/*            Watch the Trailer*/}
-                            {/*        </Button>*/}
                                 </div>
                             </div>
                         </div>

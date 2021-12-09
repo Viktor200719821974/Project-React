@@ -1,11 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import Box from '@mui/material/Box';
-import Rating from '@mui/material/Rating';
-import Typography from '@mui/material/Typography';
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Rating from "@mui/material/Rating";
 
-export default function CustomizedRating({id}) {
+function count(arr) {
+    let sum = 0;
+    let num = arr.length;
+    if (num === 0){
+        return ''
+    }
+    else{
+    arr.forEach(function(item){
+        sum += item
+    })}
+    return Math.round(sum/num);
+}
+export default function StarsRating({id}) {
     const  [comments, setComments] = useState([]);
-    console.log(comments);
     useEffect(() => {
         fetch('http://localhost:8000/api/v1/comments_apartment')
             .then(value => value.json())
@@ -13,18 +24,18 @@ export default function CustomizedRating({id}) {
 
     },[])
 
-    const filter = comments.filter(comments => comments.apartment === id);
-// .filter(comments => comments.average_rating === Math.max(comments.average_rating))
-    console.log(filter);
+    const filter = comments.filter(comments => comments.apartment === id).map(x=> x["rating"]);
+    const rating = count(filter);
     return (
-
-        <Box
-            sx={{
-                '& > legend': { mt: 2 },
-            }}
-        >
-            <Typography component="legend">Rating</Typography>
-            <Rating name="customized-5" defaultValue={5} max={5} />
-        </Box>
+            <>
+                {rating &&  <Box
+                    sx={{
+                        '& > legend': { mt: 2 },
+                    }}
+                >
+                    <Typography component="legend">Rating</Typography>
+                    <Rating name="customized-10" value={rating}  max={10} />
+                </Box>}
+            </>
     );
 }
