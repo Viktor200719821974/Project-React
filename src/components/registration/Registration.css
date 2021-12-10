@@ -29,3 +29,10 @@ input{
 .btn-default:hover {
     background: #77a198;
 }
+.registration_link{
+    color: white;
+    text-decoration: none;
+   /*margin-bottom: 20px;*/
+    /*border: solid 1px white;*/
+    /*border-radius: 2px;*/
+}

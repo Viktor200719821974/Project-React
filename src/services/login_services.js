@@ -5,10 +5,14 @@ async function loginUser(credentials) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(credentials)
+        body: JSON.stringify(credentials),
+        validateStatus: function (status){
+            console.log(status);
+            return status <500;
+        }
     })
         .then(data => data.json())
-        .catch(err => alert(err))
+        // .catch(err => alert(err))
 }
 export {loginUser}
 

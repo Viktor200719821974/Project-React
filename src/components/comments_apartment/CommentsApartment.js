@@ -13,15 +13,15 @@ function CommentsApartment({id}) {
     const filter = comments.filter(comments => comments.apartment === id);
     return (
         <div>
-            {filter.length !== 0 ? (<h3>Comments:</h3>) : (<h3>No Comments</h3>)}
+            {filter.length === 0 ? (<h3>No Comments</h3>) : (<h3>Comments:</h3>)}
             {
                 filter && filter.map((c) =>
                 <ul>
                 <li className={'li_comments_apartment'}>
                     <h3 className={'li_text'}>{c.comments}</h3>
                     <img className={'comments_photo'}
-                         src={c.photo_comments_apartment.map(x=> x["url"]) !== undefined
-                             ? c.photo_comments_apartment.map(x=> x["url"]) : 'null'} alt="photo_comments_apartment"/>
+                         src={c.photo_comments_apartment.map(x=> x["url"]) === ''
+                             ? 'null' : c.photo_comments_apartment.map(x=> x["url"])} alt="photo_comments_apartment"/>
                 </li>
 
 

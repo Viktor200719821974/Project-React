@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import './Registration.css'
 import {registrationUser} from "../../services/registration_service";
+import {Link} from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
 
 function Registration(props) {
     const handleSubmit = async (e) => {
@@ -24,10 +26,16 @@ function Registration(props) {
 
     return (
         <>
+            <Link to={'/'} className={'registration_link'}>
+                <HomeIcon color="success" />Home Page
+            </Link>
+            <span className={'pageTitle'}>Registration</span>
+
+
             <form className={'form_register'} onSubmit={handleSubmit}>
                 {/*method={'Link'} action={'http://localhost:3000'}*/}
                 <fieldset className={'register-group'}>
-                    <legend>Registration</legend>
+                    {/*<legend>Registration</legend>*/}
                 <label htmlFor={'email'} >Email
                     <input name={'email'} type="text" onChange={e => setEmail(e.target.value)} placeholder={'admin@gmail'}/>
                 </label>

@@ -40,7 +40,7 @@ function ChildModal({id}) {
 
     return (
         <React.Fragment>
-            <Button onClick={handleOpen}>Open comments</Button>
+            <Button onClick={handleOpen} variant="contained" color="success">Open comments</Button>
             <Modal
                 hideBackdrop
                 open={open}
@@ -51,8 +51,8 @@ function ChildModal({id}) {
             >
                 <Box sx={{ ...style, width: 600 }}>
                     {/*<h2 id="child-modal-title">Comments</h2>*/}
-                    <CommentsApartment key={id} id={id}/>
-                    <Button onClick={handleClose}>Closed comments</Button>
+                    <CommentsApartment key={id+4} id={id}/>
+                    <Button onClick={handleClose} variant="contained" color="success">Closed comments</Button>
                 </Box>
             </Modal>
         </React.Fragment>
@@ -140,9 +140,9 @@ export default function ApartmentModel({children, id, photo}) {
                                   <li>Number of rooms: {apartment.numbers_rooms}</li>
                                   <li>Number of squares: {apartment.numbers_squares}</li>
                                   <li>Price: {apartment.price} UAH</li>
-                            <StarsRating id={id} key={id}/>
-                                   <Carousel id={apartment.id} key={apartment.id}/>
-                                    <ChildModal key={apartment.id} id={apartment.id}/>
+                            <StarsRating id={apartment.id} key={apartment.id}/>
+                                   <Carousel id={id} key={id+2}/>
+                                    <ChildModal key={id+1} id={id}/>
                            </span>
                                 </div>
                             </div>

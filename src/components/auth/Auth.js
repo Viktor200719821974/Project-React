@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './Auth.css';
 import {loginUser} from "../../services/login_services";
 import {Link} from 'react-router-dom';
@@ -7,10 +7,18 @@ import User from "../user/User";
 
 function Auth() {
     const [token, setToken] = useState({});
+    console.log(token);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     const accessToken = token.access;
     const refreshToken = token.refresh;
-    localStorage.setItem('access', `${accessToken}`);
-    localStorage.setItem('refresh', `${refreshToken}`);
+    if (accessToken !== undefined){
+        localStorage.setItem('access', `${accessToken}`);
+    }
+    if (refreshToken !== undefined){
+        localStorage.setItem('refresh', `${refreshToken}`);
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         const {access, refresh} = await loginUser({
@@ -19,15 +27,14 @@ function Auth() {
         });
         setToken({access, refresh});
     }
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+
     return (
         <>
 
-             <div className={'form_main'}>
+            <div className={'form_main'}>
                     <form onSubmit={handleSubmit}>
                         <fieldset>
-                            <legend>Authorization</legend>
+                            {/*<legend>Authorization</legend>*/}
                             <label htmlFor="email">
                                 <input name={'email'} type="text" onChange={e => setEmail(e.target.value)}
                                        placeholder={'email'}/>
@@ -38,8 +45,8 @@ function Auth() {
                             </label>
                             <button className={'btn'} name={'submit'} type="submit">Login</button>
                             <span className={'span_link'}>
-                <Link className={'auth_link'} to={'/registration'}>Registration</Link>
-        </span>
+                                <Link className={'auth_link'} to={'/registration'}>Registration</Link>
+                            </span>
                         </fieldset>
                     </form>
                     </div>

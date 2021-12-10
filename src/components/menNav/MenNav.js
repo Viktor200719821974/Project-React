@@ -14,7 +14,7 @@ export default function SimpleBottomNavigation() {
 
     const [value, setValue] = React.useState(0);
     const history = useHistory();
-    console.log(history);
+
     useEffect(()=>{
         if(value === 0){
             history.push("/");
