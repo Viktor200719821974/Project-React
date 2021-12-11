@@ -2,14 +2,12 @@ import React, {useEffect, useState} from 'react';
 import './Auth.css';
 import {loginUser} from "../../services/login_services";
 import {Link} from 'react-router-dom';
-import User from "../user/User";
-
 
 function Auth() {
     const [token, setToken] = useState({});
-    console.log(token);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const accessToken = token.access;
     const refreshToken = token.refresh;
@@ -21,13 +19,18 @@ function Auth() {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const {access, refresh} = await loginUser({
             email,
             password
+
         });
         setToken({access, refresh});
+        setLoading(false);
     }
-
+    if (loading){
+        return <div>Loading...</div>
+    }
     return (
         <>
 

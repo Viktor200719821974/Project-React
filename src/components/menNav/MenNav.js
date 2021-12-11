@@ -40,11 +40,11 @@ export default function SimpleBottomNavigation() {
                 }}
 
             >
-                <BottomNavigationAction style={{color: "white"}} label="HomePage" icon={<WhatshotIcon />} />
-                <BottomNavigationAction style={{color: "white"}} label="User" icon={<MovieIcon />} />
-                <BottomNavigationAction style={{color: "white"}} label="TV Series" icon={<TvIcon />} />
-                <BottomNavigationAction style={{color: "white"}} label="Favorites" icon={<FavoriteIcon />} />
-                <BottomNavigationAction style={{color: "white"}} label="Search" icon={<SearchIcon />} />
+                {/*<BottomNavigationAction style={{color: "white"}} label="HomePage" icon={<WhatshotIcon />} />*/}
+                {/*<BottomNavigationAction style={{color: "white"}} label="User" icon={<MovieIcon />} />*/}
+            {/*    <BottomNavigationAction style={{color: "white"}} label="TV Series" icon={<TvIcon />} />*/}
+            {/*    <BottomNavigationAction style={{color: "white"}} label="Favorites" icon={<FavoriteIcon />} />*/}
+            {/*    <BottomNavigationAction style={{color: "white"}} label="Search" icon={<SearchIcon />} />*/}
 
             </BottomNavigation>
         </Box>

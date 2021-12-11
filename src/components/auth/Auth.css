@@ -17,4 +17,13 @@
 }
 .h_apartments{
     margin-left: 720px;
+    margin-right: 30px;
+}
+.div_apartments{
+    display: flex;
+}
+.button_apartments{
+    /*width: 90px;*/
+    height: 30px;
+    margin-right: 5px;
 }

@@ -6,18 +6,23 @@ async function loginUser(credentials) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(credentials),
-        validateStatus: function (status){
-            console.log(status);
-            return status <500;
-        }
+
     })
         .then(data => data.json())
-        // .catch(err => alert(err))
+        // .catch(err => {
+        //     if (err.response.status === 401){
+        //         try{
+        //             tokenRefresh()
+        //         }catch (e) {
+        //            console.log(e.message)
+        //         }
+        //     }
+        // })
 }
 export {loginUser}
 
 const tokenRefresh = () => {
-    fetch('http://localhost:8000/api/v1/auth/refresh',{
+    fetch(url + '/refresh',{
         method: "POST",
         headers: {
             'Content-Type': 'application/json'

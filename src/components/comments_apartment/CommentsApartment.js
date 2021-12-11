@@ -3,6 +3,7 @@ import './CommentsApartment.css';
 
 function CommentsApartment({id}) {
     const  [comments, setComments] = useState([]);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         fetch('http://localhost:8000/api/v1/comments_apartment')
             .then(value => value.json())
@@ -23,8 +24,6 @@ function CommentsApartment({id}) {
                          src={c.photo_comments_apartment.map(x=> x["url"]) === ''
                              ? 'null' : c.photo_comments_apartment.map(x=> x["url"])} alt="photo_comments_apartment"/>
                 </li>
-
-
                 </ul>
                 )
             }

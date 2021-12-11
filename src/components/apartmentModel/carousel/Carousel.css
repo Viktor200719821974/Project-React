@@ -3,8 +3,8 @@
     flex-direction: column;
     object-fit: contain;
     padding: 10px;
-    width: 150px;
-    height: 150px;
+    width: 250px;
+    height: 250px;
 }
 .carouselItem__img {
     border-radius: 10px;

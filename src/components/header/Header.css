@@ -13,18 +13,24 @@
     text-transform: uppercase;
     font-family: "Montserrat" , sans-serif;
     font-size: 5vw;
-    margin-left: 300px;
-    /*padding-bottom: 15px;*/
-
-    /*padding-left: 320px;*/
-
+    margin-left: 200px;
     color: white;
     z-index: 100;
 }
-.img_header{
-    width: 70px;
-    height: 70px;
-    margin: 10px 40px 10px 40px;
+/*.img_header{*/
+/*    width: 70px;*/
+/*    height: 70px;*/
+/*    margin: 10px 40px 10px 40px;*/
+/*}*/
+.registration_link{
+    color: white;
+    text-decoration: none;
+    margin-top: 50px;
+    /*border: solid 1px white;*/
+    /*border-radius: 2px;*/
+}
+.header_button{
+  margin-top: 40px;
 }
 @media (max-width: 1000px) {
     .header{

@@ -1,10 +1,15 @@
 import React, {useState} from 'react';
 import './Registration.css'
 import {registrationUser} from "../../services/registration_service";
-import {Link} from 'react-router-dom';
-import HomeIcon from '@mui/icons-material/Home';
 
-function Registration(props) {
+function Registration() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
+    const [age, setAge] = useState('');
+    const [phone, setPhone] = useState('');
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const registration = await registrationUser({
@@ -16,19 +21,15 @@ function Registration(props) {
             age,
             phone}
         });
+        if (registration['email'][0]){
+            console.log(registration);
+        }
+
     }
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
-    const [surname, setSurname] = useState('');
-    const [age, setAge] = useState('');
-    const [phone, setPhone] = useState('');
+
 
     return (
         <>
-            <Link to={'/'} className={'registration_link'}>
-                <HomeIcon color="success" />Home Page
-            </Link>
             <span className={'pageTitle'}>Registration</span>
 
 

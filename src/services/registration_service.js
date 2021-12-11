@@ -7,6 +7,18 @@ async function registrationUser(credentials) {
         body: JSON.stringify(credentials)
     })
         .then(data => data.json())
-        .catch(err => alert(err))
+        .catch(err => err.message);
+        // .then(res => {
+        //     // do good things
+        // })
+        // .catch(err => {
+        //     if (err.response) {
+        //         console.log('response');
+        //     } else if (err.request) {
+        //         console.log('request');
+        //     } else {
+        //         console.log(err.message);
+        //     }
+        // })
 }
 export {registrationUser}
