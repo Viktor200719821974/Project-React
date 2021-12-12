@@ -9,6 +9,7 @@ async function loginUser(credentials) {
 
     })
         .then(data => data.json())
+        .catch((error) => error.message)
         // .catch(err => {
         //     if (err.response.status === 401){
         //         try{

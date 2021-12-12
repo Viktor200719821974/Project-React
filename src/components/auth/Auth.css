@@ -1,13 +1,21 @@
 .form_main{
     margin: 10px 0 30px 720px;
+    width: 550px;
 }
 
 .span_link{
-    margin-left: 450px;
+    display: flex;
+
+}
+.error_link{
+    color: white;
+    text-decoration: none;
+    margin-left: 150px;
 }
 .auth_link{
     color: white;
     text-decoration: none;
+    margin-left: 450px;
 }
 .btn{
     border: 0;
@@ -26,4 +34,8 @@
     /*width: 90px;*/
     height: 30px;
     margin-right: 5px;
+}
+.error_message{
+    font-size: 12px;
+    color: red;
 }
