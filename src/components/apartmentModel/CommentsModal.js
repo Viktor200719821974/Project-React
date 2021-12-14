@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -20,17 +20,22 @@ const style = {
 };
 
 function CommentsModal({id}) {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const handleOpen = () => {
         setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
     };
-
+    useEffect(() =>{
+        if (localStorage.getItem('access')){
+            setIsAuthenticated(true);
+        }
+    },[])
     return (
         <React.Fragment>
-            <Button onClick={handleOpen} variant="contained" color="success">Залишити відгук</Button>
+            {isAuthenticated && <Button onClick={handleOpen} variant="contained" color="success">Залишити відгук</Button>}
             <Modal
                 hideBackdrop
                 open={open}

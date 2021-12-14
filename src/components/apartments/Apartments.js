@@ -3,14 +3,8 @@ import {getApartments} from "../../services/apartment_service";
 import Auth from "../auth/Auth";
 import '../auth/Auth.css';
 import ApartmentContent from "../apartmentContent/ApartmentContent";
-import jwt_decode from 'jwt-decode';
-import {axiosUser, getUser} from "../../services/user_service";
+import User from "../user/User";
 
-const tokenDecoded = () =>{
-    const decoded = jwt_decode(localStorage.getItem("access"));
-    console.log(decoded);
-    return decoded.user_id;
-}
 
 function Apartments() {
     const [apartments, setApartments] = useState([]);
@@ -18,7 +12,7 @@ function Apartments() {
     const [loading, setLoading] = useState(false);
     // const [userId, setUserId] = useState();
     // const [user, setUser] = useState([]);
-    // console.log(user);
+    console.log(isAuthenticated);
 
     useEffect(()=> {
         if (localStorage.getItem('access')){
@@ -32,16 +26,16 @@ function Apartments() {
         setLoading(false);
     },[])
 
-    useEffect(()=>{
-        (async () =>{
-            if (localStorage.getItem('access')){
-                const id = tokenDecoded();
-                console.log(id);
-                const res = await axiosUser(`/${id}`);
-                console.log(res);
-            }
-        })();
-    },[]);
+    // useEffect(()=>{
+    //     (async () =>{
+    //         if (localStorage.getItem('access')){
+    //
+    //             console.log(id);
+    //             const res = await axiosUser(`/${id}`);
+    //             console.log(res);
+    //         }
+    //     })();
+    // },[]);
     // useEffect(() => {
     //     if (localStorage.getItem('access')){
     //         const id = tokenDecoded();
@@ -56,7 +50,7 @@ function Apartments() {
     }
     function userList(e) {
         e.preventDefault();
-        // return <User/>
+        return <User/>
     }
 
     return (
@@ -68,7 +62,7 @@ function Apartments() {
                 {isAuthenticated && <button className={'button_apartments'}>Admin</button>}
                 {isAuthenticated && <button className={'button_apartments'}>SuperAdmin</button>}
              </div>
-            {!isAuthenticated && <Auth key={apartments.id}/> }
+            {!isAuthenticated && <Auth key={apartments.id + 8} id={apartments.id}/> }
             <div className={'trending'}>
             {apartments && apartments.map((c, index)=><ApartmentContent
                 key={index}

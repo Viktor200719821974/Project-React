@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import './CommentsApartment.css';
 
 function CommentsApartment({id}) {
-    const  [comments, setComments] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [comments, setComments] = useState([]);
+    const [noPhoto, setNoPhoto] = useState(false);
+    // const [loading, setLoading] = useState(false);
+    console.log(comments)
     useEffect(() => {
         fetch('http://localhost:8000/api/v1/comments_apartment')
             .then(value => value.json())
@@ -12,19 +14,31 @@ function CommentsApartment({id}) {
     },[])
 
     const filter = comments.filter(comments => comments.apartment === id);
+    const photo = filter.map(y => y['photo_comments_apartment']);
+    const b = photo.map(x => x.length !==0);
+    // const c = b.map(x => x);
+    // console.log(c)
+    // useEffect(() =>{
+    //     if (b === true){
+    //         setNoPhoto(true);
+    // }
+    // },[])
+
     return (
         <div>
             {filter.length === 0 ? (<h3>No Comments</h3>) : (<h3>Comments:</h3>)}
             {
                 filter && filter.map((c) =>
-                <ul>
-                <li className={'li_comments_apartment'}>
-                    <h3 className={'li_text'}>{c.comments}</h3>
-                    <img className={'comments_photo'}
-                         src={c.photo_comments_apartment.map(x=> x["url"]) === ''
-                             ? 'null' : c.photo_comments_apartment.map(x=> x["url"])} alt="photo_comments_apartment"/>
-                </li>
-                </ul>
+                <div className={'div_comments_apartment'}>
+                    <h5 className={'h5_text'}>{c.name_user}</h5>
+                {/*<span className={'span_comments_apartment'}>*/}
+                    <h4 className={'h4_text'}>{c.comments}</h4>
+                    {noPhoto && <img className={'comments_photo'}
+                         src={c.photo_comments_apartment.map(x=> x["url"] )} alt="photo_comments_apartment" />}
+                    {/*{noPhoto && <img className={'comments_photo'}*/}
+                    {/*                src={'hello'} alt="photo_comments_apartment" />}*/}
+                {/*</span>*/}
+                </div>
                 )
             }
         </div>

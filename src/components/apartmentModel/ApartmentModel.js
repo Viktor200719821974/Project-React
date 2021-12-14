@@ -143,7 +143,7 @@ export default function ApartmentModel({children, id, photo}) {
                                   <li>Number of squares: {apartment.numbers_squares}</li>
                                   <li>Price: {apartment.price} UAH</li>
                                    </span>
-                            <StarsRating id={apartment.id} key={apartment.id}/>
+                            <StarsRating id={apartment.id} key={apartment.id + 7}/>
                                    <Carousel id={id} key={id+2}/>
                                     <ChildModal key={id+1} id={id}/>
 

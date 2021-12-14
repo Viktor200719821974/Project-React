@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import './Auth.css';
 import {loginUser} from "../../services/login_services";
 import {Link} from 'react-router-dom';
-import jwt_decode from "jwt-decode";
+import AuthModal from "./AuthModal";
 
-function Auth() {
+function Auth({id}) {
     const [token, setToken] = useState({});
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errorAuth, setErrorAuth] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
@@ -38,13 +38,15 @@ function Auth() {
         });
         if (!token['email'] || !token['password']){
             setToken(token);
-            console.log(token['email'], token['password'])
         }
         if (token['detail']){
            setErrorAuth(true);
            setErrorMessage(token['detail']);
-           console.log(token);
         }
+        if (token['refresh'] || token['access']){
+            setIsAuthenticated(true);
+        }
+
         setLoading(false);
     }
     if (loading){
@@ -52,7 +54,7 @@ function Auth() {
     }
     return (
         <>
-
+            {isAuthenticated && <AuthModal key={id + 9} isAuthenticated={isAuthenticated}/>}
            <div className={'form_main'}>
                     <form onSubmit={handleSubmit}>
                         <fieldset>
