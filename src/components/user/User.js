@@ -1,34 +1,32 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
-import jwt_decode from "jwt-decode";
+import {useDispatch, useSelector} from "react-redux";
+import {getUser} from "../../services/user_service";
+import {FETCH_USER} from "../redux/actions/actionTypes";
 
-const tokenDecoded = () =>{
-    const decoded = jwt_decode(localStorage.getItem("access"));
-    return decoded.user_id;
-}
+
 function User() {
-    const [user, setUser] = useState([]);
-    console.log(user);
+    let {user} = useSelector(state => state);
+    let dispatch =  useDispatch();
+    // const [user, setUser] = useState([]);
 
-    const getUser = async () => {
-        if (localStorage.getItem('access')) {
-            const id = tokenDecoded();
-            const res = await axios.get(
-            `http://localhost:8000/api/v1/users/${id}`, {
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: "Bearer" + localStorage.getItem("access")
-                }
-            });
-            setUser(res.data);
-        }
-    };
     useEffect(() => {
-        getUser();
+        getUser().then(value =>  {
+            dispatch({type: FETCH_USER, payload: value});
+        });
     },[])
     return (
         <div>
-            <span className={'pageTitle'}>User</span>
+            { <button className={'button_apartments'}>Admin</button>}
+            { <button className={'button_apartments'}>SuperAdmin</button>}
+            {
+                user.map((c, index) =>
+                        <div key={index}>
+                            <span className={'pageTitle'}>{c.email}</span>
+
+
+                </div>
+            )
+            }
         </div>
     );
 }

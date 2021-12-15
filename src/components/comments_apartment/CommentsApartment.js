@@ -28,8 +28,8 @@ function CommentsApartment({id}) {
         <div>
             {filter.length === 0 ? (<h3>No Comments</h3>) : (<h3>Comments:</h3>)}
             {
-                filter && filter.map((c) =>
-                <div className={'div_comments_apartment'}>
+                filter && filter.map((c, index) =>
+                <div className={'div_comments_apartment'} key={index}>
                     <h5 className={'h5_text'}>{c.name_user}</h5>
                 {/*<span className={'span_comments_apartment'}>*/}
                     <h4 className={'h4_text'}>{c.comments}</h4>

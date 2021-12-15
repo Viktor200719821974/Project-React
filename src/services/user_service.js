@@ -1,23 +1,31 @@
-import axios from "axios";
+import jwt_decode from "jwt-decode";
+import {tokenRefresh} from "./login_services";
 
-// const url = 'http://localhost:8000/api/v1/users';
-//
-// const axiosUser = axios.create(
-//     {
-//         baseURL: url,
-//         headers: {
-//             Authorization: `Bearer ${localStorage.getItem('access')}`
-//         }
-//
-//     })
-// export {axiosUser};
-// const getUser = async () => {
-//     const { data } = await axios.get(
-//         `http://localhost:8000/api/v1/users/${id}`, {
-//             headers: {
-//                 "Content-type": "application/json",
-//                 Authorization: "Bearer" + localStorage.getItem("access")
-//             }
-//         });
-//     setApartment(data);
-// };
+const tokenDecoded = () =>{
+    const decoded = jwt_decode(localStorage.getItem("access"));
+    return decoded.user_id;
+}
+let url ='http://localhost:8000/api/v1/users';
+
+const accessToken = localStorage.getItem('access');
+const getUser =  () => {
+    if (localStorage.getItem('access')) {
+        const id = tokenDecoded();
+        return fetch(url + `/${id}`, {
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: `Bearer ${accessToken}`
+                }
+            })
+            .then(value => value.json())
+            .catch(function (error){
+                console.log(error)
+                if(error){
+                    tokenRefresh();
+                }
+                alert(error.config)
+            })
+        // console.log(res)
+    }
+};
+export {getUser};

@@ -10,9 +10,6 @@ function Apartments() {
     const [apartments, setApartments] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(false);
-    // const [userId, setUserId] = useState();
-    // const [user, setUser] = useState([]);
-    console.log(isAuthenticated);
 
     useEffect(()=> {
         if (localStorage.getItem('access')){
@@ -26,29 +23,10 @@ function Apartments() {
         setLoading(false);
     },[])
 
-    // useEffect(()=>{
-    //     (async () =>{
-    //         if (localStorage.getItem('access')){
-    //
-    //             console.log(id);
-    //             const res = await axiosUser(`/${id}`);
-    //             console.log(res);
-    //         }
-    //     })();
-    // },[]);
-    // useEffect(() => {
-    //     if (localStorage.getItem('access')){
-    //         const id = tokenDecoded();
-    //         console.log(id);
-    //         const c = getUser(id).then(value => setUser(value.data))
-    //
-    //     }
-    // },[])
-
     if (loading){
         return <div>Loading...</div>
     }
-    function userList(e) {
+   const userList = (e) => {
         e.preventDefault();
         return <User/>
     }
@@ -59,8 +37,6 @@ function Apartments() {
             <div className={'div_apartments'}>
             <h3 className={'h_apartments'}>{isAuthenticated ? 'Aвторизований'  : 'Авторизуйтесь'}</h3>
                 {isAuthenticated && <button className={'button_apartments'} onClick={userList}>User</button>}
-                {isAuthenticated && <button className={'button_apartments'}>Admin</button>}
-                {isAuthenticated && <button className={'button_apartments'}>SuperAdmin</button>}
              </div>
             {!isAuthenticated && <Auth key={apartments.id + 8} id={apartments.id}/> }
             <div className={'trending'}>

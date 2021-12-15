@@ -9,7 +9,7 @@ async function loginUser(credentials) {
 
     })
         .then(data => data.json())
-        .catch((error) => error.message)
+        .catch((error) => console.log(error.response.status))
         // .catch(err => {
         //     if (err.response.status === 401){
         //         try{
@@ -31,7 +31,7 @@ const tokenRefresh = () => {
         body: JSON.stringify(localStorage.getItem('refresh'))
     })
         .then(data => data.json())
-        .catch(err => alert(err))
+        .catch(err => console.log(err.message))
 }
 
 export {tokenRefresh}

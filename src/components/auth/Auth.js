@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './Auth.css';
 import {loginUser} from "../../services/login_services";
 import {Link} from 'react-router-dom';
@@ -12,7 +12,7 @@ function Auth({id}) {
     const [loading, setLoading] = useState(false);
     const [errorAuth, setErrorAuth] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
-    // console.log(isAuthenticated);
+    console.log(isAuthenticated);
     const accessToken = token.access;
     const refreshToken = token.refresh;
 
@@ -22,12 +22,6 @@ function Auth({id}) {
     if (refreshToken !== undefined){
         localStorage.setItem('refresh', `${refreshToken}`);
     }
-    // useEffect(() =>{
-    //     if (localStorage.getItem('access')){
-    //         setIsAuthenticated(true);
-    //     }
-    //
-    // },[])
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -46,7 +40,6 @@ function Auth({id}) {
         if (token['refresh'] || token['access']){
             setIsAuthenticated(true);
         }
-
         setLoading(false);
     }
     if (loading){
