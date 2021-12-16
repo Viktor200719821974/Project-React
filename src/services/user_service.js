@@ -9,6 +9,7 @@ let url ='http://localhost:8000/api/v1/users';
 
 const accessToken = localStorage.getItem('access');
 const getUser =  () => {
+
     if (localStorage.getItem('access')) {
         const id = tokenDecoded();
         return fetch(url + `/${id}`, {
