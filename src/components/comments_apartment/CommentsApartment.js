@@ -18,7 +18,7 @@ function CommentsApartment({id}) {
     const filter = comments.filter(comments => comments.apartment === id);
     const photo = filter.map(y => y['photo_comments_apartment']);
     // const b = photo.map(x => x.length !==0);
-    console.log(photo);
+
     // useEffect(() => {
     //     if (b.map(x => console.log(x))){
     //         setNoPhoto(true);

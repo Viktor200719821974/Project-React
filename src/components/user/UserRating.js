@@ -7,7 +7,7 @@ function count(arr) {
     let sum = 0;
     let num = arr.length;
     if (num === 0){
-        return 1
+        return ''
     }
     else{
         arr.forEach(function(item){
@@ -18,10 +18,10 @@ function count(arr) {
 
 export default function UserRating({comments, profile}) {
     const rating = comments.map(c => c['rating']);
-    const average_rating = Number(count(rating));
+    const average_rating = count(rating);
     return (
         <>
-            {average_rating &&  <Box
+            {rating &&  <Box
                 sx={{
                     '& > legend': { mt: 2 },
                 }}

@@ -5,6 +5,7 @@ import {FETCH_USER} from "../redux/actions/actionTypes";
 import {tokenRefresh} from "../../services/login_services";
 import UserApartmentContent from "./UserApartmentContent";
 import UserRating from "./UserRating";
+import AddApartmentModal from "./addApartment/AddApartmentModal";
 
 
 function User() {
@@ -45,13 +46,12 @@ function User() {
         <div>
             {isStaff && <button className={'button_apartments'}>Admin</button>}
             {isSuperUser && <button className={'button_apartments'}>SuperAdmin</button>}
-            {user && user.map((c) =>(
-                        <div key={c.id + 12}>
-                            <span className={'pageTitle'}>{c.email}</span>
-                        </div>))}
-            <UserRating comments={comments} key={comments.id + 13} profile={profile}/>
+            {/*{user && user.map((c) =>(*/}
+            {/*            <div key={c.id + 12}>*/}
+            {/*                <span className={'pageTitle'}>{c.email}</span>*/}
+            {/*            </div>))}*/}
+
             <span className={'pageTitle'}>Ваші квартири:</span>
-            <button>Додати квартиру</button>
                             <div className={'trending'}>
                                 {apartment && apartment.map((c, index) => <UserApartmentContent
                                     key={index}
@@ -64,11 +64,16 @@ function User() {
                                     numbers_people={c.numbers_people}
                                 />)}
                             </div>
+            {user && user.map(c => <div className={'div_add_modal'}>
+                <UserRating comments={comments} key={c.id + 119} profile={profile}/>
+                <AddApartmentModal key={c.id + 120} id={c.id}/>
+            </div>)}
+
             <div>
                 <span className={'pageTitle'}>Коментарі:</span>
-                {comments && comments.map((c) => <div key={c.id +14}>
-
+                {comments && comments.map((c) => <div key={c.id +21}>
                     <span >
+                        {c.user_name}
                     {c.comments}
                     {c.rating}
                     </span>

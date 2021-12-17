@@ -25,7 +25,7 @@ export default function StarsRating({id}) {
     },[])
 
     const filter = comments.filter(comments => comments.apartment === id).map(x=> x["rating"]);
-    const rating = Number(count(filter));
+    const rating = count(filter);
     return (
             <>
                 {rating &&  <Box
