@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {addApartment} from "../../../services/addApartment";
 import '../User.css';
-import AddApartmentOk from "./AddApartmentOk";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
-function AddApartment({id}) {
+function AddApartment() {
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
     const [region, setRegion] = useState('');
@@ -62,8 +63,11 @@ function AddApartment({id}) {
     }
     return (
         <div>
+            {apartment && <Alert severity="success">
+                <AlertTitle>Вітаємо</AlertTitle>
+                <strong>Ваша квартира добавлена!!!</strong>
+            </Alert>}
             {noError && !apartment && <div className={'noError'}>*{noError}</div>}
-            {apartment && <AddApartmentOk key={id + 150} apartment={apartment}/>}
             <form className={'form_register'} onSubmit={handleSubmit}>
                 <fieldset className={'register-group'}>
                     <legend>Додайте квартиру</legend>

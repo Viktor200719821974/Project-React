@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from "@mui/material/Button";
+import {Link} from "react-router-dom";
 
 const style = {
     position: 'absolute',
@@ -17,26 +18,26 @@ const style = {
 };
 
 export default function AddApartmentOk({apartment}) {
-    const [open, setOpen] = useState(false);
-    console.log(open, apartment);
-    const handleClose = () => {
-        setOpen(false);
-    };
+    // const [open, setOpen] = useState(true);
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
     return (
         <div>
             <Modal
-                open={open}
-                onClose={handleClose}
+                open={apartment}
+                // onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                 <Box sx={style}>
                     <div >
                         <h2>Вітаємо, Ваша квартира добавлена!!!</h2>
                     </div>
-                    {/*<div className={'div_addApartment'}>*/}
-                        <Button onClick={handleClose} variant="contained" color="success">Закрити</Button>
-                    {/*</div>*/}
+                    <div className={'div_addApartment'}>
+                    {/*    <Button onClick={handleClose} variant="contained" color="success"></Button>*/}
+                        <Link to={'/user/add'}>Закрити</Link>
+                    </div>
                 </Box>
             </Modal>
         </div>

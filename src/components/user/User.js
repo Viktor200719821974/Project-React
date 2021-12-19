@@ -71,8 +71,8 @@ function User() {
 
             <div>
                 <span className={'pageTitle'}>Коментарі:</span>
-                {comments && comments.map((c) => <div key={c.id +21}>
-                    <span >
+                {comments && comments.map((c) => <div>
+                    <span  key={c.id +21}>
                         {c.user_name}
                     {c.comments}
                     {c.rating}

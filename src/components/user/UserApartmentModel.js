@@ -50,7 +50,9 @@ function ChildModal({id}) {
                 aria-describedby="child-modal-description"
                 disableScrollLock={true}
             >
+
                 <Box sx={{ ...style, width: 600 }}>
+
                     {/*<h2 id="child-modal-title">Comments</h2>*/}
                     <CommentsApartment key={id+4} id={id}/>
                     {/*<CommentsModal key={id+5} id={id}/>*/}

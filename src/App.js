@@ -18,7 +18,6 @@ function App() {
                       <Route path={'/'} component={Apartments} exact/>
                       <Route path={'/registration'} component={Registration}/>
                       <Route path={'/user'} component={User}/>
-                      {/*<Route path={'/search'} component={Search}/>*/}
                   </Switch>
               </Container>
           </div>

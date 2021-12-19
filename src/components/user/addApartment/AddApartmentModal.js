@@ -39,7 +39,7 @@ function AddApartmentModal({id}) {
                 disableScrollLock={true}
             >
                 <Box sx={{ ...style, width: 600 }}>
-                    <AddApartment key={id + 122} id={id}/>
+                    <AddApartment key={id + 122} />
                     <Button onClick={handleClose} variant="contained" color="success">Закрити</Button>
                 </Box>
             </Modal>
