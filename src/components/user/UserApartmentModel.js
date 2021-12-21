@@ -1,4 +1,5 @@
 import React from 'react';
+import './User.css';
 import {makeStyles } from '@material-ui/styles';
 import {useState, useEffect} from "react";
 import Fade from '@mui/material/Fade';
@@ -13,6 +14,10 @@ import noPicture from "../apartmentModel/carousel/image/No_Picture.jpg";
 import StarsRating from "../starsRating/StarsRating";
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ChangeAllApartmentModal from "./changeApartment/ChangeAllApartmentModal";
+import ChangeApartmentModal from "./changeApartment/ChangeApartmentModal";
+import {deleteApartment} from "../../services/deleteApartment_services";
 // import CommentsModal from "../apartmentModel/CommentsModal";
 
 const style = {
@@ -41,6 +46,7 @@ function ChildModal({id}) {
 
     return (
         <React.Fragment>
+
             <Button onClick={handleOpen} variant="contained" color="success">Коментарі</Button>
             <Modal
                 hideBackdrop
@@ -104,6 +110,13 @@ export default function UserApartmentModel({children, id, photo}) {
         getApartment();
         // eslint-disable-next-line
     }, [id]);
+
+    const delApartment = (e) => {
+        console.log(id)
+        e.preventDefault();
+        const res = deleteApartment(id);
+        console.log(res);
+    }
     return (
         <>
             <div className={'media'} onClick={handleOpen}>
@@ -136,6 +149,7 @@ export default function UserApartmentModel({children, id, photo}) {
                                      className={'ApartmentModal__landscape'}
                                 />
                                 <div className={'ApartmentModal__about'}>
+                                    <div className={'UserApartmentModal__button_main'}>
                               <span className={'ApartmentModal__title'}>
                             <li>Country: {apartment.country }</li>
                                  <li> City: {apartment.city}</li>
@@ -145,6 +159,21 @@ export default function UserApartmentModel({children, id, photo}) {
                                   <li>Number of squares: {apartment.numbers_squares}</li>
                                   <li>Price: {apartment.price} UAH</li>
                                    </span>
+                                    <div>
+                                        <div className={'UserApartmentModal__button'}>
+                                            <ChangeApartmentModal key={id + 400} id={id}/>
+                                        </div>
+                                        <div className={'UserApartmentModal__button'}>
+                                            <Button onClick={delApartment} variant="outlined" color="success" startIcon={<DeleteIcon /> }>
+                                                Видалити
+                                            </Button>
+                                        </div>
+
+                                        <div className={'UserApartmentModal__button'}>
+                                       <ChangeAllApartmentModal id={id} key={id + 250}/>
+                                        </div>
+                                    </div>
+                                    </div>
                                     <StarsRating id={apartment.id} key={apartment.id + 7}/>
                                     <Carousel id={id} key={id+2}/>
                                     <ChildModal key={id+1} id={id}/>

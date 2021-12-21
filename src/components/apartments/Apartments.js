@@ -11,11 +11,13 @@ function Apartments() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const accessToken = localStorage.getItem('access');
+
     useEffect(()=> {
-        if (localStorage.getItem('access')){
+        if (accessToken){
             setIsAuthenticated(true);
         }
-    }, [])
+    }, [setIsAuthenticated])
 
     useEffect(()=> {
         setLoading(true);
@@ -27,7 +29,6 @@ function Apartments() {
         return <div>Loading...</div>
     }
    const userList = (e) => {
-        e.preventDefault();
         return <User/>
     }
 
