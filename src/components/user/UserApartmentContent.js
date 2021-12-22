@@ -1,4 +1,3 @@
-import {Badge} from "@material-ui/core";
 import '../apartmentContent/ApartmentContent.css';
 import noPicture from '../apartmentContent/image/No_Picture.jpg';
 import UserApartmentModel from "./UserApartmentModel";
@@ -8,7 +7,6 @@ const UserApartmentContent = ({id, country, city, region, price, numbers_people,
     return (
         <>
             <UserApartmentModel  id={id} key={id} photo={photo}>
-                {/*<Badge badgeContent={vote_average} color={vote_average >6 ? "primary" : "secondary"}/>*/}
                 <img className={'poster'} src={photo[0] || noPicture}
                      alt={'photo_rooms'}/>
                 <b className={'title'}>Country: {country}</b>

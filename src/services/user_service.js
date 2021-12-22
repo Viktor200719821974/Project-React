@@ -1,5 +1,4 @@
 import jwt_decode from "jwt-decode";
-import {tokenRefresh} from "./login_services";
 
 const tokenDecoded = () =>{
     const decoded = jwt_decode(localStorage.getItem("access"));
@@ -19,14 +18,7 @@ const getUser =  () => {
                 }
             })
             .then(value => value.json())
-            .catch(function (error){
-                console.log(error)
-                if(error){
-                    tokenRefresh();
-                }
-                alert(error.config)
-            })
-        // console.log(res)
+            .catch(err => err.message)
     }
 };
 export {getUser};

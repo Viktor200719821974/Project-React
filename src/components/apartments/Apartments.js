@@ -50,6 +50,7 @@ function Apartments() {
                 region={c.region}
                 price={c.price}
                 numbers_people={c.numbers_people}
+                isAuthenticated={isAuthenticated}
             />)}
             </div>
         </>

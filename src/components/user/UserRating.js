@@ -1,27 +1,23 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
+import {count} from "../../hook/count";
 
-function count(arr) {
-    let sum = 0;
-    let num = arr.length;
-    if (num === 0){
-        return ''
-    }
-    else{
-        arr.forEach(function(item){
-            sum += item
-        })}
-    return Math.round(sum/num);
-}
 
 export default function UserRating({comments, profile}) {
+    const [noRating, setNoRating] = useState(false);
     const rating = comments.map(c => c['rating']);
     const average_rating = count(rating);
+    
+    useEffect(() => {
+        if(average_rating !== 0){
+            setNoRating(true);
+        }
+    },[])
     return (
         <>
-            {rating &&  <Box
+            {noRating &&  <Box
                 sx={{
                     '& > legend': { mt: 2 },
                 }}

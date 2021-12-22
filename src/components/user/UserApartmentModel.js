@@ -112,7 +112,6 @@ export default function UserApartmentModel({children, id, photo}) {
     }, [id]);
 
     const delApartment = (e) => {
-        console.log(id)
         e.preventDefault();
         const res = deleteApartment(id);
         console.log(res);

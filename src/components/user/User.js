@@ -16,8 +16,7 @@ function User() {
     const [apartment, setApartment] = useState([]);
     const [comments, setComments] = useState([]);
     const [profile, setProfile] = useState([]);
-    // console.log(apartment);
-    // console.log(user);
+
     useEffect(() => {
         getUser().then(value =>  {
             if (value.code === 'token_not_valid'){
@@ -46,15 +45,11 @@ function User() {
         <div>
             {isStaff && <button className={'button_apartments'}>Admin</button>}
             {isSuperUser && <button className={'button_apartments'}>SuperAdmin</button>}
-            {/*{user && user.map((c) =>(*/}
-            {/*            <div key={c.id + 12}>*/}
-            {/*                <span className={'pageTitle'}>{c.email}</span>*/}
-            {/*            </div>))}*/}
 
             <span className={'pageTitle'}>Ваші квартири:</span>
                             <div className={'trending'}>
-                                {apartment && apartment.map((c, index) => <UserApartmentContent
-                                    key={index}
+                                {apartment && apartment.map((c) => <UserApartmentContent
+                                    key={c.id + 600}
                                     id={c.id}
                                     photo={c.photo_rooms.map(x=> x["url"])}
                                     country={c.country}
@@ -64,19 +59,25 @@ function User() {
                                     numbers_people={c.numbers_people}
                                 />)}
                             </div>
-            {user && user.map(c => <div className={'div_add_modal'}>
-                <UserRating comments={comments} key={c.id + 119} profile={profile}/>
-                <AddApartmentModal key={c.id + 120} id={c.id}/>
+            {user && user.map(c => <div key={c.id + 1000} className={'div_add_modal'}>
+                <UserRating comments={comments} key={c.id + 800} profile={profile}/>
+                <AddApartmentModal key={c.id + 700} id={c.id}/>
             </div>)}
 
             <div>
                 <span className={'pageTitle'}>Коментарі:</span>
-                {comments && comments.map((c) => <div>
-                    <span  key={c.id +21}>
+                {comments && comments.map((c) => <div key={c.id +900}>
+                    <div >
                         {c.user_name}
-                    {c.comments}
-                    {c.rating}
-                    </span>
+                    </div>
+                        <div>
+                            {c.comments}
+                        </div>
+                   <div>
+                       {c.rating}
+                   </div>
+
+
                 </div>)}
             </div>
                       </div>

@@ -2,14 +2,31 @@ import {Badge} from "@material-ui/core";
 import ApartmentModel from '../apartmentModel/ApartmentModel';
 import './ApartmentContent.css';
 import noPicture from './image/No_Picture.jpg';
+import {useEffect, useState} from "react";
+import {commentsApartmentServices} from "../../services/commentsApartment_services";
+import {count} from "../../hook/count";
 
-const ApartmentContent = ({id, country, city, region, price, numbers_people, photo}) => {
+const ApartmentContent = ({id, country, city, region, price, numbers_people, photo, isAuthenticated}) => {
 
+    const  [comments, setComments] = useState([]);
+    const [noRating, setNoRating] = useState(false);
+
+    useEffect(() => {
+        commentsApartmentServices().then(value => setComments(value.data));
+    },[])
+
+    const filter = comments.filter(comments => comments.apartment === id).map(x=> x["rating"]);
+    const rating = count(filter);
+    useEffect(() => {
+        if(filter){
+            setNoRating(true);
+        }
+    },[])
     return (
         <>
-            <ApartmentModel  id={id} key={id} photo={photo}>
+            <ApartmentModel  id={id} key={id} photo={photo} isAuthenticated={isAuthenticated}>
 
-                {/*<Badge badgeContent={vote_average} color={vote_average >6 ? "primary" : "secondary"}/>*/}
+                {noRating && <Badge badgeContent={rating} color={rating > 6 ? "primary" : "secondary"}/>}
                 <img className={'poster'} src={photo[0] || noPicture}
                 alt={'photo_rooms'}/>
                 <b className={'title'}>Country: {country}</b>

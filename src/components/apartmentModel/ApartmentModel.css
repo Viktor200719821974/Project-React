@@ -86,8 +86,16 @@
     }
     .ApartmentModal__title {
         font-size: 2.0vw;
+        width: 430px;
     }
     .ApartmentModal__description {
         font-size: 22px;
     }
+}
+.ApartmentModal_main_title{
+    display: flex;
+}
+.ApartmentModal_button_rent{
+    margin-left: 150px;
+    margin-top: 200px;
 }

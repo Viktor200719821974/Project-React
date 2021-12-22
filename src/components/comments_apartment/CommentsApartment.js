@@ -26,8 +26,8 @@ function CommentsApartment({id}) {
             {
                 filter && filter.map((c, index) =>
                 <div className={'div_comments_apartment'} key={index}>
-                    <h5 className={'h5_text'}>{c.name_user}</h5>
-                    <h4 className={'h4_text'}>{c.comments}</h4>
+                    <div className={'h5_text'}>{c.name_user}</div>
+                    <div className={'h4_text'}>{c.comments}</div>
 
                     {noPhoto && <img className={'comments_photo'}
                          src={c.photo_comments_apartment.map(x=> x["url"] )} alt="photo_comments_apartment" />}

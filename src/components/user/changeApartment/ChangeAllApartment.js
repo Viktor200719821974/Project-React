@@ -71,7 +71,7 @@ function ChangeAllApartment({id}) {
             {noError && !apartment && <div className={'noError'}>*{noError}</div>}
             <form className={'form_register'} onSubmit={handleSubmit}>
                 <fieldset className={'register-group'}>
-                    <legend>Додайте квартиру</legend>
+                    <legend>Змінити всі данні квартири</legend>
                     <label htmlFor={'country'} className={!apartment && errorCountry ? 'error_label': 'label'}>Країна {errorCountry && errorCountry}
                         <input className={!apartment && errorCountry ?'error_input' : 'input'} name={'country'} type="text" onChange={e =>
                             setCountry(e.target.value)} placeholder={'Country must be A-Z, a-z, max-length=30'}/>

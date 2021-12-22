@@ -8,23 +8,23 @@ async function changeAllApartment({country, city, region, numbers_squares, numbe
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify(country, city, region, numbers_squares, numbers_people, numbers_rooms, price)
-    })
-        .then(data => data.json())
+        body: JSON.stringify({country:country, city:city, region:region, numbers_squares:numbers_squares,
+            numbers_people:numbers_people, numbers_rooms:numbers_rooms, price:price})
+    }) .then(data => data.json())
         .catch(err => err.message)
 }
 
-async function changeApartment({country, city, region, numbers_squares, numbers_people, numbers_rooms, price, id}) {
+async function changeApartment({key, value, id}) {
     return fetch(url + `/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify(country, city, region, numbers_squares, numbers_people, numbers_rooms, price)
+        body: JSON.stringify({key:key, value:value})
     })
         .then(data => data.json())
-        .catch(err => err.message)
+        .catch(err => console.log(err))
 }
 
 export {changeAllApartment, changeApartment};

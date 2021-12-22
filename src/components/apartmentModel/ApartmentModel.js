@@ -14,6 +14,7 @@ import StarsRating from "../starsRating/StarsRating";
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import CommentsModal from "./CommentsModal";
+import RentApartmentModal from "./rentApartment/RentApartmentModal";
 
 const style = {
     position: 'absolute',
@@ -76,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
     },
 }));
-export default function ApartmentModel({children, id, photo}) {
+export default function ApartmentModel({children, id, photo, isAuthenticated}) {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [apartment, setApartment] = useState([]);
@@ -134,6 +135,7 @@ export default function ApartmentModel({children, id, photo}) {
                                      className={'ApartmentModal__landscape'}
                                 />
                                 <div className={'ApartmentModal__about'}>
+                                    <div className={'ApartmentModal_main_title'}>
                               <span className={'ApartmentModal__title'}>
                             <li>Country: {apartment.country }</li>
                                  <li> City: {apartment.city}</li>
@@ -143,10 +145,13 @@ export default function ApartmentModel({children, id, photo}) {
                                   <li>Number of squares: {apartment.numbers_squares}</li>
                                   <li>Price: {apartment.price} UAH</li>
                                    </span>
+                                    <div className={'ApartmentModal_button_rent'}>
+                                        {isAuthenticated && <RentApartmentModal key={apartment.id + 1100} id={apartment.id}/>}
+                                    </div>
+                                    </div>
                             <StarsRating id={apartment.id} key={apartment.id + 7}/>
                                    <Carousel id={id} key={id+2}/>
                                     <ChildModal key={id+1} id={id}/>
-
                                 </div>
                             </div>
                         </div>
