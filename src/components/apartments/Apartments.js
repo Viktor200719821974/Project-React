@@ -10,7 +10,9 @@ function Apartments() {
     const [apartments, setApartments] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(false);
-
+    const [page, setPage] = useState(1);
+    const [numOfPages, setNumOfPages] = useState();
+    console.log(apartments);
     const accessToken = localStorage.getItem('access');
 
     useEffect(()=> {
@@ -53,6 +55,7 @@ function Apartments() {
                 isAuthenticated={isAuthenticated}
             />)}
             </div>
+
         </>
     );
 }

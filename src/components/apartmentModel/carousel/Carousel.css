@@ -3,11 +3,24 @@
     flex-direction: column;
     object-fit: contain;
     padding: 10px;
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
 }
 .carouselItem__img {
+    width: 200px;
+    height: 200px;
     border-radius: 10px;
     margin-bottom: 5px;
     box-shadow: 0 0 5px black;
+
+    /*width: 200px;*/
+    /*height: 200px;*/
 }
+/*.carouselItem__img_big{*/
+/*    width: 600px;*/
+/*    height: 800px;*/
+/*}*/
+/*.carouselItem_a{*/
+/*    width: 250px;*/
+/*    height: 250px;*/
+/*}*/

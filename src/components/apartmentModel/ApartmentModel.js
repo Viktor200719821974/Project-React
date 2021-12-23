@@ -126,7 +126,6 @@ export default function ApartmentModel({children, id, photo, isAuthenticated}) {
                             <div className={'ApartmentModal'}>
 
                                 <img src={photo.length !== 0 ? photo[0] : unavailable}
-
                                      alt='photo_rooms'
                                      className={'ApartmentModal__portrait'}
                                 />

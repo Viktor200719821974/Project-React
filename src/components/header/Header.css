@@ -6,6 +6,7 @@
     box-shadow: 0 1px 5px black;
     position: fixed;
     justify-content: center;
+    z-index: 100;
 }
 .header_span{
     width: 70%;
