@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../User.css';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import {changeApartment} from "../../../services/changeAllApartment_services";
+import FormControl from "@mui/material/FormControl";
+import Box from "@mui/material/Box";
+import {InputLabel, Select} from "@material-ui/core";
+import MenuItem from "@mui/material/MenuItem";
 
 function ChangeApartment({id}) {
     const [key, setKey] = useState('');
@@ -10,42 +14,29 @@ function ChangeApartment({id}) {
     const [errorValue, setErrorValue] = useState();
     const [noError, setNoError] = useState();
     const [apartment, setApartment] = useState(false);
-
+    console.log(errorValue)
+    console.log(noError)
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const newApartment = await changeApartment ({
             key,
             value,
             id
         });
+        console.log(newApartment);
         try{
-            // if (newApartment.key) {
-            //     setErrorValue(newApartment.key);
-            // }
-            // if (newApartment.city){
-            //     setErrorValue(newApartment.city);
-            // }
-            // if (newApartment.region){
-            //     setErrorValue(newApartment.region);
-            // }
-            // if (newApartment.numbers_squares){
-            //     setErrorValue(newApartment.numbers_squares);
-            // }
-            // if (newApartment.numbers_people){
-            //     setErrorValue(newApartment.numbers_people);
-            // }
-            // if (newApartment.numbers_rooms){
-            //     setErrorValue(newApartment.numbers_rooms);
-            // }
-            // if (newApartment.price){
-            //     setErrorValue(newApartment.price);
-            // }
+
         }catch (e){
             setNoError(e.message);
         }if (newApartment['id']){
             setApartment(true);
         }
     }
+    const handleChange = (event) => {
+        setKey(event.target.value);
+    };
+
     return (
         <div>
             {apartment && <Alert severity="success">
@@ -55,18 +46,34 @@ function ChangeApartment({id}) {
             {noError && !apartment && <div className={'noError'}>*{noError}</div>}
             <form className={'form_register'} onSubmit={handleSubmit}>
                 <fieldset className={'register-group'}>
-                    <legend>Змінити данні квартири, щоб змінити впишіть, що змінити і на що змінити.</legend>
-                    <label htmlFor={'Що змінити'} className={!apartment && errorValue ? 'error_label': 'label'}>
-                        Що змінити
-                        <input className={!apartment && errorValue ?'error_input' : 'input'} name={'key'}
-                               type="text" onChange={e =>
-                            setKey(e.target.value)} placeholder={'Впишіть назву строки яку треба змінити'}/>
-                    </label>
+                    <legend>Щоб змінити виберіть, що змінити і впишіть нащо змінити.</legend>
+                    <Box sx={{ minWidth: 120 }} >
+                        <FormControl fullWidth>
+                            <InputLabel sx={{ color: '#648880',  fontWeight: 400}}>Що змінити</InputLabel>
+                            <Select
+                                sx={{color: 'black', backgroundColor: 'white', fontWeight: 800, height: 30, width: 200}}
+                                // labelId="demo-simple-select-label"
+                                // id="demo-simple-select"
+                                value={key}
+                                label="Що змінити"
+                                onChange={handleChange}
+                            >
+                                <MenuItem value={'country'} sx={{color: 'black', fontWeight: 800}}>country</MenuItem>
+                                <MenuItem value={'city'} sx={{color: 'black', fontWeight: 800}}>city</MenuItem>
+                                <MenuItem value={'region'} sx={{color: 'black', fontWeight: 800}}>region</MenuItem>
+                                <MenuItem value={'number_peoples'} sx={{color: 'black', fontWeight: 800}}>number_peoples</MenuItem>
+                                <MenuItem value={'number_rooms'} sx={{color: 'black', fontWeight: 800}}>number_rooms</MenuItem>
+                                <MenuItem value={'number_squares'} sx={{color: 'black', fontWeight: 800}}>number_squares</MenuItem>
+                                <MenuItem value={'price'} sx={{color: 'black', fontWeight: 800}}>price</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
                     <label htmlFor={'На що змінити'} className={!apartment && errorValue ? 'error_label': 'label'}>
-                        На що змінити {errorValue && errorValue}
+                        Нащо змінити
                         <input className={!apartment && errorValue ?'error_input' : 'input'} name={'value'}
                                type="text" onChange={e =>
                             setValue(e.target.value)} placeholder={'Впишіть нове значення'}/>
+                        {noError && noError}
                     </label>
                 </fieldset>
                 <button className={'btn btn-default'} name={'submit'} type="submit">Відправити</button>

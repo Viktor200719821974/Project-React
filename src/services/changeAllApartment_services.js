@@ -15,16 +15,17 @@ async function changeAllApartment({country, city, region, numbers_squares, numbe
 }
 
 async function changeApartment({key, value, id}) {
+    const list = {[key]: value}
     return fetch(url + `/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({key:key, value:value})
+        body: JSON.stringify(list)
     })
         .then(data => data.json())
-        .catch(err => console.log(err))
+        .catch(err => err.message)
 }
 
 export {changeAllApartment, changeApartment};
