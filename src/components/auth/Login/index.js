@@ -9,10 +9,12 @@ import {
 } from "@material-ui/core";
 import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "./validation";
-import api from "../../services/api";
-import useAuth from "../../hooks/useAuth";
+import api from "../../newComponent/services/api";
+import useAuth from "../../../hook/useAuth";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import {getUser} from "../../../hook/token_user_id";
+import AuthModal from "../AuthModal";
 
 // const useStyles = makeStyles((theme) => ({
 //     root: {
@@ -26,6 +28,7 @@ import { useState } from "react";
 function Login() {
     // const classes = useStyles();
     const [isLoading, setIsLoading] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const auth = useAuth();
 
     const {
@@ -42,27 +45,35 @@ function Login() {
             setIsLoading(true);
             const { data: loginData } = await api.auth.login(data);
 
-            auth.setToken(loginData.token);
-            auth.setUser(loginData.user);
+            auth.setToken(loginData);
+            // auth.setUser(getUser(loginData['access']));
+            console.log(loginData);
+            // console.log(loginData);
+            if (loginData['access']){
+                setIsAuthenticated(true);
+            }
         } catch (e) {
             if (e.response.status === 422) {
                 Object.keys(e.response.data.errors).forEach((key) => {
                     setError(key, {
                         type: "manual",
-                        message: e.response.data.errors[key],
+                        message: [key],
                     });
+                    console.log(e.message);
                 });
             }
         } finally {
+
             setIsLoading(false);
         }
     };
 
     return (
-        <Container maxWidth="xs" >
+        <Container maxWidth="xs" sx={{marginTop: 10, marginLeft: 30, marginRight: 'auto'}}>
+            {isAuthenticated && <AuthModal isAuthenticated={isAuthenticated} isLoading={isLoading}/>}
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <Typography variant="h6">Login</Typography>
+                    <Typography variant="h5">Login</Typography>
                 </Grid>
             </Grid>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,7 +118,7 @@ function Login() {
                     <Grid item xs={12}>
                         <Button
                             variant="contained"
-                            color="primary"
+                            color="success"
                             type="submit"
                             disabled={isLoading}
                         >

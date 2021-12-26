@@ -1,15 +1,18 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Cookies from "js-cookie";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 import api from "../../services/api";
+import {getUser} from "../../../../hook/token_user_id";
 
 function AuthProvider(props) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [user, setUser] = useState(null);
     const [token, setTokenData] = useState(null);
-
+    console.log(token);
+    console.log(user);
     const setToken = useCallback((tokenData) => {
         setTokenData(tokenData);
+        console.log(setToken);
         if (tokenData) {
             Cookies.set("auth-token", tokenData);
         } else {
@@ -23,12 +26,12 @@ function AuthProvider(props) {
     }, [setToken]);
 
     const loadData = useCallback(async () => {
-        const tokenData = Cookies.get("auth-token");
+        const tokenData = Cookies.get("access");
         setTokenData(tokenData);
-
+        console.log(loadData)
         try {
             if (tokenData) {
-                const { data } = await api.auth.getProfile();
+                const { data } = getUser(tokenData);
                 setUser(data);
             }
         } catch {
@@ -50,10 +53,11 @@ function AuthProvider(props) {
             setUser,
             setToken,
             logOut,
+
         }),
         [isLoaded, user, token, setToken, logOut]
     );
-
+    console.log(contextValue);
     return (
         <AuthContext.Provider value={contextValue}>
             {props.children}

@@ -1,5 +1,5 @@
 import { Route, Redirect, useHistory } from "react-router-dom";
-import useAuth from "../../../hooks/useAuth";
+import useAuth from "../../../../../hook/useAuth";
 
 function GuestRoute({ children, ...rest }) {
     const auth = useAuth();

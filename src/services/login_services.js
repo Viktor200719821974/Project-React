@@ -10,7 +10,7 @@ async function loginUser(credentials) {
 
     })
         .then(data => data.json())
-        .catch((error) => console.log(error.response.status))
+        .catch((error) => error.message)
 }
 export {loginUser}
 

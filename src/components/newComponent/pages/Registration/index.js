@@ -10,7 +10,7 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "./validation";
 import api from "../../services/api";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../../../hook/useAuth";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -42,7 +42,7 @@ function Registration() {
             setIsLoading(true);
             await api.auth.registration(data);
             const { data: loginData } = await api.auth.login(data);
-            auth.setToken(loginData.token);
+            auth.setToken(loginData.access);
             auth.setUser(loginData.user);
         } catch (e) {
             if (e.response.status === 422) {

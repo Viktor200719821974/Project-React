@@ -38,10 +38,10 @@ function Apartments() {
         <>
             {!isAuthenticated && <span className={'pageTitle'}>Apartments</span>}
             <div className={'div_apartments'}>
-            <h3 className={'h_apartments'}>{isAuthenticated ? 'Aвторизований'  : 'Авторизуйтесь'}</h3>
+            {/*<h3 className={'h_apartments'}>{isAuthenticated ? 'Aвторизований'  : 'Авторизуйтесь'}</h3>*/}
                 {isAuthenticated && <button className={'button_apartments'} onClick={userList}>User</button>}
              </div>
-            {!isAuthenticated && <Auth key={apartments.id + 8} id={apartments.id}/> }
+            {/*{!isAuthenticated && <Auth key={apartments.id + 8} id={apartments.id}/> }*/}
             <div className={'trending'}>
             {apartments && apartments.map((c, index)=><ApartmentContent
                 key={index}

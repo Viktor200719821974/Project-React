@@ -1,5 +1,6 @@
 form {
-    margin-bottom: 22px;
+    width: 600px;
+    margin: 10px auto 22px auto ;
 }
 input{
     /*font: 300 16px/22px "Roboto", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;*/
@@ -17,7 +18,7 @@ input{
 .error_label{
     color: red;
     cursor: pointer;
-    font-weight: 400;
+    font-weight: 200;
 }
 .label {
     color: #648880;

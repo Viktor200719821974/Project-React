@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import {Link} from 'react-router-dom';
 import './Auth.css';
+import HomeIcon from "@mui/icons-material/Home";
+import Button from "@mui/material/Button";
 
 const style = {
     position: 'absolute',
@@ -30,14 +32,26 @@ export default function AuthModal({isAuthenticated}) {
                     <div >
                         <h2>Вітаємо, Ви авторизувались!!! </h2>
                     </div>
-                    <div className={'div_auth_main'}>
-                        <div className={'div_auth_modal'}>
-                        <Link to={'/user'} className={'link_auth_modal'}>Моя сторінка</Link>
-                        </div>
+                    <Button
+                        component={Link} to="/"
+                        variant="contained"
+                        color="success"
+                        type="submit"
+                        // disabled={isLoading}
+                    >
+                       Закрити
+                    </Button>
+                    {/*<div className={'div_auth_main'}>*/}
+                        {/*<Button color="primary"  sx={{fontWeight: 'bold', marginTop: 5}}>*/}
+                        {/*   Закрити*/}
+                        {/*</Button>*/}
+                        {/*<div className={'div_auth_modal'}>*/}
+                        {/*<Link to={'/user'} className={'link_auth_modal'}>Моя сторінка</Link>*/}
+                        {/*</div>*/}
                         {/*<div className={'div_auth_modal'}>*/}
                         {/*<Link to={'/'} className={'link_auth_modal'}>Home Page</Link>*/}
                         {/*</div>*/}
-                    </div>
+                    {/*</div>*/}
                 </Box>
             </Modal>
         </div>

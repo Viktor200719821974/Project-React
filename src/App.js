@@ -6,6 +6,8 @@ import {Container} from "@mui/material";
 import Apartments from "./components/apartments/Apartments";
 import Registration from "./components/registration/Registration";
 import User from "./components/user/User";
+import Routes from "./components/routes/Routes";
+import Auth from "./components/auth/Auth";
 
 function App() {
 
@@ -13,12 +15,15 @@ function App() {
       <BrowserRouter>
           <Header/>
           <div className={'app'}>
+
               <Container>
                   <Switch>
                       <Route path={'/'} component={Apartments} exact/>
+                      <Route path={'/login'} component={Auth}/>
                       <Route path={'/registration'} component={Registration}/>
                       <Route path={'/user'} component={User}/>
                   </Switch>
+              {/*    <Routes/>*/}
               </Container>
           </div>
           {/*<SimpleBottomNavigation/>*/}
