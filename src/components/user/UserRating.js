@@ -6,18 +6,13 @@ import {count} from "../../hook/count";
 
 
 export default function UserRating({comments, profile}) {
-    const [noRating, setNoRating] = useState(false);
+
     const rating = comments.map(c => c['rating']);
     const average_rating = count(rating);
-    
-    useEffect(() => {
-        if(average_rating !== 0){
-            setNoRating(true);
-        }
-    },[])
+
     return (
         <>
-            {noRating &&  <Box
+            {rating &&  <Box
                 sx={{
                     '& > legend': { mt: 2 },
                 }}

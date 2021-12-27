@@ -14,16 +14,13 @@ const Header = () => {
     // const [exit, setExit] = useState(false);
     const auth = useAuth();
     const history = useHistory();
-
     const onLogOut = () => {
         auth.logOut();
         history.push("/login");
+        localStorage.removeItem('access');
+        localStorage.removeItem('refresh');
+        auth.isLoaded = false;
     };
-    // const logout = () => {
-    //     localStorage.removeItem('access');
-    //     localStorage.removeItem('refresh');
-    //     setExit(true);
-    // }
     return (
         <div className={'header'}>
 
@@ -34,13 +31,16 @@ const Header = () => {
                 <Button color="success" component={Link} to="/" sx={{fontWeight: 'bold', marginTop: 5}}>
                     <HomeIcon color="success" /> Home
                 </Button>
+            {!auth.isLoaded && <Button color="success" component={Link} to="/user" sx={{fontWeight: 'bold', marginTop: 5}}>
+                 My page
+            </Button>}
             {/*</div>*/}
             <span className={'header_span'} onClick={() => window.scroll(0, 0)}>
                 ЗНАЙДИ СОБІ ЖИТЛО
            </span>
             <div className={'header_button'}>
                 {/*    (auth.user ? (*/}
-                        {auth.isLoaded ? (
+                        {!auth.isLoaded ? (
                             <>
                     <IconButton aria-label="add an alarm" size="large" sx={{ color: "green" }} component={Link} to="/login">
                         <LoginIcon />

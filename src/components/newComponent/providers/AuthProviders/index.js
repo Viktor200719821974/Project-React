@@ -12,7 +12,6 @@ function AuthProvider(props) {
     console.log(user);
     const setToken = useCallback((tokenData) => {
         setTokenData(tokenData);
-        console.log(setToken);
         if (tokenData) {
             Cookies.set("auth-token", tokenData);
         } else {

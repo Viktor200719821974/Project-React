@@ -20,7 +20,8 @@ function User() {
     useEffect(() => {
         getUser().then(value =>  {
             if (value.code === 'token_not_valid'){
-                tokenRefresh();
+                const refresh = tokenRefresh();
+                console.log(refresh);
             }
             if (value.is_staff === true){
                 setIsStaff(true);
@@ -60,7 +61,9 @@ function User() {
                                 />)}
                             </div>
             {user && user.map(c => <div key={c.id + 1000} className={'div_add_modal'}>
+                <div className={'user_rating'}>
                 <UserRating comments={comments} key={c.id + 800} profile={profile}/>
+            </div>
                 <AddApartmentModal key={c.id + 700} id={c.id}/>
             </div>)}
 

@@ -15,7 +15,7 @@ async function loginUser(credentials) {
 export {loginUser}
 
 const refreshToken = localStorage.getItem('refresh');
-
+console.log(refreshToken);
 const tokenRefresh = () => {
     return fetch(url + '/refresh',{
         method: "POST",
@@ -25,7 +25,7 @@ const tokenRefresh = () => {
         body: JSON.stringify({refresh:refreshToken})
     })
         .then(data => data.json())
-        .catch(err => console.log(err.message))
+        .catch(err => err.message)
 }
 
 export {tokenRefresh}

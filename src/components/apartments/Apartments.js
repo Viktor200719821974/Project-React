@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {getApartments} from "../../services/apartment_service";
-import Auth from "../auth/Auth";
-import '../auth/Auth.css';
 import ApartmentContent from "../apartmentContent/ApartmentContent";
-import User from "../user/User";
-
+import CustomPagination from "../pagination/CustomPagination";
+import "./Apartments.css";
 
 function Apartments() {
     const [apartments, setApartments] = useState([]);
@@ -12,7 +10,7 @@ function Apartments() {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [numOfPages, setNumOfPages] = useState();
-    console.log(apartments);
+
     const accessToken = localStorage.getItem('access');
 
     useEffect(()=> {
@@ -23,24 +21,26 @@ function Apartments() {
 
     useEffect(()=> {
         setLoading(true);
-        getApartments().then(value => setApartments(value.data))
+        getApartments(page).then(value => {
+            console.log(value);
+            setApartments(value.data);
+            setNumOfPages(value.total_pages);
+        });
+
         setLoading(false);
-    },[])
+    },[page])
 
     if (loading){
         return <div>Loading...</div>
     }
-   const userList = (e) => {
-        return <User/>
-    }
 
     return (
         <>
-            {!isAuthenticated && <span className={'pageTitle'}>Apartments</span>}
-            <div className={'div_apartments'}>
+            {/*{!isAuthenticated && <span className={'pageTitle'}>Apartments</span>}*/}
+            {/*<div className={'div_apartments'}>*/}
             {/*<h3 className={'h_apartments'}>{isAuthenticated ? 'Aвторизований'  : 'Авторизуйтесь'}</h3>*/}
-                {isAuthenticated && <button className={'button_apartments'} onClick={userList}>User</button>}
-             </div>
+            {/*    {isAuthenticated && <button className={'button_apartments'} onClick={userList}>User</button>}*/}
+             {/*</div>*/}
             {/*{!isAuthenticated && <Auth key={apartments.id + 8} id={apartments.id}/> }*/}
             <div className={'trending'}>
             {apartments && apartments.map((c, index)=><ApartmentContent
@@ -55,7 +55,9 @@ function Apartments() {
                 isAuthenticated={isAuthenticated}
             />)}
             </div>
-
+            {/*<div className={'pagination'}>*/}
+            {numOfPages > 1 && <CustomPagination setPage={setPage} numOfPages={numOfPages}/>}
+            {/*</div>*/}
         </>
     );
 }

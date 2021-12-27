@@ -4,6 +4,7 @@ import {loginUser} from "../../services/login_services";
 import {Link} from 'react-router-dom';
 import AuthModal from "./AuthModal";
 import {Button} from "@material-ui/core";
+import useAuth from "../../hook/useAuth";
 
 function Auth() {
     const [token, setToken] = useState({});
@@ -15,7 +16,7 @@ function Auth() {
     const [errorMessage, setErrorMessage] = useState();
     const [errorEmail, setErrorEmail] = useState();
     const [errorPassword, setErrorPassword] = useState();
-
+    const auth = useAuth();
     const accessToken = token.access;
     const refreshToken = token.refresh;
 
@@ -46,6 +47,7 @@ function Auth() {
             setToken(token);
             setIsAuthenticated(true);
         }
+        auth.setToken(token);
         setLoading(false);
     }
     if (loading){
