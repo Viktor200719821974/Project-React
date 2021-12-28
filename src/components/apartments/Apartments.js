@@ -21,12 +21,14 @@ function Apartments() {
 
     useEffect(()=> {
         setLoading(true);
+        try{
         getApartments(page).then(value => {
-            console.log(value);
             setApartments(value.data);
             setNumOfPages(value.total_pages);
         });
-
+        }catch (e){
+            console.log(e);
+        }
         setLoading(false);
     },[page])
 

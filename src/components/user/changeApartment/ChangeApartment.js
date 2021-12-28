@@ -14,8 +14,7 @@ function ChangeApartment({id}) {
     const [errorValue, setErrorValue] = useState();
     const [noError, setNoError] = useState();
     const [apartment, setApartment] = useState(false);
-    console.log(errorValue)
-    console.log(noError)
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -61,9 +60,9 @@ function ChangeApartment({id}) {
                                 <MenuItem value={'country'} sx={{color: 'black', fontWeight: 800}}>country</MenuItem>
                                 <MenuItem value={'city'} sx={{color: 'black', fontWeight: 800}}>city</MenuItem>
                                 <MenuItem value={'region'} sx={{color: 'black', fontWeight: 800}}>region</MenuItem>
-                                <MenuItem value={'number_peoples'} sx={{color: 'black', fontWeight: 800}}>number_peoples</MenuItem>
-                                <MenuItem value={'number_rooms'} sx={{color: 'black', fontWeight: 800}}>number_rooms</MenuItem>
-                                <MenuItem value={'number_squares'} sx={{color: 'black', fontWeight: 800}}>number_squares</MenuItem>
+                                <MenuItem value={'numbers_people'} sx={{color: 'black', fontWeight: 800}}>numbers_people</MenuItem>
+                                <MenuItem value={'numbers_rooms'} sx={{color: 'black', fontWeight: 800}}>numbers_rooms</MenuItem>
+                                <MenuItem value={'numbers_squares'} sx={{color: 'black', fontWeight: 800}}>numbers_squares</MenuItem>
                                 <MenuItem value={'price'} sx={{color: 'black', fontWeight: 800}}>price</MenuItem>
                             </Select>
                         </FormControl>
