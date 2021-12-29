@@ -4,6 +4,7 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import axios from "axios";
 import './Carousel.css';
 import noPicture from './image/No_Picture.jpg';
+import ImageModal from "./ImageModal";
 
 const handleDragStart = (e) => e.preventDefault();
 
@@ -24,16 +25,15 @@ const Carousel = ({id}) => {
 
     const items =(photo && photo.map((c) => (
         <div className={'carouselItem'}>
-            {/*<a href={c.url} target={"_blank"}>*/}
+            <ImageModal image={c.url} key={c.id + 1100}>
             <img
                 src={c.url || noPicture}
                 alt='photo_rooms'
                 onDragStart={handleDragStart}
                 className={'carouselItem_img'}
             />
-                <b className={'carouselItem_txt'}>{c?.name}</b>
-            {/*    <span><img className={'carouselItem__img_big'} src={c.url} alt="photo_rooms"/></span>*/}
-            {/*</a>*/}
+                {/*<b className={'carouselItem_txt'}>{c?.name}</b>*/}
+        </ImageModal>
         </div>
     )));
     const responsive = {

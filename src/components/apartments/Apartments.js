@@ -3,6 +3,7 @@ import {getApartments} from "../../services/apartment_service";
 import ApartmentContent from "../apartmentContent/ApartmentContent";
 import CustomPagination from "../pagination/CustomPagination";
 import "./Apartments.css";
+import FiltersModal from "../filters/FiltersModal";
 
 function Apartments() {
     const [apartments, setApartments] = useState([]);
@@ -10,6 +11,20 @@ function Apartments() {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [numOfPages, setNumOfPages] = useState();
+    const [country, setCountry] = useState('');
+    const [countryValue, setCountryValue] = useState('');
+    const [city, setCity] = useState('');
+    const [cityValue, setCityValue] = useState('');
+    const [region, setRegion] = useState('');
+    const [regionValue, setRegionValue] = useState('');
+    const [numbers_people,setNumbersPeople] = useState('');
+    const [numbersPeopleValue, setNumbersPeopleValue] = useState('');
+    const [numbers_rooms, setNumbersRooms] = useState('');
+    const [numbersRoomsValue, setNumbersRoomsValue] = useState('');
+    const [numbers_squares, setNumbersSquares] = useState('');
+    const [numbersSquaresValue, setNumbersSquaresValue] = useState('');
+    const [price, setPrice] = useState('');
+    const [priceValue, setPriceValue] = useState('');
 
     const accessToken = localStorage.getItem('access');
 
@@ -22,15 +37,24 @@ function Apartments() {
     useEffect(()=> {
         setLoading(true);
         try{
-        getApartments(page).then(value => {
+        getApartments(
+            page, countryValue, country, city, cityValue, region, regionValue, numbers_people, numbersPeopleValue,
+            numbers_rooms, numbersRoomsValue, numbers_squares, numbersSquaresValue, price, priceValue
+        ).then(value => {
             setApartments(value.data);
             setNumOfPages(value.total_pages);
+            // if (value.data.length === 0){
+            //     return <div>Not found</div>
+            // }
+            console.log(value);
         });
         }catch (e){
             console.log(e);
         }
         setLoading(false);
-    },[page])
+    },[page, country, countryValue, city, cityValue, region, regionValue, numbers_people, numbersPeopleValue,
+        numbers_rooms, numbersRoomsValue, numbers_squares, numbersSquaresValue, price, priceValue
+    ])
 
     if (loading){
         return <div>Loading...</div>
@@ -44,6 +68,28 @@ function Apartments() {
             {/*    {isAuthenticated && <button className={'button_apartments'} onClick={userList}>User</button>}*/}
              {/*</div>*/}
             {/*{!isAuthenticated && <Auth key={apartments.id + 8} id={apartments.id}/> }*/}
+            <FiltersModal setCountryValue={setCountryValue}
+                          setCountry={setCountry}
+                          country={country}
+                          setCityValue={setCityValue}
+                          setCity={setCity}
+                          city={city}
+                          setNumbersPeopleValue={setNumbersPeopleValue}
+                          numbers_people={numbers_people}
+                          setNumbersPeople={setNumbersPeople}
+                          region={region}
+                          setRegion={setRegion}
+                          setRegionValue={setRegionValue}
+                          numbers_rooms={numbers_rooms}
+                          setNumbersRooms={setNumbersRooms}
+                          setNumbersRoomsValue={setNumbersRoomsValue}
+                          numbers_squares={numbers_squares}
+                          setNumbersSquares={setNumbersSquares}
+                          setNumbersSquaresValue={setNumbersSquaresValue}
+                          price={price}
+                          setPrice={setPrice}
+                          setPriceValue={setPriceValue}
+            />
             <div className={'trending'}>
             {apartments && apartments.map((c, index)=><ApartmentContent
                 key={index}
