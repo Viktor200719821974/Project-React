@@ -1,3 +1,14 @@
 * ul{
     justify-content: center;
 }
+.div_notFound{
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 2vw;
+    padding: 4px;
+    border-radius: 50px;
+    color: white;
+    margin-top: 100px;
+}

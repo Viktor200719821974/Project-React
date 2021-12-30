@@ -8,6 +8,8 @@ import Registration from "./components/registration/Registration";
 import User from "./components/user/User";
 import Routes from "./components/routes/Routes";
 import Auth from "./components/auth/Auth";
+import Admin from "./components/user/administrations/Admin";
+import SuperAdmin from "./components/user/administrations/SuperAdmin";
 
 function App() {
 
@@ -22,6 +24,8 @@ function App() {
                       <Route path={'/login'} component={Auth}/>
                       <Route path={'/registration'} component={Registration}/>
                       <Route path={'/user'} component={User}/>
+                      <Route path={'/admin'} component={Admin}/>
+                      <Route path={'/superAdmin'} component={SuperAdmin}/>
                   </Switch>
               {/*    <Routes/>*/}
               </Container>

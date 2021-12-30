@@ -4,6 +4,8 @@ import ApartmentContent from "../apartmentContent/ApartmentContent";
 import CustomPagination from "../pagination/CustomPagination";
 import "./Apartments.css";
 import FiltersModal from "../filters/FiltersModal";
+import ClearIcon from '@mui/icons-material/Clear';
+import Button from "@mui/material/Button";
 
 function Apartments() {
     const [apartments, setApartments] = useState([]);
@@ -28,6 +30,22 @@ function Apartments() {
 
     const accessToken = localStorage.getItem('access');
 
+    const delFilters = () => {
+        setCountry('');
+        setCountryValue('');
+        setCity('');
+        setCityValue('');
+        setRegion('');
+        setRegionValue('');
+        setNumbersPeople('');
+        setNumbersPeopleValue('');
+        setNumbersRooms('');
+        setNumbersRoomsValue('');
+        setNumbersSquares('');
+        setNumbersSquaresValue('');
+        setPrice('');
+        setPriceValue('');
+    }
     useEffect(()=> {
         if (accessToken){
             setIsAuthenticated(true);
@@ -43,10 +61,6 @@ function Apartments() {
         ).then(value => {
             setApartments(value.data);
             setNumOfPages(value.total_pages);
-            // if (value.data.length === 0){
-            //     return <div>Not found</div>
-            // }
-            console.log(value);
         });
         }catch (e){
             console.log(e);
@@ -55,11 +69,18 @@ function Apartments() {
     },[page, country, countryValue, city, cityValue, region, regionValue, numbers_people, numbersPeopleValue,
         numbers_rooms, numbersRoomsValue, numbers_squares, numbersSquaresValue, price, priceValue
     ])
+    if(apartments.length === 0){
+        return <div>
+            <Button onClick={delFilters} variant="outlined" color="success" startIcon={<ClearIcon/> }
+                    sx={{fontWeight:800, marginTop: '20px'}}>
+                Очистити фільтр
+            </Button>
+            <div className={'div_notFound'}>Not found</div>
+            </div>}
 
     if (loading){
         return <div>Loading...</div>
     }
-
     return (
         <>
             {/*{!isAuthenticated && <span className={'pageTitle'}>Apartments</span>}*/}

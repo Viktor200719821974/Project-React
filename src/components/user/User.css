@@ -69,6 +69,15 @@ input{
 .user_rating{
     margin-bottom: 10px;
 }
-/*.div_add_modal{*/
-/*    display: flex;*/
-/*}*/
+.AdminModal_title{
+    width: 100%;
+    font-size: 42px;
+    padding: 8px 0 10px 0;
+    color: green;
+}
+.AdminModal_subTitle{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2px;
+    font-size: 32px;
+}

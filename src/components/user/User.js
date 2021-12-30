@@ -6,7 +6,10 @@ import {tokenRefresh} from "../../services/login_services";
 import UserApartmentContent from "./UserApartmentContent";
 import UserRating from "./UserRating";
 import AddApartmentModal from "./addApartment/AddApartmentModal";
-
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import Button from "@mui/material/Button";
+import {Link} from "react-router-dom";
 
 function User() {
     let {user} = useSelector(state => state);
@@ -44,9 +47,10 @@ function User() {
     },[])
     return (
         <div>
-            {isStaff && <button className={'button_apartments'}>Admin</button>}
-            {isSuperUser && <button className={'button_apartments'}>SuperAdmin</button>}
-
+            {isStaff && <Button component={Link} to="/admin" variant="outlined" color="success" startIcon={<AdminPanelSettingsIcon /> }
+                                sx={{fontWeight:800, margin: '10px 0 0 10px', float: 'right'}}>Admin</Button>}
+            {isSuperUser && <Button component={Link} to="/superAdmin" variant="outlined" color="success" startIcon={<SupervisorAccountIcon /> }
+                sx={{fontWeight:800, float: 'right', margin: '10px 0 0 10px'}}>SuperAdmin</Button>}
             <span className={'pageTitle'}>Ваші квартири:</span>
                             <div className={'trending'}>
                                 {apartment && apartment.map((c) => <UserApartmentContent
