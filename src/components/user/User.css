@@ -81,3 +81,18 @@ input{
     padding: 0 2px;
     font-size: 32px;
 }
+.admin_button{
+    display: flex;
+    justify-content: center;
+    /*position: relative;*/
+    /*right: -160px;*/
+}
+.changeComment_input{
+    width: 540px;
+    height: 100px;
+    border-radius: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    padding-bottom: 30px;
+    text-align: justify;
+}

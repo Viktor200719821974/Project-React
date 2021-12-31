@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AdminModal = ({id, children}) => {
+const AdminBlockedModal = ({id, children}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [user, setUser] = useState([]);
@@ -111,4 +111,4 @@ const AdminModal = ({id, children}) => {
     );
 };
 
-export default AdminModal;
+export default AdminBlockedModal;

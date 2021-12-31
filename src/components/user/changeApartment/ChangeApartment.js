@@ -76,7 +76,6 @@ function ChangeApartment({id}) {
                     </label>
                 </fieldset>
                 <button className={'btn btn-default'} name={'submit'} type="submit">Відправити</button>
-
             </form>
         </div>
     );

@@ -8,11 +8,11 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     (config) => {
         const authToken = localStorage.getItem("access");
-        console.log(authToken)
+        // console.log(authToken)
         if (authToken) {
             config.headers.authorization = `Bearer ${authToken}`;
         }
-        console.log(config)
+        // console.log(config)
         return config;
     },
     (error) => {
