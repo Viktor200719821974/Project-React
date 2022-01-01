@@ -22,9 +22,6 @@ const Admin = () => {
     const [loaded, setLoaded] = useState(false);
     const [loadedCommentsUsers, setLoadedCommentsUsers] = useState(false);
     const [loadedCommentsApartments, setLoadedCommentsApartments] = useState(false);
-    // const [loadedPagination, setLoadedPagination] = useState(false);
-    // console.log(commentsUsers);
-    // console.log(loadedCommentsUsers);
 
     const handleUsers = async(e) => {
         e.preventDefault();
@@ -90,7 +87,7 @@ const Admin = () => {
             const res = await api.auth.getCommentsUsers(page);
             setCommentsUsers(res.data.data)
         }
-    },[page, commentsUsers])
+    },[page])
 
     const handleOpen = () => {
         setLoaded(false);
@@ -101,11 +98,6 @@ const Admin = () => {
         setCommentsUsers([]);
         setCommentsApartments([]);
     }
-    // useEffect(() => {
-    // if (loaded || loadedCommentsUsers || loadedCommentsApartments){
-    //     setLoadedPagination(true);
-    // }
-    // },[loadedPagination])
     if (isLoading){
         return <div>Loading...</div>
     }
@@ -163,8 +155,8 @@ const Admin = () => {
                     />
                 )}
             </div>
-            {loaded || loadedCommentsUsers || loadedCommentsApartments && numOfPages > 1 &&  <CustomPagination
-                setPage={setPage} numOfPages={numOfPages}/>}
+            {(loadedCommentsApartments || loadedCommentsUsers || loaded) && (numOfPages > 1 &&  <CustomPagination
+                setPage={setPage} numOfPages={numOfPages}/>)}
         </>
     );
 };

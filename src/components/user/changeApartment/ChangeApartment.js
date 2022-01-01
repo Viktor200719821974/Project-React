@@ -17,7 +17,6 @@ function ChangeApartment({id}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const newApartment = await changeApartment ({
             key,
             value,

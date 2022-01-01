@@ -4,11 +4,12 @@ import "../../User.css";
 const FormChangeComment = ({setChangeComment, comment, changeComment}) => {
     return (
         <div>
-            <label htmlFor={'Comments'} className={'label'}>
-                Change Comments
-                <input type="text" className={'changeComment_input'} name={'value'} value={changeComment} onChange={e =>
-                    setChangeComment(e.target.value)} placeholder={comment}/>
-            </label>
+            {/*<form action="">*/}
+                <legend className={'label'}>Change Comments</legend>
+                <textarea name="comments" id="text_box" cols="70" rows="7" value={changeComment}
+                          onChange={e => setChangeComment(e.target.value)}>{comment}</textarea>
+
+            {/*</form>*/}
         </div>
     );
 };

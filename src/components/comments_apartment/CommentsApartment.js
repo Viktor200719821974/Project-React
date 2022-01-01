@@ -1,28 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './CommentsApartment.css';
 
-function CommentsApartment({id}) {
 
-    const [comments, setComments] = useState([]);
+function CommentsApartment({id, filter, noComments}) {
     const [noPhoto, setNoPhoto] = useState(false);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        setLoading(true);
-        fetch('http://localhost:8000/api/v1/comments_apartment')
-            .then(value => value.json())
-            .then(value => setComments(value.data));
-        setLoading(false);
-    },[])
-
-    const filter = comments.filter(comments => comments.apartment === id);
-    const photo = filter.map(y => y['photo_comments_apartment']);
-    if (loading){
-        return <div>Loading...</div>
-    }
     return (
         <div>
-            {filter.length === 0 ? (<h3>No Comments</h3>) : (<h3>Comments:</h3>)}
+            {noComments ? (<h3>Comments:</h3>) : (<h3>No Comments</h3>)}
             {
                 filter && filter.map((c, index) =>
                 <div className={'div_comments_apartment'} key={index}>

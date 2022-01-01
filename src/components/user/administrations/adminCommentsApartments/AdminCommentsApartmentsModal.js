@@ -37,6 +37,8 @@ const AdminCommentsApartmentsModal = ({id, children}) => {
     const [comment, setComment] = useState([]);
     const [changeComment, setChangeComment] = useState('');
     const [error, setError] = useState();
+    const [deleteStatus, setDeleteStatus] = useState(false);
+    const [changeStatus, setChangeStatus] = useState(false);
 
     const handleOpen = () => {
         setOpen(true)
@@ -48,7 +50,9 @@ const AdminCommentsApartmentsModal = ({id, children}) => {
         e.preventDefault();
         try{
             const res = await api.auth.deleteCommentApartment(id);
-            console.log(res.config);
+            if (res.status === 204){
+                setDeleteStatus(true);
+            }
         }catch (e) {
             if (e.response.status){
                 setError(e.response.status);
@@ -56,11 +60,17 @@ const AdminCommentsApartmentsModal = ({id, children}) => {
         }
     }
     const handleChangeComment = async (e) => {
+        const obj = {'comments':changeComment};
         e.preventDefault();
         try{
-            const res = await api.auth.changeCommentApartment(id, changeComment);
+            const res = await api.auth.changeCommentApartment(id, obj);
+            if (res.status === 200){
+                setChangeStatus(true);
+            }
         }catch (e) {
-            console.log(e.message);
+            if (e.message){
+                setError(e.message);
+            }
         }
     }
     useEffect(async () => {
@@ -94,6 +104,12 @@ const AdminCommentsApartmentsModal = ({id, children}) => {
                         <div className={classes.paper}>
                             {error && <Alert severity="error">
                                 <strong>{error}</strong>
+                            </Alert>}
+                            {changeStatus && <Alert severity="success">
+                                <strong>Comment change</strong>
+                            </Alert>}
+                            {deleteStatus && <Alert severity="success">
+                                <strong>No content</strong>
                             </Alert>}
                             <FormChangeComment setChangeComment={setChangeComment} key={id + 65}
                                                comment={comment.comments} changeComment={changeComment}/>

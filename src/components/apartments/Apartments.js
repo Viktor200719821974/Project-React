@@ -6,6 +6,7 @@ import "./Apartments.css";
 import FiltersModal from "../filters/FiltersModal";
 import ClearIcon from '@mui/icons-material/Clear';
 import Button from "@mui/material/Button";
+import {tokenRefresh} from "../../services/login_services";
 
 function Apartments() {
     const [apartments, setApartments] = useState([]);
@@ -27,6 +28,7 @@ function Apartments() {
     const [numbersSquaresValue, setNumbersSquaresValue] = useState('');
     const [price, setPrice] = useState('');
     const [priceValue, setPriceValue] = useState('');
+    const [filtersBlock, setFilterBlock] = useState(false);
 
     const accessToken = localStorage.getItem('access');
 
@@ -69,17 +71,27 @@ function Apartments() {
     },[page, country, countryValue, city, cityValue, region, regionValue, numbers_people, numbersPeopleValue,
         numbers_rooms, numbersRoomsValue, numbers_squares, numbersSquaresValue, price, priceValue
     ])
+    useEffect(() => {
+        if (countryValue || cityValue || regionValue || numbersPeopleValue || numbersRoomsValue || numbersSquaresValue ||
+            priceValue){
+            setFilterBlock(true);
+        }
+    },[filtersBlock])
     if(apartments.length === 0){
-        return <div>
+        return filtersBlock && <div>
             <Button onClick={delFilters} variant="outlined" color="success" startIcon={<ClearIcon/> }
                     sx={{fontWeight:800, marginTop: '20px'}}>
                 Очистити фільтр
             </Button>
             <div className={'div_notFound'}>Not found</div>
-            </div>}
-
+            </div>
+    }
     if (loading){
         return <div>Loading...</div>
+    }
+    const handleToken = (e) => {
+        e.preventDefault();
+        tokenRefresh().then(value => console.log(value));
     }
     return (
         <>
@@ -127,6 +139,7 @@ function Apartments() {
             {/*<div className={'pagination'}>*/}
             {numOfPages > 1 && <CustomPagination setPage={setPage} numOfPages={numOfPages}/>}
             {/*</div>*/}
+            <button onClick={handleToken}>token</button>
         </>
     );
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import {makeStyles } from '@material-ui/styles';
 import {useState, useEffect} from "react";
 import Fade from '@mui/material/Fade';
-import axios from "axios";
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import './ApartmentModel.css';
@@ -15,13 +14,16 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import CommentsModal from "./CommentsModal";
 import RentApartmentModal from "./rentApartment/RentApartmentModal";
+import api from "../../services/api";
 
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 600,
+    // width: 600,
+    // height: 600,
+    // overflow: 'scroll',
     bgcolor: '#39445a',
     border: '2px solid #000',
     boxShadow: 24,
@@ -33,13 +35,39 @@ const style = {
 
 function ChildModal({id}) {
     const [open, setOpen] = React.useState(false);
+    const [comments, setComments] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [noComments, setNoComments] = useState(false);
+    const [manyComments, setManyComments] = useState(false);
+
+    const filter = comments.filter(comments => comments.apartment === id);
+    const photo = filter.map(y => y['photo_comments_apartment']);
+
     const handleOpen = () => {
         setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
     };
+    useEffect(async () => {
+        setLoading(true);
+        const {data} = await api.auth.getCommentsApartment();
+        setComments(data.data);
+        setLoading(false);
+    },[])
 
+    useEffect(() => {
+        if (filter.length !== 0){
+            setNoComments(true);
+        }
+        if (filter.length > 4){
+            setManyComments(true);
+        }
+    },[filter])
+
+    if (loading){
+        return <div>Loading...</div>
+    }
     return (
         <React.Fragment>
             <Button onClick={handleOpen} variant="contained" color="success">Коментарі</Button>
@@ -53,7 +81,7 @@ function ChildModal({id}) {
             >
                 <Box sx={{ ...style, width: 600 }}>
                     {/*<h2 id="child-modal-title">Comments</h2>*/}
-                    <CommentsApartment key={id+4} id={id}/>
+                    <CommentsApartment key={id+4} id={id} filter={filter} noComments={noComments}/>
                     <CommentsModal key={id+5} id={id}/>
                     <Button onClick={handleClose} variant="contained" color="success">Закрити коментарі</Button>
                 </Box>
@@ -88,19 +116,9 @@ export default function ApartmentModel({children, id, photo, isAuthenticated}) {
     const handleClose = () => {
         setOpen(false)
     };
-    const getApartment = async () => {
-        const { data } = await axios.get(
-            `http://localhost:8000/api/v1/apartments/${id}`, {
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: "Bearer" + localStorage.getItem("access")
-                }
-            });
+    useEffect(async() => {
+        const { data } = await api.auth.getApartment(id);
         setApartment(data);
-    };
-
-    useEffect(() => {
-        getApartment();
         // eslint-disable-next-line
     }, [id]);
     return (

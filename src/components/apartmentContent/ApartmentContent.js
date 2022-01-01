@@ -11,12 +11,15 @@ const ApartmentContent = ({id, country, city, region, price, numbers_people, pho
     const  [comments, setComments] = useState([]);
     const [noRating, setNoRating] = useState(false);
 
+    const filter = comments.filter(comments => comments.apartment === id).map(x=> x["rating"]);
+    const rating = count(filter);
+
     useEffect(() => {
         commentsApartmentServices().then(value => setComments(value.data));
     },[])
 
-    const filter = comments.filter(comments => comments.apartment === id).map(x=> x["rating"]);
-    const rating = count(filter);
+
+
     useEffect(() => {
         if(filter){
             setNoRating(true);

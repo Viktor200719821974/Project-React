@@ -30,7 +30,7 @@ export default function AuthModal({isAuthenticated}) {
             >
                 <Box sx={style}>
                     <div >
-                        <h2>Вітаємо, Ви авторизувались!!! </h2>
+                        <h2>Ви авторизувались!!! </h2>
                     </div>
                     <Button
                         component={Link} to="/"

@@ -37,6 +37,8 @@ const AdminCommentsUserModal = ({id, children}) => {
     const [comment, setComment] = useState([]);
     const [changeComment, setChangeComment] = useState('');
     const [error, setError] = useState();
+    const [deleteStatus, setDeleteStatus] = useState(false);
+    const [changeStatus, setChangeStatus] = useState(false);
 
     const handleOpen = () => {
         setOpen(true)
@@ -48,6 +50,9 @@ const AdminCommentsUserModal = ({id, children}) => {
         e.preventDefault();
         try{
             const res = await api.auth.deleteCommentUser(id);
+            if (res.status === 204){
+                setDeleteStatus(true);
+            }
         }catch (e) {
             if (e.response.statusText){
                 setError(e.response.statusText);
@@ -55,11 +60,17 @@ const AdminCommentsUserModal = ({id, children}) => {
         }
     }
     const handleChangeComment = async (e) => {
+        const obj = {'comments':changeComment};
         e.preventDefault();
         try{
-            const res = await api.auth.changeCommentUser(id, changeComment);
+            const res = await api.auth.changeCommentUser(id, obj);
+                if (res.status === 200){
+                    setChangeStatus(true);
+                }
         }catch (e) {
-            console.log(e.message);
+            if (e.message){
+                setError(e.message);
+            }
         }
     }
     useEffect(async () => {
@@ -94,8 +105,14 @@ const AdminCommentsUserModal = ({id, children}) => {
                             {error && <Alert severity="error">
                                 <strong>{error}</strong>
                             </Alert>}
+                            {changeStatus && <Alert severity="success">
+                                <strong>Comment change</strong>
+                            </Alert>}
+                            {deleteStatus && <Alert severity="success">
+                                <strong>No content</strong>
+                            </Alert>}
                             <FormChangeComment setChangeComment={setChangeComment} key={id + 65}
-                                               comment={comment.comments} changeComment={changeComment}/>
+                                               comment={comment.comments} changeComment={changeComment} id={comment.id}/>
                             <div>
                                 <Button onClick={handleChangeComment} variant="outlined" color="success"
                                         startIcon={<ChangeCircleIcon/> }
