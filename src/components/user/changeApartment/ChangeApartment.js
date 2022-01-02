@@ -7,6 +7,7 @@ import FormControl from "@mui/material/FormControl";
 import Box from "@mui/material/Box";
 import {InputLabel, Select} from "@material-ui/core";
 import MenuItem from "@mui/material/MenuItem";
+import api from "../../../services/api";
 
 function ChangeApartment({id}) {
     const [key, setKey] = useState('');
@@ -14,21 +15,22 @@ function ChangeApartment({id}) {
     const [errorValue, setErrorValue] = useState();
     const [noError, setNoError] = useState();
     const [apartment, setApartment] = useState(false);
-
+    console.log(key, value);
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const newApartment = await changeApartment ({
-            key,
-            value,
-            id
-        });
-        console.log(newApartment);
+        let obj = {[key]: value};
         try{
+            const {data} = await api.auth.changeApartment(id, obj);
+            if (data['id']){
+                     setApartment(true);
+            }
+            console.log(data);
+        }catch (e) {
+            if (e.response.status === 400){
+                setNoError(e.response.data.country);
+            }
 
-        }catch (e){
-            setNoError(e.message);
-        }if (newApartment['id']){
-            setApartment(true);
+            console.log(e.response.data);
         }
     }
     const handleChange = (event) => {
@@ -71,7 +73,7 @@ function ChangeApartment({id}) {
                         <input className={!apartment && errorValue ?'error_input' : 'input'} name={'value'}
                                type="text" onChange={e =>
                             setValue(e.target.value)} placeholder={'Впишіть нове значення'}/>
-                        {noError && noError}
+                        {/*{noError && noError}*/}
                     </label>
                 </fieldset>
                 <button className={'btn btn-default'} name={'submit'} type="submit">Відправити</button>

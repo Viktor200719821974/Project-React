@@ -20,6 +20,7 @@ const endpoints = {
     deleteCommentUser: (id) => axios.delete(`/comments_user/${id}`),
     changeCommentApartment: (id, obj) => axios.patch(`/comments_apartment/${id}`, obj),
     changeCommentUser: (id, obj) => axios.patch(`/comments_user/${id}`, obj),
+    changeApartment: (id, obj) => axios.patch(`/apartments/${id}`, obj),
 };
 
 export default endpoints;

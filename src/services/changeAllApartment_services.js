@@ -15,13 +15,12 @@ async function changeAllApartment({country, city, region, numbers_squares, numbe
 }
 
 async function changeApartment({key, value, id}) {
-
-    if (key === 'numbers_people' || 'numbers_rooms' || 'numbers_squares') {
-        value = Number(value);
-
-    }
+    // if (key === 'numbers_people' || 'numbers_rooms' || 'numbers_squares') {
+    //     value = Number(value);
+    // }else{
+    //     return value;
+    // }
     let list = {[key]: value}
-
     return fetch(url + `/${id}`, {
         method: 'PATCH',
         headers: {
