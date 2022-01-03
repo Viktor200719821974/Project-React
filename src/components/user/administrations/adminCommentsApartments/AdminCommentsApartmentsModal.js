@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AdminCommentsApartmentsModal = ({id, children}) => {
+const AdminCommentsApartmentsModal = ({id, children, statusResponse, setStatusResponse}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [comment, setComment] = useState([]);
@@ -52,10 +52,11 @@ const AdminCommentsApartmentsModal = ({id, children}) => {
             const res = await api.auth.deleteCommentApartment(id);
             if (res.status === 204){
                 setDeleteStatus(true);
+                setStatusResponse(true);
             }
         }catch (e) {
             if (e.response.status){
-                setError(e.response.status);
+                setError(e.response.statusText);
             }
         }
     }
@@ -66,6 +67,7 @@ const AdminCommentsApartmentsModal = ({id, children}) => {
             const res = await api.auth.changeCommentApartment(id, obj);
             if (res.status === 200){
                 setChangeStatus(true);
+                setStatusResponse(true);
             }
         }catch (e) {
             if (e.message){
@@ -75,13 +77,16 @@ const AdminCommentsApartmentsModal = ({id, children}) => {
     }
     useEffect(async () => {
         try{
-            const {data} = await api.auth.getCommentApartments(id);
-                    setComment(data);
-                    // console.log(data);
+            const res = await api.auth.getCommentApartments(id);
+                    setComment(res.data);
         }catch (e){
             console.log(e.message);
         }
-    },[])
+        if (statusResponse){
+            setStatusResponse(false);
+        }
+    },[statusResponse])
+
     return (
         <div>
             <div className={'media'} onClick={handleOpen}>

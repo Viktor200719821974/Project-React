@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import '../../user/User.css';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import api from "../../../services/api";
 import {choiceDate} from "../../../services/choiceDate";
 import {tokenRefresh} from "../../../services/login_services";
 
@@ -18,40 +19,53 @@ function RentApartment({id}) {
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
+        let obj = {date_arrival, date_departure, number_peoples};
         e.preventDefault();
         setLoading(true);
-        const rentApartment = await choiceDate ({
-            date_arrival,
-            date_departure,
-            number_peoples,
-            id
-        });
         try{
-            if (rentApartment.code === 'token_not_valid'){
-               const token = tokenRefresh();
-            }
-            if (rentApartment){
-                setErrorDateArrival(rentApartment.date_arrival);
-            }
-            if (rentApartment.date_departure){
-                setErrorDateDeparture(rentApartment.date_departure);
-            }
-            if (rentApartment.number_peoples){
-                setNumberPeoples(rentApartment.number_peoples);
-            }
-            if (typeof (rentApartment) === "string"){
-                setErrorDate(rentApartment);
-            }
+            const res = await api.auth.rentApartment(id, obj);
+            if (res.status === 201){
 
-        }catch (e){
-            setNoError(e.message);
-        }if (rentApartment['id']) {
-            setApartment(true);
+            }
+            console.log(res.status);
+            console.log(res);
+        }catch (e) {
+            console.log(e.message);
+            console.log(e.response.data);
+            setNoError(e.response.data);
         }
+        // const rentApartment = await choiceDate ({
+        //     date_arrival,
+        //     date_departure,
+        //     number_peoples,
+        //     id
+        // });
+        // try{
+        //     if (rentApartment.code === 'token_not_valid'){
+        //        const token = tokenRefresh();
+        //     }
+        //     if (rentApartment){
+        //         setErrorDateArrival(rentApartment.date_arrival);
+        //     }
+        //     if (rentApartment.date_departure){
+        //         setErrorDateDeparture(rentApartment.date_departure);
+        //     }
+        //     if (rentApartment.number_peoples){
+        //         setNumberPeoples(rentApartment.number_peoples);
+        //     }
+        //     if (typeof (rentApartment) === "string"){
+        //         setErrorDate(rentApartment);
+        //     }
+        //
+        // }catch (e){
+        //     setNoError(e.message);
+        // }if (rentApartment['id']) {
+        //     setApartment(true);
+        // }
         setLoading(false);
     }
     if (loading){
-        return <Alert severity="success">Ми відправили Ваше прохання зняти житло, відповідь отримаєте
+        return <Alert severity="success" sx={{backgroundColor: '#39445a', color: 'white'}}>Ми відправили Ваше прохання зняти житло, відповідь отримаєте
             на електронну почту</Alert>
     }
     return (

@@ -2,10 +2,12 @@ import React from 'react';
 import "../../User.css";
 import AdminCommentsApartmentsModal from "./AdminCommentsApartmentsModal";
 
-const AdminCommentsApartmentsContent = ({id, apartment, comments, name_user, photo_comments, rating}) => {
+const AdminCommentsApartmentsContent = ({id, apartment, comments, name_user, photo_comments, rating, statusResponse,
+                                            setStatusResponse}) => {
     return (
 
-         <AdminCommentsApartmentsModal key={id + 45} id={id}>
+         <AdminCommentsApartmentsModal key={id + 45} id={id} statusResponse={statusResponse}
+                                       setStatusResponse={setStatusResponse}>
             <b className={'title'}>Name user: {name_user}</b>
             <span className="subTitle"><strong>Comments:</strong> {comments} </span>
             <span className="subTitle"><strong>Rating:</strong> {rating}</span>

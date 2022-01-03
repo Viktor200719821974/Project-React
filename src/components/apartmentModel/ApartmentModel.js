@@ -21,9 +21,10 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    // width: 600,
-    // height: 600,
-    // overflow: 'scroll',
+    width: 600,
+    height: 600,
+    overflow: 'scroll',
+    overflowX: 'hidden',
     bgcolor: '#39445a',
     border: '2px solid #000',
     boxShadow: 24,
@@ -34,14 +35,13 @@ const style = {
 };
 
 function ChildModal({id}) {
+
     const [open, setOpen] = React.useState(false);
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(false);
     const [noComments, setNoComments] = useState(false);
     const [manyComments, setManyComments] = useState(false);
-
-    const filter = comments.filter(comments => comments.apartment === id);
-    const photo = filter.map(y => y['photo_comments_apartment']);
+    const [statusResponse, setStatusResponse] = useState(false);
 
     const handleOpen = () => {
         setOpen(true);
@@ -51,20 +51,17 @@ function ChildModal({id}) {
     };
     useEffect(async () => {
         setLoading(true);
-        const {data} = await api.auth.getCommentsApartment();
-        setComments(data.data);
+        try{
+            const {data} = await api.auth.getApartment(id);
+            setComments(data.comments_apartment);
+        }catch (e) {
+            console.log(e.message);
+        }
         setLoading(false);
-    },[])
-
-    useEffect(() => {
-        if (filter.length !== 0){
-            setNoComments(true);
-        }
-        if (filter.length > 4){
-            setManyComments(true);
-        }
-    },[filter])
-
+    },[statusResponse, noComments, manyComments])
+    // const filter = comments.filter(comments => comments.apartment === id);
+    // const photo = filter.map(y => y['photo_comments_apartment']);
+    // console.log(filter);
     if (loading){
         return <div>Loading...</div>
     }
@@ -81,8 +78,10 @@ function ChildModal({id}) {
             >
                 <Box sx={{ ...style, width: 600 }}>
                     {/*<h2 id="child-modal-title">Comments</h2>*/}
-                    <CommentsApartment key={id+4} id={id} filter={filter} noComments={noComments}/>
-                    <CommentsModal key={id+5} id={id}/>
+                    <CommentsApartment key={id+4} filter={comments} noComments={noComments}/>
+                    <CommentsModal key={id+5} id={id} setStatusResponse={setStatusResponse}
+                                   statusResponse={statusResponse} comments={comments} noComments={noComments}
+                                   setNoComments={setNoComments} setManyComments={setManyComments} manyComments={manyComments}/>
                     <Button onClick={handleClose} variant="contained" color="success">Закрити коментарі</Button>
                 </Box>
             </Modal>
@@ -105,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
     },
 }));
-export default function ApartmentModel({children, id, photo, isAuthenticated}) {
+export default function ApartmentModel({children, id, photo, isAuthenticated, rating}) {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [apartment, setApartment] = useState([]);
@@ -166,7 +165,7 @@ export default function ApartmentModel({children, id, photo, isAuthenticated}) {
                                         {isAuthenticated && <RentApartmentModal key={apartment.id + 1100} id={apartment.id}/>}
                                     </div>
                                     </div>
-                            <StarsRating id={apartment.id} key={apartment.id + 7}/>
+                            <StarsRating id={apartment.id} key={apartment.id + 7} rating={rating}/>
                                    <Carousel id={id} key={id+2}/>
                                     <ChildModal key={id+1} id={id}/>
                                 </div>

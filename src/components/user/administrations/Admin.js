@@ -22,11 +22,12 @@ const Admin = () => {
     const [loaded, setLoaded] = useState(false);
     const [loadedCommentsUsers, setLoadedCommentsUsers] = useState(false);
     const [loadedCommentsApartments, setLoadedCommentsApartments] = useState(false);
+    const [statusResponse, setStatusResponse] = useState(false);
 
     const handleUsers = async(e) => {
+        setIsLoading(true);
         e.preventDefault();
         try {
-            setIsLoading(true);
             const res = await api.auth.getUsers(page);
             setUsers(res.data.data);
             setNumOfPages(res.data.total_pages);
@@ -43,12 +44,12 @@ const Admin = () => {
             const res = await api.auth.getUsers(page);
             setUsers(res.data.data)
         }
-    },[page, users])
+    },[page, statusResponse])
 
     const handleCommentsApartment = async(e) => {
+        setIsLoading(true);
         e.preventDefault();
         try {
-            setIsLoading(true);
             const res = await api.auth.getCommentsApartments(page);
             setCommentsApartments(res.data.data);
             setNumOfPages(res.data.total_pages);
@@ -65,12 +66,12 @@ const Admin = () => {
             const res = await api.auth.getCommentsApartments(page);
             setCommentsApartments(res.data.data)
         }
-    },[page, commentsApartments])
+    },[page, statusResponse])
 
     const handleCommentsUsers = async(e) => {
+        setIsLoading(true);
         e.preventDefault();
         try {
-            setIsLoading(true);
             const res = await api.auth.getCommentsUsers(page);
             setCommentsUsers(res.data.data);
             setNumOfPages(res.data.total_pages);
@@ -87,9 +88,9 @@ const Admin = () => {
             const res = await api.auth.getCommentsUsers(page);
             setCommentsUsers(res.data.data)
         }
-    },[page])
+    },[page, statusResponse])
 
-    const handleOpen = () => {
+    const handleClosed = () => {
         setLoaded(false);
         setLoadedCommentsApartments(false);
         setLoadedCommentsUsers(false);
@@ -117,7 +118,7 @@ const Admin = () => {
                         sx={{fontWeight:800, float: 'right', margin: '10px 0 0 10px'}}>Get comments Users </Button>
             </div>
             <div>
-                <Button onClick={handleOpen} variant="outlined" color="error" startIcon={<CloseIcon /> }
+                <Button onClick={handleClosed} variant="outlined" color="error" startIcon={<CloseIcon /> }
                         sx={{fontWeight:800, float: 'right', margin: '10px 0 0 10px'}}>Close </Button>
             </div>
         </div>
@@ -132,6 +133,8 @@ const Admin = () => {
                     is_active={c.is_active}
                     is_staff={c.is_staff}
                     is_superuser={c.is_superuser}
+                    statusResponse={statusResponse}
+                    setStatusResponse={setStatusResponse}
                     />
                )}
                 {commentsApartments && commentsApartments.map((c, index) => <AdminCommentsApartmentsContent
@@ -142,6 +145,8 @@ const Admin = () => {
                     name_user={c.name_user}
                     photo_comments={c.photo_comments}
                     rating={c.rating}
+                    statusResponse={statusResponse}
+                    setStatusResponse={setStatusResponse}
                     />
                 )}
                 {commentsUsers && commentsUsers.map((c, index) => <AdminCommentsUserContent
@@ -152,6 +157,8 @@ const Admin = () => {
                         name_user={c.user_name}
                         photo_comments={c.photo_comments_user}
                         rating={c.rating}
+                        statusResponse={statusResponse}
+                        setStatusResponse={setStatusResponse}
                     />
                 )}
             </div>

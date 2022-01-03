@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AdminCommentsUserModal = ({id, children}) => {
+const AdminCommentsUserModal = ({id, children, statusResponse, setStatusResponse}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [comment, setComment] = useState([]);
@@ -52,6 +52,7 @@ const AdminCommentsUserModal = ({id, children}) => {
             const res = await api.auth.deleteCommentUser(id);
             if (res.status === 204){
                 setDeleteStatus(true);
+                setStatusResponse(true);
             }
         }catch (e) {
             if (e.response.statusText){
@@ -66,6 +67,7 @@ const AdminCommentsUserModal = ({id, children}) => {
             const res = await api.auth.changeCommentUser(id, obj);
                 if (res.status === 200){
                     setChangeStatus(true);
+                    setStatusResponse(true);
                 }
         }catch (e) {
             if (e.message){
@@ -81,7 +83,10 @@ const AdminCommentsUserModal = ({id, children}) => {
         }catch (e){
             console.log(e.message);
         }
-    },[])
+        if (statusResponse){
+            setStatusResponse(false);
+        }
+    },[statusResponse])
     return (
         <div>
             <div className={'media'} onClick={handleOpen}>

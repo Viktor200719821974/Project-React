@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -20,7 +20,7 @@ const style = {
     pb: 3,
 };
 
-function ChangeApartmentModal({id}) {
+function ChangeApartmentModal({id, setStatusResponse, statusResponse}) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -28,6 +28,11 @@ function ChangeApartmentModal({id}) {
     const handleClose = () => {
         setOpen(false);
     };
+    useEffect(() => {
+        if (statusResponse){
+            setStatusResponse(false);
+        }
+    },[])
     return (
         <React.Fragment>
             <Button onClick={handleOpen} variant="outlined" color="success" startIcon={<DriveFileRenameOutlineIcon /> }>
@@ -42,7 +47,7 @@ function ChangeApartmentModal({id}) {
                 disableScrollLock={true}
             >
                 <Box sx={{ ...style, width: 600 }}>
-                    <ChangeApartment id={id} key={id + 500}/>
+                    <ChangeApartment id={id} key={id + 500} setStatusResponse={setStatusResponse}/>
                     <Button onClick={handleClose} variant="contained" color="success">Закрити</Button>
                 </Box>
             </Modal>

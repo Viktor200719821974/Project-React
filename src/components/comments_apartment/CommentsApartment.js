@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import './CommentsApartment.css';
 
 
-function CommentsApartment({id, filter, noComments}) {
+function CommentsApartment({filter, noComments}) {
     const [noPhoto, setNoPhoto] = useState(false);
     return (
         <div>
-            {noComments ? (<h3>Comments:</h3>) : (<h3>No Comments</h3>)}
+            {!noComments ? (<h3>No Comments</h3>) : (<h3>Comments:</h3>)}
             {
                 filter && filter.map((c, index) =>
                 <div className={'div_comments_apartment'} key={index}>

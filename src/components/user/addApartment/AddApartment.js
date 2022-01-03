@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {addApartment} from "../../../services/addApartment";
 import '../User.css';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import api from "../../../services/api";
 
-function AddApartment() {
+function AddApartment({setStatusResponse}) {
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
     const [region, setRegion] = useState('');
@@ -21,46 +21,55 @@ function AddApartment() {
     const [errorPrice, setErrorPrice] = useState();
     const [noError, setNoError] = useState();
     const [apartment, setApartment] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const newApartment = await addApartment ({
-            country,
-            city,
-            region,
-            numbers_squares,
-            numbers_people,
-            numbers_rooms,
-            price
-        });
-        try{
-            if (newApartment.country){
-                setErrorCountry(newApartment.country);
-            }
-            if (newApartment.city){
-                setErrorCity(newApartment.city);
-            }
-            if (newApartment.region){
-                setErrorRegion(newApartment.region);
-            }
-            if (newApartment.numbers_squares){
-                setErrorNumbersSquares(newApartment.numbers_squares);
-            }
-            if (newApartment.numbers_people){
-                setErrorNumbersPeople(newApartment.numbers_people);
-            }
-            if (newApartment.numbers_rooms){
-                setErrorNumbersRooms(newApartment.numbers_rooms);
-            }
-            if (newApartment.price){
-                setErrorPrice(newApartment.price);
-            }
-        }catch (e){
-            setNoError(e.message);
-        }if (newApartment['id']){
-            setApartment(true);
-        }
+    let obj = {
+        country,
+        city,
+        region,
+        numbers_squares,
+        numbers_people,
+        numbers_rooms,
+        price
     }
+    const handleSubmit = async (e) => {
+        // setLoading(true);
+        e.preventDefault();
+        try{
+        const res = await api.auth.addApartment(obj);
+        if (res.status === 201){
+            setApartment(true);
+            setStatusResponse(true);
+        }
+        }catch (e) {
+            if (e.response.data.country){
+                setErrorCountry(e.response.data.country);
+            }
+            if (e.response.data.city){
+                setErrorCity(e.response.data.city);
+            }
+            if (e.response.data.region){
+                setErrorRegion(e.response.data.region);
+            }
+            if (e.response.data.numbers_squares){
+                setErrorNumbersSquares(e.response.data.numbers_squares);
+            }
+            if (e.response.data.numbers_people){
+                setErrorNumbersPeople(e.response.data.numbers_people);
+            }
+            if (e.response.data.numbers_rooms){
+                setErrorNumbersRooms(e.response.data.numbers_rooms);
+            }
+            if (e.response.data.price){
+                setErrorPrice(e.response.data.price);
+            }
+            console.log(e.message);
+        }
+        // setLoading(false);
+    }
+    // if (loading){
+    //     return <div>Loading...</div>
+    // }
     return (
         <div>
             {apartment && <Alert severity="success">

@@ -3,33 +3,28 @@ import ApartmentModel from '../apartmentModel/ApartmentModel';
 import './ApartmentContent.css';
 import noPicture from './image/No_Picture.jpg';
 import {useEffect, useState} from "react";
-import {commentsApartmentServices} from "../../services/commentsApartment_services";
 import {count} from "../../hook/count";
+import api from "../../services/api";
 
 const ApartmentContent = ({id, country, city, region, price, numbers_people, photo, isAuthenticated}) => {
 
     const  [comments, setComments] = useState([]);
-    const [noRating, setNoRating] = useState(false);
-
-    const filter = comments.filter(comments => comments.apartment === id).map(x=> x["rating"]);
+    const filter = comments.map(comments => comments.rating);
     const rating = count(filter);
 
-    useEffect(() => {
-        commentsApartmentServices().then(value => setComments(value.data));
-    },[])
-
-
-
-    useEffect(() => {
-        if(filter){
-            setNoRating(true);
+    useEffect(async() => {
+        try{
+            const {data} = await api.auth.getApartment(id);
+            setComments(data.comments_apartment);
+        }catch (e) {
+            console.log(e.message);
         }
     },[])
     return (
         <>
-            <ApartmentModel  id={id} key={id} photo={photo} isAuthenticated={isAuthenticated}>
+            <ApartmentModel  id={id} key={id} photo={photo} isAuthenticated={isAuthenticated} rating={rating}>
 
-                {noRating && <Badge badgeContent={rating} color={rating > 6 ? "primary" : "secondary"}/>}
+                <Badge badgeContent={rating} color={rating > 6 ? "primary" : "secondary"}/>
                 <img className={'poster'} src={photo[0] || noPicture}
                 alt={'photo_rooms'}/>
                 <b className={'title'}>Country: {country}</b>

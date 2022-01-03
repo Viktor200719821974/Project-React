@@ -1,8 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {getUser} from "../../services/user_service";
-import {FETCH_USER} from "../redux/actions/actionTypes";
-import {tokenRefresh} from "../../services/login_services";
 import UserApartmentContent from "./UserApartmentContent";
 import UserRating from "./UserRating";
 import AddApartmentModal from "./addApartment/AddApartmentModal";
@@ -14,14 +10,13 @@ import api from "../../services/api";
 import jwt_decode from "jwt-decode";
 
 function User() {
-    // let {user} = useSelector(state => state);
-    // let dispatch =  useDispatch();
     const [user, setUser] = useState({});
     const [isStaff, setIsStaff] = useState(false);
     const [isSuperUser, setIsSuperUser] = useState(false);
     const [apartment, setApartment] = useState([]);
     const [comments, setComments] = useState([]);
     const [profile, setProfile] = useState([]);
+    const [statusResponse, setStatusResponse] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const tokenDecoded = () =>{
@@ -46,26 +41,8 @@ function User() {
     }catch (e) {
             console.log(e.message);
         }
-        // getUser().then(value =>  {
-        //     if (value.code === 'token_not_valid'){
-        //         const refresh = tokenRefresh();
-        //         console.log(refresh);
-        //     }
-        //
-        //
-        //     if (value.apartment){
-        //         setApartment(value.apartment);
-        //     }
-        //     if (value.comments_user){
-        //         setComments(value.comments_user);
-        //     }
-        //     if (value.profile){
-        //         setProfile(value.profile);
-        //     }
-        //     dispatch({type: FETCH_USER, payload: value});
-        // });
         setLoading(false);
-    },[])
+    },[statusResponse])
 
     if (loading){
         return <div>Loading...</div>
@@ -87,13 +64,16 @@ function User() {
                                     region={c.region}
                                     price={c.price}
                                     numbers_people={c.numbers_people}
+                                    setStatusResponse={setStatusResponse}
+                                    statusResponse={statusResponse}
                                 />)}
                             </div>
             {user && (<div key={user.id + 1000} className={'div_add_modal'}>
                 <div className={'user_rating'}>
                 <UserRating comments={comments} key={user.id + 800} profile={profile}/>
             </div>
-                <AddApartmentModal key={user.id + 700} id={user.id}/>
+                <AddApartmentModal key={user.id + 700} id={user.id} statusResponse={statusResponse}
+                                   setStatusResponse={setStatusResponse}/>
             </div>)}
 
             <div>

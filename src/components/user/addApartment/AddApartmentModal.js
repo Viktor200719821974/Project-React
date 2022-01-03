@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -19,7 +19,7 @@ const style = {
     pb: 3,
 };
 
-function AddApartmentModal({id}) {
+function AddApartmentModal({id, setStatusResponse, statusResponse}) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -27,6 +27,11 @@ function AddApartmentModal({id}) {
     const handleClose = () => {
         setOpen(false);
     };
+    useEffect(() => {
+        if (statusResponse){
+            setStatusResponse(false);
+        }
+    },[])
     return (
         <React.Fragment>
             {<Button onClick={handleOpen} variant="contained" color="success">Додати квартиру</Button>}
@@ -39,7 +44,7 @@ function AddApartmentModal({id}) {
                 disableScrollLock={true}
             >
                 <Box sx={{ ...style, width: 600 }}>
-                    <AddApartment key={id + 122} />
+                    <AddApartment key={id + 122} statusResponse={statusResponse} setStatusResponse={setStatusResponse} />
                     <Button onClick={handleClose} variant="contained" color="success">Закрити</Button>
                 </Box>
             </Modal>

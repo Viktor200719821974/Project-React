@@ -52,7 +52,11 @@ function Apartments() {
         if (accessToken){
             setIsAuthenticated(true);
         }
-    }, [setIsAuthenticated])
+        if (countryValue || cityValue || regionValue || numbersPeopleValue || numbersRoomsValue || numbersSquaresValue ||
+            priceValue){
+            setFilterBlock(true);
+        }
+    }, [setIsAuthenticated, filtersBlock])
 
     useEffect(()=> {
         setLoading(true);
@@ -71,12 +75,6 @@ function Apartments() {
     },[page, country, countryValue, city, cityValue, region, regionValue, numbers_people, numbersPeopleValue,
         numbers_rooms, numbersRoomsValue, numbers_squares, numbersSquaresValue, price, priceValue
     ])
-    useEffect(() => {
-        if (countryValue || cityValue || regionValue || numbersPeopleValue || numbersRoomsValue || numbersSquaresValue ||
-            priceValue){
-            setFilterBlock(true);
-        }
-    },[filtersBlock])
     if(apartments.length === 0){
         return filtersBlock && <div>
             <Button onClick={delFilters} variant="outlined" color="success" startIcon={<ClearIcon/> }
@@ -84,7 +82,7 @@ function Apartments() {
                 Очистити фільтр
             </Button>
             <div className={'div_notFound'}>Not found</div>
-            </div>
+        </div>
     }
     if (loading){
         return <div>Loading...</div>

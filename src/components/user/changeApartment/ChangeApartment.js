@@ -1,36 +1,52 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import '../User.css';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import {changeApartment} from "../../../services/changeAllApartment_services";
 import FormControl from "@mui/material/FormControl";
 import Box from "@mui/material/Box";
 import {InputLabel, Select} from "@material-ui/core";
 import MenuItem from "@mui/material/MenuItem";
 import api from "../../../services/api";
 
-function ChangeApartment({id}) {
+function ChangeApartment({id, setStatusResponse}) {
     const [key, setKey] = useState('');
     const [value, setValue] = useState('');
     const [errorValue, setErrorValue] = useState();
     const [noError, setNoError] = useState();
     const [apartment, setApartment] = useState(false);
-    console.log(key, value);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         let obj = {[key]: value};
         try{
-            const {data} = await api.auth.changeApartment(id, obj);
-            if (data['id']){
-                     setApartment(true);
+            const res = await api.auth.changeApartment(id, obj);
+            if(res.status === 200){
+                setApartment(true);
+                setStatusResponse(true);
             }
-            console.log(data);
         }catch (e) {
-            if (e.response.status === 400){
-                setNoError(e.response.data.country);
-            }
-
-            console.log(e.response.data);
+                if (e.response.data.country) {
+                    setErrorValue(e.response.data.country);
+                }
+                if (e.response.data.city) {
+                    setErrorValue(e.response.data.city);
+                }
+                if (e.response.data.region) {
+                    setErrorValue(e.response.data.region);
+                }
+                if (e.response.data.numbers_squares) {
+                    setErrorValue(e.response.data.numbers_squares);
+                }
+                if (e.response.data.numbers_people) {
+                    setErrorValue(e.response.data.numbers_people);
+                }
+                if (e.response.data.numbers_rooms) {
+                    setErrorValue(e.response.data.numbers_rooms);
+                }
+                if (e.response.data.price) {
+                    setErrorValue(e.response.data.price);
+                }
+            setNoError(e.response.statusText);
         }
     }
     const handleChange = (event) => {
@@ -69,11 +85,11 @@ function ChangeApartment({id}) {
                         </FormControl>
                     </Box>
                     <label htmlFor={'На що змінити'} className={!apartment && errorValue ? 'error_label': 'label'}>
-                        Нащо змінити
+                        Нащо змінити {errorValue && errorValue}
                         <input className={!apartment && errorValue ?'error_input' : 'input'} name={'value'}
                                type="text" onChange={e =>
                             setValue(e.target.value)} placeholder={'Впишіть нове значення'}/>
-                        {/*{noError && noError}*/}
+
                     </label>
                 </fieldset>
                 <button className={'btn btn-default'} name={'submit'} type="submit">Відправити</button>

@@ -8,17 +8,21 @@ import api from "../../../../services/api";
 import Button from "@mui/material/Button";
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        boxSizing: "border-box",
+        // alignItems: "center",
+        // justifyContent: "center",
+        margin: "60px auto auto auto",
+        width: 800,
     },
     paper: {
         width: "90%",
-        height: "80%",
-        padding: "20px",
+        height: "85%",
+        padding: "10px 30px",
         backgroundColor: "#39445a",
         border: "1px solid #282c34",
         borderRadius: 10,
@@ -26,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AdminBlockedModal = ({id, children, statusResponse, setStatusResponse}) => {
+const UserManagerModal = ({id, children, statusResponse, setStatusResponse}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [user, setUser] = useState([]);
@@ -38,10 +42,10 @@ const AdminBlockedModal = ({id, children, statusResponse, setStatusResponse}) =>
     const handleClose = () => {
         setOpen(false)
     };
-    const handleBlocked = async (e) => {
+    const handleUserNoManager = async (e) => {
         e.preventDefault();
         try{
-            const res = await api.auth.getUserBlocked(id);
+            const res = await api.auth.changeUserNoManager(id);
             if (res.status === 200){
                 setStatusResponse(true);
             }
@@ -49,31 +53,30 @@ const AdminBlockedModal = ({id, children, statusResponse, setStatusResponse}) =>
             console.log(e.message);
         }
     }
-    const handleActivate = async (e) => {
+    const handleUserManager = async (e) => {
         e.preventDefault();
         try{
-        const res = await api.auth.getUserActivate(id);
-        if (res.status === 200){
-            setStatusResponse(true);
-        }
+            const res = await api.auth.changeUserManager(id);
+            if (res.status === 200){
+                setStatusResponse(true);
+            }
         }catch (e) {
             console.log(e.message);
         }
     }
     useEffect(async () => {
         try{
-        const res = await api.auth.getUser(id);
-        setUser(res.data);
-        setProfile(res.data.profile);
+            const res = await api.auth.getUser(id);
+            setUser(res.data);
+            setProfile(res.data.profile);
         }catch (e){
             console.log(e.message);
         }
-    },[statusResponse])
-    useEffect(() => {
         if (statusResponse){
             setStatusResponse(false);
         }
-    })
+    },[statusResponse])
+
     return (
         <div>
             <div className={'media'} onClick={handleOpen}>
@@ -106,12 +109,14 @@ const AdminBlockedModal = ({id, children, statusResponse, setStatusResponse}) =>
                                 <span className="AdminModal_subTitle">Surname: {profile.surname} </span>
                                 <span className="AdminModal_subTitle">Age: {profile.age} </span>
                                 <span className="AdminModal_subTitle">Phone: {profile.phone} </span>
-                                </div>  )}
+                            </div>  )}
                             <div>
-                                <Button onClick={handleBlocked} variant="outlined" color="success" startIcon={<BlockIcon/> }
-                                        sx={{fontWeight:800, margin: '60px 0 0 10px'}}>Blocked user </Button>
-                                <Button onClick={handleActivate} variant="outlined" color="success" startIcon={<CheckCircleOutlineIcon/> }
-                                        sx={{fontWeight:800, margin: '60px 0 0 10px'}}>Activate user </Button>
+                                <Button onClick={handleUserNoManager} variant="outlined" color="success"
+                                        startIcon={<BlockIcon/> }
+                                        sx={{fontWeight:800, margin: '60px 0 0 10px'}}>User not manager </Button>
+                                <Button onClick={handleUserManager} variant="outlined" color="success"
+                                        startIcon={<AdminPanelSettingsIcon/> }
+                                        sx={{fontWeight:800, margin: '60px 0 0 10px'}}>User Manager </Button>
                             </div>
                         </div>
                     )}
@@ -121,4 +126,4 @@ const AdminBlockedModal = ({id, children, statusResponse, setStatusResponse}) =>
     );
 };
 
-export default AdminBlockedModal;
+export default UserManagerModal;

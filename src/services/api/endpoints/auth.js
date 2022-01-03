@@ -21,6 +21,13 @@ const endpoints = {
     changeCommentApartment: (id, obj) => axios.patch(`/comments_apartment/${id}`, obj),
     changeCommentUser: (id, obj) => axios.patch(`/comments_user/${id}`, obj),
     changeApartment: (id, obj) => axios.patch(`/apartments/${id}`, obj),
+    deleteApartment: (id) => axios.delete(`/apartments/${id}`),
+    addApartment: (obj) => axios.post('/apartments', obj),
+    changeAllApartment: (id, obj) => axios.put(`/apartments/${id}`, obj),
+    changeUserNoManager: (id) => axios.put(`/users/${id}/manager`),
+    changeUserManager: (id) => axios.patch(`/users/${id}/manager`),
+    sendCommentsApartment: (id, obj) => axios.post(`/apartments/${id}/comment_apartment`, obj),
+    rentApartment: (id, obj) => axios.post(`/apartments/${id}/selected_date`, obj),
 };
 
 export default endpoints;

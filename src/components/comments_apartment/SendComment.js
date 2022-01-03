@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
-import {sendCommentApartment} from "../../services/sendCommentApartment_service";
+import React, {useEffect, useState} from 'react';
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import api from "../../services/api";
 
-function SendComment({id}) {
+function SendComment({id, setStatusResponse, statusResponse}) {
+
     const [comments, setComments] = useState('');
     const [rating, setRating] = useState();
     const [errorRating, setErrorRating] = useState();
@@ -12,26 +13,29 @@ function SendComment({id}) {
     const [commentsOk, setCommentsOk] = useState(false);
 
     const handleSubmit = async (e) => {
+        let obj = {comments, rating};
         e.preventDefault();
-        const sendComment = await sendCommentApartment ({
-           comments,
-            rating,
-            id
-        });
-            console.log(sendComment);
-        try{
-            if (sendComment.comments){
-                setErrorComments(sendComment.comments);
+        try {
+            const res = await api.auth.sendCommentsApartment(id, obj);
+            if (res.status === 201){
+                setCommentsOk(true);
+                setStatusResponse(true);
             }
-            if (sendComment.rating){
-                setErrorRating(sendComment.rating);
+        }catch (e) {
+            if (e.response.data.comments){
+                setErrorComments(e.response.data.comments);
             }
-        }catch (e){
+            if (e.response.data.rating){
+                setErrorRating(e.response.data.rating);
+            }
             setNoError(e.message);
-        }if (sendComment['apartment']){
-            setCommentsOk(true);
         }
     }
+    useEffect(() => {
+        if (statusResponse){
+            setStatusResponse(false);
+        }
+    },[])
     return (
         <div>
             {commentsOk && <Alert severity="success">

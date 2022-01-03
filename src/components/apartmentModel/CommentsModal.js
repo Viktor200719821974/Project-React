@@ -19,7 +19,8 @@ const style = {
     pb: 3,
 };
 
-function CommentsModal({id}) {
+function CommentsModal({id, setStatusResponse, statusResponse, setNoComments, noComments, comments, manyComments,
+                           setManyComments}) {
     const [open, setOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const handleOpen = () => {
@@ -31,6 +32,12 @@ function CommentsModal({id}) {
     useEffect(() =>{
         if (localStorage.getItem('access')){
             setIsAuthenticated(true);
+        }
+        if (comments.length !== 0){
+            setNoComments(true);
+        }
+        if (comments.length > 4){
+            setManyComments(true);
         }
     },[])
     return (
@@ -45,7 +52,7 @@ function CommentsModal({id}) {
                 disableScrollLock={true}
             >
                 <Box sx={{ ...style, width: 600 }}>
-                    <SendComment key={id+6} id={id}/>
+                    <SendComment key={id+6} id={id} setStatusResponse={setStatusResponse} statusResponse={statusResponse}/>
                     <Button onClick={handleClose} variant="contained" color="success">Закрити</Button>
                 </Box>
             </Modal>

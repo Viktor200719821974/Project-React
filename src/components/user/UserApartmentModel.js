@@ -3,7 +3,6 @@ import './User.css';
 import {makeStyles } from '@material-ui/styles';
 import {useState, useEffect} from "react";
 import Fade from '@mui/material/Fade';
-import axios from "axios";
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import '../apartmentModel/ApartmentModel.css';
@@ -17,8 +16,7 @@ import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ChangeAllApartmentModal from "./changeApartment/ChangeAllApartmentModal";
 import ChangeApartmentModal from "./changeApartment/ChangeApartmentModal";
-import {deleteApartment} from "../../services/deleteApartment_services";
-// import CommentsModal from "../apartmentModel/CommentsModal";
+import api from "../../services/api";
 
 const style = {
     position: 'absolute',
@@ -37,6 +35,7 @@ const style = {
 
 function ChildModal({id}) {
     const [open, setOpen] = React.useState(false);
+
     const handleOpen = () => {
         setOpen(true);
     };
@@ -56,12 +55,8 @@ function ChildModal({id}) {
                 aria-describedby="child-modal-description"
                 disableScrollLock={true}
             >
-
                 <Box sx={{ ...style, width: 600 }}>
-
-                    {/*<h2 id="child-modal-title">Comments</h2>*/}
                     <CommentsApartment key={id+4} id={id}/>
-                    {/*<CommentsModal key={id+5} id={id}/>*/}
                     <Button onClick={handleClose} variant="contained" color="success">Закрити коментарі</Button>
                 </Box>
             </Modal>
@@ -84,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
     },
 }));
-export default function UserApartmentModel({children, id, photo}) {
+export default function UserApartmentModel({children, id, photo, setStatusResponse, statusResponse}) {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [apartment, setApartment] = useState([]);
@@ -95,29 +90,35 @@ export default function UserApartmentModel({children, id, photo}) {
     const handleClose = () => {
         setOpen(false)
     };
-    const getApartment = async () => {
-        const { data } = await axios.get(
-            `http://localhost:8000/api/v1/apartments/${id}`, {
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: "Bearer" + localStorage.getItem("access")
-                }
-            });
-        setApartment(data);
-    };
+    useEffect(async() => {
+        try{
+        const res = await api.auth.getApartment(id);
+        setApartment(res.data);
+        }catch (e) {
+            console.log(e.message);
+        }
+        //eslint-disable-next-line
+    }, []);
 
-    useEffect(() => {
-        getApartment();
-        // eslint-disable-next-line
-    }, [id]);
-
-    const delApartment = (e) => {
+    const delApartment = async (e) => {
         e.preventDefault();
-        const res = deleteApartment(id);
-        console.log(res);
+        try{
+        const res = await api.auth.deleteApartment(id);
+        if (res.status === 204){
+            setStatusResponse(true);
+        }
+        }catch (e) {
+            console.log(e.message);
+        }
     }
+    useEffect(() => {
+        if (statusResponse){
+            setStatusResponse(false);
+        }
+    },[])
+
     return (
-        <>
+     <>
             <div className={'media'} onClick={handleOpen}>
                 {children}
             </div>
@@ -160,16 +161,21 @@ export default function UserApartmentModel({children, id, photo}) {
                                    </span>
                                     <div>
                                         <div className={'UserApartmentModal__button'}>
-                                            <ChangeApartmentModal key={id + 400} id={id}/>
+                                            <ChangeApartmentModal key={id + 400} id={id}
+                                                                  setStatusResponse={setStatusResponse}
+                                                                  statusResponse={statusResponse}/>
                                         </div>
                                         <div className={'UserApartmentModal__button'}>
-                                            <Button onClick={delApartment} variant="outlined" color="success" startIcon={<DeleteIcon /> }>
+                                            <Button onClick={delApartment} variant="outlined" color="success"
+                                                    startIcon={<DeleteIcon /> }>
                                                 Видалити
                                             </Button>
                                         </div>
 
                                         <div className={'UserApartmentModal__button'}>
-                                       <ChangeAllApartmentModal id={id} key={id + 250}/>
+                                       <ChangeAllApartmentModal id={id} key={id + 250}
+                                                                setStatusResponse={setStatusResponse}
+                                                                statusResponse={statusResponse}/>
                                         </div>
                                     </div>
                                     </div>
