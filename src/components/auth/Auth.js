@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './Auth.css';
 import {loginUser} from "../../services/login_services";
 import {Link} from 'react-router-dom';
 import AuthModal from "./AuthModal";
 import {Button} from "@material-ui/core";
 import useAuth from "../../hook/useAuth";
+import {useHistory} from "react-router";
+import api from "../../services/api";
 
 function Auth() {
     const [token, setToken] = useState({});
@@ -17,38 +19,59 @@ function Auth() {
     const [errorEmail, setErrorEmail] = useState();
     const [errorPassword, setErrorPassword] = useState();
     const auth = useAuth();
-    const accessToken = token.access;
-    const refreshToken = token.refresh;
+    const history = useHistory();
 
-    if (accessToken !== undefined){
-        localStorage.setItem('access', `${accessToken}`);
-    }
-    if (refreshToken !== undefined){
-        localStorage.setItem('refresh', `${refreshToken}`);
-    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const token = await loginUser({
-            email,
-            password
-        });
-        if (token['email']){
-            setErrorEmail(token['email']);
+        let data = {email, password};
+        try{
+            const token = await api.auth.login(data);
+            auth.setToken(token.data);
+            console.log(token.data);
+            if (token.status === 200){
+                setToken(token);
+                setIsAuthenticated(true);
+                history.push("/");
+            }
+        // const token = await loginUser({
+        //     email,
+        //     password
+        // });
+        // if (token['email']){
+        //     setErrorEmail(token['email']);
+        // }
+        // if (token['password']){
+        //     setErrorPassword(token['password']);
+        // }
+        // if (token['detail']){
+        //    setErrorAuth(true);
+        //    setErrorMessage(token['detail']);
+        // }
+
+        }catch (e) {
+            if (e.response.status === 422) {
+                Object.keys(e.response.data.errors).forEach((key) => {
+                    setErrorMessage(key, {
+                        type: "manual",
+                        message: [key],
+                    });
+                });
+            }
+            if (e.response.data.email){
+                setErrorEmail(e.response.data.email);
+            }
+            if (e.response.data.password){
+                setErrorPassword(e.response.data.password);
+            }
+            if (e.response.data.detail){
+                setErrorMessage(e.response.data.detail);
+                setErrorAuth(true);
+            }
+            console.log(e.message);
+        } finally {
+            setLoading(false);
         }
-        if (token['password']){
-            setErrorPassword(token['password']);
-        }
-        if (token['detail']){
-           setErrorAuth(true);
-           setErrorMessage(token['detail']);
-        }
-        if (token['refresh'] || token['access']){
-            setToken(token);
-            setIsAuthenticated(true);
-        }
-        auth.setToken(token);
-        setLoading(false);
     }
     if (loading){
         return <div>Loading...</div>
@@ -56,7 +79,7 @@ function Auth() {
     return (
         <>
             <span className={'pageTitle'}>Authorization</span>
-            {isAuthenticated && <AuthModal key={email} isAuthenticated={isAuthenticated}/>}
+            {/*{isAuthenticated && <AuthModal key={email} isAuthenticated={isAuthenticated}/>}*/}
             <form className={'form_register'} onSubmit={handleSubmit}>
                 <fieldset className={'register-group'}>
                     <label htmlFor={'email'} className={!isAuthenticated && errorEmail ?'error_label' : 'label'}>Email
@@ -82,27 +105,6 @@ function Auth() {
                     Create an account
                 </Button>
             </form>
-           {/*<div className={'form_main'}>*/}
-           {/*         <form onSubmit={handleSubmit}>*/}
-           {/*             <fieldset>*/}
-           {/*                 /!*<legend>Authorization</legend>*!/*/}
-           {/*                 <label htmlFor="email">*/}
-           {/*                     <input name={'email'} type="text" onChange={e => setEmail(e.target.value)}*/}
-           {/*                            placeholder={'email'}/>*/}
-           {/*                 </label>*/}
-           {/*                 <label htmlFor="password">*/}
-           {/*                     <input name={'password'} type="password" onChange={e => setPassword(e.target.value)}*/}
-           {/*                            placeholder={'password'}/>*/}
-           {/*                 </label>*/}
-           {/*                 <button className={'btn'} name={'submit'} type="submit">Login</button>*/}
-           {/*                 <span className={'span_link'}>*/}
-           {/*                     {errorAuth && <div className={'error_message'}>* {errorMessage}</div>}*/}
-           {/*                     <Link className={errorAuth ?'error_link' : 'auth_link'} to={'/registration'}>Registration</Link>*/}
-           {/*                 </span>*/}
-           {/*             </fieldset>*/}
-           {/*         </form>*/}
-           {/*         </div>*/}
-
         </>
     );
 }

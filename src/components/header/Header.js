@@ -17,9 +17,9 @@ const Header = () => {
     const onLogOut = () => {
         auth.logOut();
         history.push("/login");
-        localStorage.removeItem('access');
-        localStorage.removeItem('refresh');
-        auth.isLoaded = false;
+        // localStorage.removeItem('access');
+        // localStorage.removeItem('refresh');
+        // auth.isLoaded = false;
     };
     return (
         <div className={'header'}>
@@ -31,7 +31,7 @@ const Header = () => {
                 <Button color="success" component={Link} to="/" sx={{fontWeight: 'bold', marginTop: 5}}>
                     <HomeIcon color="success" /> Home
                 </Button>
-            {!auth.isLoaded && <Button color="success" component={Link} to="/user" sx={{fontWeight: 'bold', marginTop: 5}}>
+            {auth.isLoaded && <Button color="success" component={Link} to="/user" sx={{fontWeight: 'bold', marginTop: 5}}>
                  My page
             </Button>}
             {/*</div>*/}
@@ -39,7 +39,7 @@ const Header = () => {
                 ЗНАЙДИ СОБІ ЖИТЛО
            </span>
             <div className={'header_button'}>
-                {/*    (auth.user ? (*/}
+                    {auth.user && <div>{auth.user.profile.name}</div>}
                         {!auth.isLoaded ? (
                             <>
                     <IconButton aria-label="add an alarm" size="large" sx={{ color: "green" }} component={Link} to="/login">

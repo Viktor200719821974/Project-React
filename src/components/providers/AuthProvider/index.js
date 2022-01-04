@@ -1,42 +1,44 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import Cookies from "js-cookie";
-import { AuthContext } from "../../../context/AuthContext";
-import api from "../../services/api";
-import {getUser} from "../../../../hook/token_user_id";
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {AuthContext} from "../../context/AuthContext";
+import api from "../../../services/api";
+import {tokenDecoded} from "../../../hook/token_user_id";
 
-function AuthProvider(props) {
+const AuthProvider = (props) => {
+
     const [isLoaded, setIsLoaded] = useState(false);
     const [user, setUser] = useState(null);
     const [token, setTokenData] = useState(null);
-    console.log(token);
-    console.log(user);
+
     const setToken = useCallback((tokenData) => {
         setTokenData(tokenData);
         if (tokenData) {
-            Cookies.set("auth-token", tokenData);
+           localStorage.setItem("access", tokenData.access);
+           localStorage.setItem("refresh", tokenData.refresh);
         } else {
-            Cookies.remove("auth-token");
+            localStorage.removeItem("access");
+            localStorage.removeItem("refresh");
         }
-    }, []);
-
+    }, [token]);
     const logOut = useCallback(() => {
         setUser(null);
         setToken(null);
+        setIsLoaded(false);
     }, [setToken]);
 
     const loadData = useCallback(async () => {
-        const tokenData = Cookies.get("access");
+        const tokenData = localStorage.getItem("access");
         setTokenData(tokenData);
-        console.log(loadData)
         try {
             if (tokenData) {
-                const { data } = getUser(tokenData);
+                const id = tokenDecoded(tokenData);
+                const { data } = await api.auth.getUser(id);
                 setUser(data);
+                setIsLoaded(true);
             }
         } catch {
             setToken(null);
         } finally {
-            setIsLoaded(true);
+
         }
     }, [setToken]);
 
@@ -56,12 +58,11 @@ function AuthProvider(props) {
         }),
         [isLoaded, user, token, setToken, logOut]
     );
-    console.log(contextValue);
     return (
         <AuthContext.Provider value={contextValue}>
             {props.children}
         </AuthContext.Provider>
     );
-}
+};
 
 export default AuthProvider;

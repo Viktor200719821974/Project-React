@@ -5,15 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import {store} from "./store";
-import AuthProvider from "./components/newComponent/providers/AuthProviders";
+import AuthProvider from "./components/providers/AuthProvider";
+
 
 ReactDOM.render(
   <React.StrictMode>
-      {/*<AuthProvider>*/}
+      <AuthProvider>
       <Provider store={store}>
            <App />
           </Provider>
-      {/*</AuthProvider>*/}
+      </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
@@ -30,7 +31,7 @@ reportWebVitals();
 // import { BrowserRouter as Router } from "react-router-dom";
 // import App from "./App";
 // import reportWebVitals from "./reportWebVitals";
-// import AuthProvider from "./components/newComponent/providers/AuthProviders";
+// import AuthProvider from "./components/newComponent/providers/AuthProvider";
 //
 // ReactDOM.render(
 //     <React.StrictMode>
