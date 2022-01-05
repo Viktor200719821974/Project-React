@@ -3,7 +3,7 @@ const url = 'http://localhost:8000/api/v1/apartments';
 function getApartments(page, countryValue, country, city, cityValue, region, regionValue, numbers_people,
                        numbersPeopleValue, numbers_rooms, numbersRoomsValue, numbers_squares, numbersSquaresValue,
                        price, priceValue) {
-    // console.log(numbers_rooms, numbersRoomsValue);
+    // console.log(price, priceValue);
     const urlFilters = `&${country}=${countryValue}&${city}=${cityValue}&${region}=${regionValue}&${numbers_people}=
     ${numbersPeopleValue}&${numbers_rooms}=${numbersRoomsValue}&${numbers_squares}=${numbersSquaresValue}&${price}=
     ${priceValue}`;

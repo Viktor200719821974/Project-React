@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Filters from "./Filters";
 import FilterListIcon from '@mui/icons-material/FilterList';
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const style = {
     position: 'absolute',
@@ -23,11 +24,28 @@ export default function FiltersModal({country, setCountry, setCountryValue, setC
                                          setRegion, setRegionValue, setNumbersPeopleValue, numbers_people,
                                          setNumbersPeople, numbers_rooms, setNumbersRooms, setNumbersRoomsValue,
                                          numbers_squares, setNumbersSquares, setNumbersSquaresValue, price, setPrice,
-                                         setPriceValue}) {
+                                         setPriceValue,  setFilterBlock}) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const delFilters = () => {
+        setCountry('');
+        setCountryValue('');
+        setCity('');
+        setCityValue('');
+        setRegion('');
+        setRegionValue('');
+        setNumbersPeople('');
+        setNumbersPeopleValue('');
+        setNumbersRooms('');
+        setNumbersRoomsValue('');
+        setNumbersSquares('');
+        setNumbersSquaresValue('');
+        setPrice('');
+        setPriceValue('');
+        setFilterBlock(false);
+    }
     return (
         <div>
             <Button onClick={handleOpen} variant="outlined" color="success" startIcon={<FilterListIcon /> }
@@ -65,6 +83,12 @@ export default function FiltersModal({country, setCountry, setCountryValue, setC
                         setPrice={setPrice}
                         setPriceValue={setPriceValue}
                     />
+                    <div className={'UserApartmentModal__button'}>
+                        <Button onClick={delFilters}  variant="outlined" color="success"
+                                startIcon={<DeleteIcon /> }>
+                           видалити фільтри
+                        </Button>
+                    </div>
                 </Box>
             </Modal>
         </div>

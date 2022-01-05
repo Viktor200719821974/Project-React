@@ -39,7 +39,6 @@ const Header = () => {
                 ЗНАЙДИ СОБІ ЖИТЛО
            </span>
             <div className={'header_button'}>
-                    {auth.user && <div>{auth.user.profile.name}</div>}
                         {!auth.isLoaded ? (
                             <>
                     <IconButton aria-label="add an alarm" size="large" sx={{ color: "green" }} component={Link} to="/login">
@@ -52,29 +51,13 @@ const Header = () => {
                 )
                     : (
                 <>
-                        <IconButton aria-label="add an alarm" size="large" sx={{ color: "green" }} onClick={onLogOut}>
+
+                    <div className={'div_name'}>{auth.user.profile.name}
+                    <IconButton aria-label="add an alarm" size="large" sx={{ color: "green" }} onClick={onLogOut}>
                     <LogoutIcon />
-                    </IconButton>
+                    </IconButton></div>
                 </>
                 )}
-
-                            {/*<Button color="inherit" component={Link} to="/profile">*/}
-                            {/*    {auth.user.firstName} {auth.user.lastName}*/}
-                {/*</Button>*/}
-                            {/*<Button color="success" onClick={onLogOut}>*/}
-                            {/*    Log out*/}
-                            {/*</Button>*/}
-
-                    {/*) : (*/}
-
-                            {/*<Button color="success" component={Link} to="/login">*/}
-                            {/*    Login*/}
-                            {/*</Button>*/}
-                            {/*<Button color="success" component={Link} to="/registration">*/}
-                            {/*    Registration*/}
-                            {/*</Button>*/}
-
-                    {/*))}*/}
             </div>
         </div>
     );

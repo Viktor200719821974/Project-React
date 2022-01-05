@@ -111,11 +111,11 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
             console.log(e.message);
         }
     }
-    useEffect(() => {
-        if (statusResponse){
-            setStatusResponse(false);
-        }
-    },[])
+    // useEffect(() => {
+    //     if (statusResponse){
+    //         setStatusResponse(false);
+    //     }
+    // },[])
 
     return (
      <>

@@ -10,7 +10,6 @@ import {tokenRefresh} from "../../services/login_services";
 
 function Apartments() {
     const [apartments, setApartments] = useState([]);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [numOfPages, setNumOfPages] = useState();
@@ -30,8 +29,6 @@ function Apartments() {
     const [priceValue, setPriceValue] = useState('');
     const [filtersBlock, setFilterBlock] = useState(false);
 
-    const accessToken = localStorage.getItem('access');
-
     const delFilters = () => {
         setCountry('');
         setCountryValue('');
@@ -47,19 +44,18 @@ function Apartments() {
         setNumbersSquaresValue('');
         setPrice('');
         setPriceValue('');
+        setFilterBlock(false);
     }
     useEffect(()=> {
-        if (accessToken){
-            setIsAuthenticated(true);
-        }
-        if (countryValue || cityValue || regionValue || numbersPeopleValue || numbersRoomsValue || numbersSquaresValue ||
-            priceValue){
+        if (countryValue || cityValue || regionValue || numbersPeopleValue || numbersRoomsValue || numbersSquaresValue
+            || priceValue ){
             setFilterBlock(true);
         }
-    }, [setIsAuthenticated, filtersBlock])
+    }, [countryValue, cityValue, regionValue, numbersPeopleValue, numbersRoomsValue, numbersSquaresValue, priceValue])
 
     useEffect(()=> {
         setLoading(true);
+
         try{
         getApartments(
             page, countryValue, country, city, cityValue, region, regionValue, numbers_people, numbersPeopleValue,
@@ -75,7 +71,7 @@ function Apartments() {
     },[page, country, countryValue, city, cityValue, region, regionValue, numbers_people, numbersPeopleValue,
         numbers_rooms, numbersRoomsValue, numbers_squares, numbersSquaresValue, price, priceValue
     ])
-    if(apartments.length === 0){
+    if(apartments?.length === 0 || undefined){
         return filtersBlock && <div>
             <Button onClick={delFilters} variant="outlined" color="success" startIcon={<ClearIcon/> }
                     sx={{fontWeight:800, marginTop: '20px'}}>
@@ -93,12 +89,6 @@ function Apartments() {
     }
     return (
         <>
-            {/*{!isAuthenticated && <span className={'pageTitle'}>Apartments</span>}*/}
-            {/*<div className={'div_apartments'}>*/}
-            {/*<h3 className={'h_apartments'}>{isAuthenticated ? 'Aвторизований'  : 'Авторизуйтесь'}</h3>*/}
-            {/*    {isAuthenticated && <button className={'button_apartments'} onClick={userList}>User</button>}*/}
-             {/*</div>*/}
-            {/*{!isAuthenticated && <Auth key={apartments.id + 8} id={apartments.id}/> }*/}
             <FiltersModal setCountryValue={setCountryValue}
                           setCountry={setCountry}
                           country={country}
@@ -120,6 +110,7 @@ function Apartments() {
                           price={price}
                           setPrice={setPrice}
                           setPriceValue={setPriceValue}
+                          setFilterBlock={setFilterBlock}
             />
             <div className={'trending'}>
             {apartments && apartments.map((c, index)=><ApartmentContent
@@ -131,7 +122,6 @@ function Apartments() {
                 region={c.region}
                 price={c.price}
                 numbers_people={c.numbers_people}
-                isAuthenticated={isAuthenticated}
             />)}
             </div>
             {/*<div className={'pagination'}>*/}

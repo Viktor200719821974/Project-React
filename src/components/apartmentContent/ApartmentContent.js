@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import {count} from "../../hook/count";
 import api from "../../services/api";
 
-const ApartmentContent = ({id, country, city, region, price, numbers_people, photo, isAuthenticated}) => {
+const ApartmentContent = ({id, country, city, region, price, numbers_people, photo}) => {
 
     const  [comments, setComments] = useState([]);
     const filter = comments.map(comments => comments.rating);
@@ -22,7 +22,7 @@ const ApartmentContent = ({id, country, city, region, price, numbers_people, pho
     },[])
     return (
         <>
-            <ApartmentModel  id={id} key={id} photo={photo} isAuthenticated={isAuthenticated} rating={rating}>
+            <ApartmentModel  id={id} key={id} photo={photo} rating={rating}>
 
                 <Badge badgeContent={rating} color={rating > 6 ? "primary" : "secondary"}/>
                 <img className={'poster'} src={photo[0] || noPicture}

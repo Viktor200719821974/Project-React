@@ -15,6 +15,7 @@ import Box from '@mui/material/Box';
 import CommentsModal from "./CommentsModal";
 import RentApartmentModal from "./rentApartment/RentApartmentModal";
 import api from "../../services/api";
+import useAuth from "../../hook/useAuth";
 
 const style = {
     position: 'absolute',
@@ -104,10 +105,11 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
     },
 }));
-export default function ApartmentModel({children, id, photo, isAuthenticated, rating}) {
+export default function ApartmentModel({children, id, photo, rating}) {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [apartment, setApartment] = useState([]);
+    const auth = useAuth();
 
     const handleOpen = () => {
         setOpen(true)
@@ -162,7 +164,7 @@ export default function ApartmentModel({children, id, photo, isAuthenticated, ra
                                   <li>Price: {apartment.price} UAH</li>
                                    </span>
                                     <div className={'ApartmentModal_button_rent'}>
-                                        {isAuthenticated && <RentApartmentModal key={apartment.id + 1100} id={apartment.id}/>}
+                                        {auth.isLoaded && <RentApartmentModal key={apartment.id + 1100} id={apartment.id}/>}
                                     </div>
                                     </div>
                             <StarsRating id={apartment.id} key={apartment.id + 7} rating={rating}/>
