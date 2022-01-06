@@ -12,7 +12,6 @@ function Auth() {
     const [token, setToken] = useState({});
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errorAuth, setErrorAuth] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
@@ -28,26 +27,11 @@ function Auth() {
         try{
             const token = await api.auth.login(data);
             auth.setToken(token.data);
-            console.log(token.data);
+
             if (token.status === 200){
                 setToken(token);
-                setIsAuthenticated(true);
                 history.push("/");
             }
-        // const token = await loginUser({
-        //     email,
-        //     password
-        // });
-        // if (token['email']){
-        //     setErrorEmail(token['email']);
-        // }
-        // if (token['password']){
-        //     setErrorPassword(token['password']);
-        // }
-        // if (token['detail']){
-        //    setErrorAuth(true);
-        //    setErrorMessage(token['detail']);
-        // }
 
         }catch (e) {
             if (e.response.status === 422) {
@@ -82,14 +66,14 @@ function Auth() {
             {/*{isAuthenticated && <AuthModal key={email} isAuthenticated={isAuthenticated}/>}*/}
             <form className={'form_register'} onSubmit={handleSubmit}>
                 <fieldset className={'register-group'}>
-                    <label htmlFor={'email'} className={!isAuthenticated && errorEmail ?'error_label' : 'label'}>Email
-                        <input className={!isAuthenticated && errorEmail ? 'error_input': 'input'} name={'email'}
+                    <label htmlFor={'email'} className={!auth.isLoaded && errorEmail ?'error_label' : 'label'}>Email
+                        <input className={!auth.isLoaded && errorEmail ? 'error_input': 'input'} name={'email'}
                                type="text" onChange={e => setEmail(e.target.value)}
                                placeholder={errorEmail ? errorEmail : 'admin@gmail'}/>
                     </label>
-                    <label htmlFor={'password'} className={!isAuthenticated && errorPassword ?'error_label' : 'label'}>
+                    <label htmlFor={'password'} className={!auth.isLoaded && errorPassword ?'error_label' : 'label'}>
                         Гасло
-                        <input className={!isAuthenticated && errorPassword ? 'error_input': 'input'} name={'password'}
+                        <input className={!auth.isLoaded && errorPassword ? 'error_input': 'input'} name={'password'}
                                type="password" onChange={e => setPassword(e.target.value)}
                                placeholder={errorPassword ? errorPassword : '************************'}/>
                     </label>

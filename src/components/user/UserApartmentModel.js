@@ -8,7 +8,6 @@ import Modal from '@mui/material/Modal';
 import '../apartmentModel/ApartmentModel.css';
 import {unavailable} from "../../constans/constans";
 import Carousel from "../apartmentModel/carousel/Carousel";
-import CommentsApartment from "../comments_apartment/CommentsApartment";
 import noPicture from "../apartmentModel/carousel/image/No_Picture.jpg";
 import StarsRating from "../starsRating/StarsRating";
 import Button from '@mui/material/Button';
@@ -17,6 +16,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ChangeAllApartmentModal from "./changeApartment/ChangeAllApartmentModal";
 import ChangeApartmentModal from "./changeApartment/ChangeApartmentModal";
 import api from "../../services/api";
+import AddPhotoApartmentModal from "./addApartment/AddPhotoApartmentModal";
+import UserCommentsApartment from "./UserCommentsApartment";
 
 const style = {
     position: 'absolute',
@@ -33,7 +34,7 @@ const style = {
     pb: 3,
 };
 
-function ChildModal({id}) {
+function ChildModal({id, comments, noComments}) {
     const [open, setOpen] = React.useState(false);
 
     const handleOpen = () => {
@@ -53,10 +54,10 @@ function ChildModal({id}) {
                 onClose={handleClose}
                 aria-labelledby="child-modal-title"
                 aria-describedby="child-modal-description"
-                disableScrollLock={true}
+                // disableScrollLock={true}
             >
                 <Box sx={{ ...style, width: 600 }}>
-                    <CommentsApartment key={id+4} id={id}/>
+                    <UserCommentsApartment key={id+4} id={id} comments={comments} noComments={noComments}/>
                     <Button onClick={handleClose} variant="contained" color="success">Закрити коментарі</Button>
                 </Box>
             </Modal>
@@ -83,6 +84,8 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [apartment, setApartment] = useState([]);
+    const [comments, setComments] = useState([]);
+    const [noComments, setNoComments] =useState(false);
 
     const handleOpen = () => {
         setOpen(true)
@@ -94,6 +97,10 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
         try{
         const res = await api.auth.getApartment(id);
         setApartment(res.data);
+        setComments(res.data.comments_apartment);
+        if (res.data.comments_apartment.length !== 0){
+            setNoComments(true);
+        }
         }catch (e) {
             console.log(e.message);
         }
@@ -111,12 +118,6 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
             console.log(e.message);
         }
     }
-    // useEffect(() => {
-    //     if (statusResponse){
-    //         setStatusResponse(false);
-    //     }
-    // },[])
-
     return (
      <>
             <div className={'media'} onClick={handleOpen}>
@@ -177,11 +178,16 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
                                                                 setStatusResponse={setStatusResponse}
                                                                 statusResponse={statusResponse}/>
                                         </div>
+                                        <div className={'UserApartmentModal__button'}>
+                                       <AddPhotoApartmentModal id={id} key={id + 350}
+                                                               setStatusResponse={setStatusResponse}
+                                                               statusResponse={statusResponse}/>
+                                        </div>
                                     </div>
                                     </div>
                                     <StarsRating id={apartment.id} key={apartment.id + 7}/>
                                     <Carousel id={id} key={id+2}/>
-                                    <ChildModal key={id+1} id={id}/>
+                                    <ChildModal key={id+234} id={id} comments={comments} noComments={noComments}/>
 
                                 </div>
                             </div>

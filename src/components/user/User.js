@@ -32,12 +32,15 @@ function User() {
         setApartment(data.apartment);
         setProfile(data.profile);
         setUser(data);
-            if (data.is_staff === true){
-                        setIsStaff(true);
-                    }
-            if (data.is_superuser === true){
-                        setIsSuperUser(true);
-                    }
+        if (statusResponse){
+            setStatusResponse(false);
+        }
+        if (data.is_staff === true){
+            setIsStaff(true);
+        }
+        if (data.is_superuser === true){
+            setIsSuperUser(true);
+        }
     }catch (e) {
             console.log(e.message);
         }
@@ -79,14 +82,17 @@ function User() {
             <div>
                 <span className={'pageTitle'}>Коментарі:</span>
                 {comments && comments.map((c) => <div key={c.id +900}>
-                    <div >
-                        {c.user_name}
-                    </div>
-                        <div>
+                   <div className={'div_comments_user_main'}>
+                       <div className={'div_comments_user_name'}>
+                           {c.user_name}
+                       </div>
+
+                        <div className={'div_comments_user'}>
                             {c.comments}
+                            <div className={'div_comments_user_rating'}>
+                             Rating: {c.rating}
+                            </div>
                         </div>
-                   <div>
-                       {c.rating}
                    </div>
                 </div>)}
             </div>

@@ -1,27 +1,32 @@
 import React, {useState, useEffect} from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import axios from "axios";
 import './Carousel.css';
 import noPicture from './image/No_Picture.jpg';
 import ImageModal from "./ImageModal";
+import api from "../../../services/api";
 
 const handleDragStart = (e) => e.preventDefault();
 
 const Carousel = ({id}) => {
     const [photo, setPhoto] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    const fetchPhoto = async () => {
-        const { data } = await axios(
-            `http://localhost:8000/api/v1/apartments/${id}`
-        );
-        setPhoto(data.photo_rooms);
-    };
-
-    useEffect(() => {
-        fetchPhoto();
+    useEffect(async() => {
+        setLoading(true);
+        try{
+            const { data } = await api.auth.getApartment(id);
+            setPhoto(data.photo_rooms);
+        }catch (e) {
+            console.log(e.message);
+        }
+        setLoading(false);
         // eslint-disable-next-line
     }, []);
+
+    if (loading){
+        return <div>Loading...</div>
+    }
 
     const items =(photo && photo.map((c) => (
         <div className={'carouselItem'}>
@@ -47,17 +52,17 @@ const Carousel = ({id}) => {
             items: 3,
         },
     };
-    const rootElement = {width: 700, height: 800};
-    const rootElement2 = {width: 400, height: 250}
-    const onSlideChange = (e) => {
-        console.debug('Item`s position during a change: ', e.item)
-        console.debug('Slide`s position during a change: ', e.slide)
-    }
-
-    const onSlideChanged = (e) => {
-        console.debug('Item`s position after changes: ', e.item)
-        console.debug('Slide`s position after changes: ', e.slide)
-    }
+    // const rootElement = {width: 700, height: 800};
+    // const rootElement2 = {width: 400, height: 250}
+    // const onSlideChange = (e) => {
+    //     console.debug('Item`s position during a change: ', e.item)
+    //     console.debug('Slide`s position during a change: ', e.slide)
+    // }
+    //
+    // const onSlideChanged = (e) => {
+    //     console.debug('Item`s position after changes: ', e.item)
+    //     console.debug('Slide`s position after changes: ', e.slide)
+    // }
     return (
         <AliceCarousel autoPlay
                        autoPlayInterval={1000}
@@ -67,9 +72,9 @@ const Carousel = ({id}) => {
                        disableDotsControls
                        disableButtonsControls
                        mouseTracking items={items}
-                       onSlideChange={onSlideChange}
-                       onSlideChanged={onSlideChanged}
-                       onResizeEvent={(e, prevProps, nextProps) => <div>{rootElement}</div>}
+                       // onSlideChange={onSlideChange}
+                       // onSlideChanged={onSlideChanged}
+                       // onResizeEvent={(e, prevProps, nextProps) => <div>{rootElement}</div>}
                        // fadeOutAnimation={true}
                        // mouseTrackingEnabled={true}
                        // playButtonEnabled={true}

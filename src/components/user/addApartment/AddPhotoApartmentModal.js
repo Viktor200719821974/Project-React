@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import SendComment from "../comments_apartment/SendComment";
-import useAuth from "../../hook/useAuth";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import AddPhotoApartment from "./AddPhotoApartment";
 
 const style = {
     position: 'absolute',
@@ -19,11 +19,9 @@ const style = {
     px: 4,
     pb: 3,
 };
-
-function CommentsModal({id, setStatusResponse, statusResponse}) {
+const AddPhotoApartmentModal = ({id, setStatusResponse, statusResponse}) => {
 
     const [open, setOpen] = useState(false);
-    const auth = useAuth();
     const handleOpen = () => {
         setOpen(true);
     };
@@ -31,24 +29,32 @@ function CommentsModal({id, setStatusResponse, statusResponse}) {
         setOpen(false);
     };
 
+    // useEffect(() => {
+    //     if (statusResponse){
+    //         setStatusResponse(false);
+    //     }
+    // },[])
     return (
         <React.Fragment>
-            {auth.isLoaded && <Button onClick={handleOpen} variant="contained" color="success">Залишити відгук</Button>}
+            <Button onClick={handleOpen} variant="outlined" color="success"
+                    startIcon={<AddAPhotoIcon/> }>
+                Додати фото
+            </Button>
             <Modal
                 hideBackdrop
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="child-modal-title"
                 aria-describedby="child-modal-description"
-                // disableScrollLock={true}
+                disableScrollLock={true}
             >
-                <Box sx={{ ...style,}}>
-                    <SendComment key={id+6} id={id} setStatusResponse={setStatusResponse} statusResponse={statusResponse}/>
+                <Box sx={{ ...style, width: 600 }}>
+                    <AddPhotoApartment/>
                     <Button onClick={handleClose} variant="contained" color="success">Закрити</Button>
                 </Box>
             </Modal>
         </React.Fragment>
     );
-}
+};
 
-export default CommentsModal;
+export default AddPhotoApartmentModal;

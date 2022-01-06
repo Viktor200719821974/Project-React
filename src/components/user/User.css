@@ -96,3 +96,26 @@ input{
     padding-bottom: 30px;
     text-align: justify;
 }
+.div_comments_user_main{
+
+}
+.div_comments_user{
+    border: solid 2px white;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 600px;
+    margin: 0 auto;
+    padding: 5px 10px;
+    font-size: 22px;
+}
+.div_comments_user_name{
+    color: green;
+    font-size: 20px;
+    margin-bottom: 5px;
+    margin-left: 150px;
+}
+.div_comments_user_rating{
+    color: yellowgreen;
+    font-size: 18px;
+    margin-left: 480px;
+}

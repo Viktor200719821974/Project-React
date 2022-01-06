@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -27,14 +27,9 @@ function AddApartmentModal({id, setStatusResponse, statusResponse}) {
     const handleClose = () => {
         setOpen(false);
     };
-    useEffect(() => {
-        if (statusResponse){
-            setStatusResponse(false);
-        }
-    },[])
     return (
         <React.Fragment>
-            {<Button onClick={handleOpen} variant="contained" color="success">Додати квартиру</Button>}
+            <Button onClick={handleOpen} variant="contained" color="success">Додати квартиру</Button>
             <Modal
                 hideBackdrop
                 open={open}

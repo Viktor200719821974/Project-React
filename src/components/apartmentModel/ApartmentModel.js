@@ -23,9 +23,9 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 600,
-    height: 600,
-    overflow: 'scroll',
-    overflowX: 'hidden',
+    // height: 600,
+    // ,
+    // overflowX: 'hidden',
     bgcolor: '#39445a',
     border: '2px solid #000',
     boxShadow: 24,
@@ -55,11 +55,18 @@ function ChildModal({id}) {
         try{
             const {data} = await api.auth.getApartment(id);
             setComments(data.comments_apartment);
+            if (data.comments_apartment.length !== 0){
+                setNoComments(true);
+            }
+            if (data.comments_apartment.length > 4){
+                setManyComments(true);
+            }
         }catch (e) {
             console.log(e.message);
         }
         setLoading(false);
-    },[statusResponse, noComments, manyComments])
+    },[statusResponse, noComments])
+
     // const filter = comments.filter(comments => comments.apartment === id);
     // const photo = filter.map(y => y['photo_comments_apartment']);
     // console.log(filter);
@@ -77,13 +84,15 @@ function ChildModal({id}) {
                 aria-describedby="child-modal-description"
                 disableScrollLock={true}
             >
-                <Box sx={{ ...style, width: 600 }}>
+                <Box sx={{ ...style,}}>
                     {/*<h2 id="child-modal-title">Comments</h2>*/}
+                    <div className={manyComments && noComments ? 'div_comments_apartment_modal' : 'div_comments_apartment_modal_noComments'}>
                     <CommentsApartment key={id+4} filter={comments} noComments={noComments}/>
                     <CommentsModal key={id+5} id={id} setStatusResponse={setStatusResponse}
                                    statusResponse={statusResponse} comments={comments} noComments={noComments}
                                    setNoComments={setNoComments} setManyComments={setManyComments} manyComments={manyComments}/>
                     <Button onClick={handleClose} variant="contained" color="success">Закрити коментарі</Button>
+                    </div>
                 </Box>
             </Modal>
         </React.Fragment>

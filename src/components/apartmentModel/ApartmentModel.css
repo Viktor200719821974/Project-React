@@ -99,3 +99,11 @@
     margin-left: 150px;
     margin-top: 200px;
 }
+.div_comments_apartment_modal{
+    height: 600px;
+    overflow: auto;
+    scrollbar-width: thin;
+}
+.div_comments_apartment_modal_noComments{
+    width: 600px;
+}
