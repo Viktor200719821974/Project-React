@@ -49,7 +49,7 @@ const AddPhotoApartmentModal = ({id, setStatusResponse, statusResponse}) => {
                 disableScrollLock={true}
             >
                 <Box sx={{ ...style, width: 600 }}>
-                    <AddPhotoApartment/>
+                    <AddPhotoApartment key={id+567} id={id}/>
                     <Button onClick={handleClose} variant="contained" color="success">Закрити</Button>
                 </Box>
             </Modal>

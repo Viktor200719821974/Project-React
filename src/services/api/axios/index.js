@@ -11,7 +11,7 @@ axiosInstance.interceptors.request.use(
         if (authToken) {
             config.headers.authorization = `Bearer ${authToken}`;
         }
-        // console.log(config)
+        // console.log(authToken);
         return config;
     },
     (error) => {
