@@ -17,14 +17,14 @@ import ChangeAllApartmentModal from "./changeApartment/ChangeAllApartmentModal";
 import ChangeApartmentModal from "./changeApartment/ChangeApartmentModal";
 import api from "../../services/api";
 import AddPhotoApartmentModal from "./addApartment/AddPhotoApartmentModal";
-import UserCommentsApartment from "./UserCommentsApartment";
+import UserCommentsApartmentContent from "./userCommentsApartment/UserCommentsApartmentContent";
 
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 600,
+    // width: 600,
     bgcolor: '#39445a',
     border: '2px solid #000',
     boxShadow: 24,
@@ -34,16 +34,16 @@ const style = {
     pb: 3,
 };
 
-function ChildModal({id, comments, noComments}) {
+function ChildModal({id, comments, noComments, dateSelection}) {
     const [open, setOpen] = React.useState(false);
-
     const handleOpen = () => {
         setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
     };
-
+    // const  filterComments = comments.filter(c => c.user_email === user_emailDate);
+    // console.log(filterComments);
     return (
         <React.Fragment>
 
@@ -56,8 +56,22 @@ function ChildModal({id, comments, noComments}) {
                 aria-describedby="child-modal-description"
                 // disableScrollLock={true}
             >
-                <Box sx={{ ...style, width: 600 }}>
-                    <UserCommentsApartment key={id+4} id={id} comments={comments} noComments={noComments}/>
+                <Box sx={{ ...style, width: 800 }}>
+                    {dateSelection && dateSelection.map((c, index) => <UserCommentsApartmentContent key={index} id={id}
+                                           date_arrival={c.date_arrival}
+                                           date_departure={c.date_departure}
+                                           user_emailDate={c.user_emailDate}
+                                           number_days={c.number_days}
+                                           number_peoples={c.number_peoples}
+                                           noComments={noComments}
+                                           // name={c.name_user}
+                                           // rating={c.rating}
+                                           // comment={c.comments}
+                                           count={c.count}
+                                           user_emailDate={c.user_email}
+                                           comments={comments}
+                        />
+                    )}
                     <Button onClick={handleClose} variant="contained" color="success">Закрити коментарі</Button>
                 </Box>
             </Modal>
@@ -86,6 +100,7 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
     const [apartment, setApartment] = useState([]);
     const [comments, setComments] = useState([]);
     const [noComments, setNoComments] =useState(false);
+    const [dateSelection, setDateSelection] = useState([]);
 
     const handleOpen = () => {
         setOpen(true)
@@ -98,6 +113,7 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
         const res = await api.auth.getApartment(id);
         setApartment(res.data);
         setComments(res.data.comments_apartment);
+        setDateSelection(res.data.date_selection);
         if (res.data.comments_apartment.length !== 0){
             setNoComments(true);
         }
@@ -179,16 +195,15 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
                                                                 statusResponse={statusResponse}/>
                                         </div>
                                         <div className={'UserApartmentModal__button'}>
-                                       <AddPhotoApartmentModal id={id} key={id + 350}
-                                                               setStatusResponse={setStatusResponse}
-                                                               statusResponse={statusResponse}/>
+                                            <AddPhotoApartmentModal id={id} key={id + 350}
+                                                                    setStatusResponse={setStatusResponse}
+                                                                    statusResponse={statusResponse}/>
                                         </div>
                                     </div>
                                     </div>
                                     <StarsRating id={apartment.id} key={apartment.id + 7}/>
                                     <Carousel id={id} key={id+2}/>
-                                    <ChildModal key={id+234} id={id} comments={comments} noComments={noComments}/>
-
+                                    <ChildModal key={id+456} id={id} comments={comments} dateSelection={dateSelection} noComments={noComments}/>
                                 </div>
                             </div>
                         </div>

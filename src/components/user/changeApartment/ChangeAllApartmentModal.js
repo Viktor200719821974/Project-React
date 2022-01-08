@@ -29,11 +29,11 @@ function ChangeAllApartmentModal({id, setStatusResponse, statusResponse}) {
     const handleClose = () => {
         setOpen(false);
     };
-    useEffect(() => {
-        if (statusResponse){
-            setStatusResponse(false);
-        }
-    },[])
+    // useEffect(() => {
+    //     if (statusResponse){
+    //         setStatusResponse(false);
+    //     }
+    // },[])
     return (
         <React.Fragment>
              <Button onClick={handleOpen} variant="outlined" color="success" startIcon={<BorderColorIcon /> }>

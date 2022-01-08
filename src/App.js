@@ -6,10 +6,10 @@ import {Container} from "@mui/material";
 import Apartments from "./components/apartments/Apartments";
 import Registration from "./components/registration/Registration";
 import User from "./components/user/User";
-import Routes from "./components/routes/Routes";
 import Auth from "./components/auth/Auth";
 import Admin from "./components/user/administrations/Admin";
 import SuperAdmin from "./components/user/administrations/SuperAdmin";
+// import UserCommentsApartment from "./components/user/userCommentsApartment/UserCommentsApartment";
 
 function App() {
 
@@ -26,6 +26,7 @@ function App() {
                       <Route path={'/user'} component={User}/>
                       <Route path={'/admin'} component={Admin}/>
                       <Route path={'/superAdmin'} component={SuperAdmin}/>
+                      {/*<Route path={'/comments_apartment'} component={UserCommentsApartment}/>*/}
                   </Switch>
               {/*    <Routes/>*/}
               </Container>

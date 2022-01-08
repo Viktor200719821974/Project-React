@@ -29,6 +29,7 @@ const endpoints = {
     sendCommentsApartment: (id, obj) => axios.post(`/apartments/${id}/comment_apartment`, obj),
     rentApartment: (id, obj) => axios.post(`/apartments/${id}/selected_date`, obj),
     addPhotoRooms: (id, photo_rooms) => axios.patch(`/apartments/${id}/photo_rooms`, photo_rooms),
+    getDateSelection: () => axios.get('/date_selection'),
 };
 
 export default endpoints;

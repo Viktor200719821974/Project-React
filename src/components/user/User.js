@@ -7,7 +7,8 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import Button from "@mui/material/Button";
 import {Link} from "react-router-dom";
 import api from "../../services/api";
-import jwt_decode from "jwt-decode";
+import CommentIcon from '@mui/icons-material/Comment';
+import {tokenDecoded} from "../../hook/token_user_id";
 
 function User() {
     const [user, setUser] = useState({});
@@ -18,15 +19,12 @@ function User() {
     const [profile, setProfile] = useState([]);
     const [statusResponse, setStatusResponse] = useState(false);
     const [loading, setLoading] = useState(false);
+    const token = localStorage.getItem('access');
 
-    const tokenDecoded = () =>{
-        const decoded = jwt_decode(localStorage.getItem("access"));
-        return decoded.user_id;
-    }
-    useEffect(async () => {
+    useEffect( async() => {
         setLoading(true);
         try{
-        const id = tokenDecoded();
+        const id = tokenDecoded(token);
         const {data} = await api.auth.getUser(id);
         setComments(data.comments_user);
         setApartment(data.apartment);
@@ -96,6 +94,8 @@ function User() {
                    </div>
                 </div>)}
             </div>
+            <Button component={Link} to="/comments_apartment" variant="contained" color="success" startIcon={<CommentIcon /> }>
+                Comments Apartment</Button>
                       </div>
                 );
 }
