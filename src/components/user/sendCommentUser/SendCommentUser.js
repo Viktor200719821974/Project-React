@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import api from "../../services/api";
+import api from "../../../services/api";
 
-function SendComment({id, setStatusResponse, statusResponse}) {
-
+const SendCommentUser = ({id, setStatusResponse}) => {
+    console.log(id);
     const [comments, setComments] = useState('');
     const [rating, setRating] = useState();
     const [errorRating, setErrorRating] = useState();
@@ -16,7 +16,7 @@ function SendComment({id, setStatusResponse, statusResponse}) {
         let obj = {comments, rating};
         e.preventDefault();
         try {
-            const res = await api.auth.sendCommentsApartment(id, obj);
+            const res = await api.auth.sendCommentUser(id, obj);
             if (res.status === 201){
                 setCommentsOk(true);
                 setStatusResponse(true);
@@ -31,7 +31,6 @@ function SendComment({id, setStatusResponse, statusResponse}) {
             setNoError(e.message);
         }
     }
-
     return (
         <div>
             {commentsOk && <Alert severity="success">
@@ -40,24 +39,24 @@ function SendComment({id, setStatusResponse, statusResponse}) {
             </Alert>}
             {noError && !commentsOk && <div className={'noError'}>*{noError}</div>}
             <form className={'form_register'} onSubmit={handleSubmit}>
-                <fieldset className={'register-group'}>
-                    <legend>Залиште свій коментар</legend>
                     <label htmlFor={'comments'} className={!commentsOk && errorComments ? 'error_label': 'label'}>
                         Коментар {errorComments && errorComments}
-                        <input className={!commentsOk && errorComments ?'error_input' : 'input'} name={'comments'} type="text" onChange={e =>
-                            setComments(e.target.value)} placeholder={'Напишіть щось...'}/>
+                        <textarea name="comments" id="text_box" cols="70" rows="7" value={comments}
+                                  onChange={e => setComments(e.target.value)}/>
                     </label>
-                    <label htmlFor="rating" className={!commentsOk && errorRating ? 'error_label': 'label'}>Оцінка
+                <br/>
+                    <label htmlFor="rating" className={!commentsOk && errorRating ? 'error_label': 'label'}>Поставте оцінку
                         {errorRating && errorRating}
-                        <input className={!commentsOk && errorRating ?'error_input' : 'input'} name={'rating'}  type="number" onChange={e =>
-                            setRating(e.target.value)} placeholder={'Поставте оцінку від 1 до 10'}/>
+                        <input className={!commentsOk && errorRating ?'error_input' : 'input_commentUser'} name={'rating'}
+                               type="number" onChange={e => setRating(e.target.value)}
+                               placeholder={'від 1 до 10'}/>
                     </label>
-                </fieldset>
+                <div className={'SendCommentUser_button_form'}>
                 <button className={'btn btn-default'} name={'submit'} type="submit">Відправити</button>
-
+                </div>
             </form>
         </div>
     );
-}
+};
 
-export default SendComment;
+export default SendCommentUser;

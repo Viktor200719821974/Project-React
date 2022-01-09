@@ -1,4 +1,5 @@
-import '../apartmentContent/ApartmentContent.css';
+// import '../apartmentContent/ApartmentContent.css';
+import "./User.css";
 import noPicture from '../apartmentContent/image/No_Picture.jpg';
 import UserApartmentModel from "./UserApartmentModel";
 

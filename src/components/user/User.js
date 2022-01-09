@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import "./User.css";
 import UserApartmentContent from "./UserApartmentContent";
 import UserRating from "./UserRating";
 import AddApartmentModal from "./addApartment/AddApartmentModal";
@@ -7,7 +8,6 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import Button from "@mui/material/Button";
 import {Link} from "react-router-dom";
 import api from "../../services/api";
-import CommentIcon from '@mui/icons-material/Comment';
 import {tokenDecoded} from "../../hook/token_user_id";
 
 function User() {
@@ -19,6 +19,7 @@ function User() {
     const [profile, setProfile] = useState([]);
     const [statusResponse, setStatusResponse] = useState(false);
     const [loading, setLoading] = useState(false);
+
     const token = localStorage.getItem('access');
 
     useEffect( async() => {
@@ -94,11 +95,8 @@ function User() {
                    </div>
                 </div>)}
             </div>
-            <Button component={Link} to="/comments_apartment" variant="contained" color="success" startIcon={<CommentIcon /> }>
-                Comments Apartment</Button>
-                      </div>
+        </div>
                 );
 }
-
 
 export default User;
