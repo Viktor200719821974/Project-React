@@ -27,7 +27,7 @@ function ChildModal({id, comments, noComments, dateSelection, setStatusResponse,
     const handleClose = () => {
         setOpen(false);
     };
-    const  filterEmail = comments.map(c => c.user_email);
+    const  filterEmail = dateSelection.map(c => c.user_email);
     const filterName = comments.map(c => c.name_user);
     let uniqueEmail = [...new Set(filterEmail)];
     let uniqueName = [...new Set(filterName)];
