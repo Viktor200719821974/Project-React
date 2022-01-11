@@ -36,6 +36,21 @@ const AuthProvider = (props) => {
                 setIsLoaded(true);
             }
         } catch {
+            // if (e.request.status === 401){
+            //     const refreshToken = localStorage.getItem('refresh');
+            //     let data = {refresh:refreshToken};
+            //     try{
+            //         const token = await api.auth.refresh(data);
+            //         if (token.status === 200){
+            //            setToken(token.data);
+            //         }
+            //         console.log(token);
+            //     }catch (e) {
+            //         console.log(e.message);
+            //     }
+            // }
+            // console.log(e.response);
+            // console.log(e.request);
             setToken(null);
         } finally {
 
@@ -43,7 +58,7 @@ const AuthProvider = (props) => {
     }, [setToken]);
 
     useEffect(() => {
-        loadData().then(response => console.log(response));
+        loadData();
     }, [loadData]);
 
     const contextValue = useMemo(
@@ -54,7 +69,6 @@ const AuthProvider = (props) => {
             setUser,
             setToken,
             logOut,
-
         }),
         [isLoaded, user, token, setToken, logOut]
     );

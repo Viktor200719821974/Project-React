@@ -9,8 +9,6 @@ import Button from "@mui/material/Button";
 import {Link} from "react-router-dom";
 import api from "../../services/api";
 import {tokenDecoded} from "../../hook/token_user_id";
-import {refreshToken} from "../../hook/refresh_token";
-import useAuth from "../../hook/useAuth";
 
 function User() {
     const [user, setUser] = useState({});
@@ -21,10 +19,10 @@ function User() {
     const [profile, setProfile] = useState([]);
     const [statusResponse, setStatusResponse] = useState(false);
     const [loading, setLoading] = useState(false);
-    const auth = useAuth();
     const token = localStorage.getItem('access');
 
-    useEffect( async() => {
+    useEffect( () => {
+        async function fetchData(){
         setLoading(true);
         try{
         const id = tokenDecoded(token);
@@ -44,23 +42,12 @@ function User() {
             setIsSuperUser(true);
         }
     }catch (e) {
-            if (e.request.status === 401){
-                const refreshToken = localStorage.getItem('refresh');
-                let data = {['refresh']: refreshToken};
-                try{
-                    const token = await api.auth.refresh(data);
-                    if (token.status === 200){
-                        auth.setToken(token.data);
-                    }
-                    console.log(token.status);
-                }catch (e) {
-                    console.log(e.message);
-                }
-            }
-            console.log(e.request.status);
+            console.log(e.message);
         }
+        }
+        fetchData();
         setLoading(false);
-    },[statusResponse])
+    },[statusResponse, token])
 
     if (loading){
         return <div>Loading...</div>

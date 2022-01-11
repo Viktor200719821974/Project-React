@@ -6,9 +6,6 @@ import "./Apartments.css";
 import FiltersModal from "../filters/FiltersModal";
 import ClearIcon from '@mui/icons-material/Clear';
 import Button from "@mui/material/Button";
-import api from "../../services/api";
-import {tokenRefresh} from "../../services/login_services";
-import useAuth from "../../hook/useAuth";
 
 function Apartments() {
     const [apartments, setApartments] = useState([]);
@@ -30,7 +27,6 @@ function Apartments() {
     const [price, setPrice] = useState('');
     const [priceValue, setPriceValue] = useState('');
     const [filtersBlock, setFilterBlock] = useState(false);
-    const auth = useAuth();
 
     const delFilters = () => {
         setCountry('');
@@ -58,7 +54,6 @@ function Apartments() {
 
     useEffect(()=> {
         setLoading(true);
-
         try{
         getApartments(
             page, countryValue, country, city, cityValue, region, regionValue, numbers_people, numbersPeopleValue,
@@ -87,20 +82,20 @@ function Apartments() {
         return <div>Loading...</div>
     }
 
-    const handleToken = async (e) => {
-        e.preventDefault();
-        const refreshToken = localStorage.getItem('refresh');
-        let data = {['refresh']: refreshToken};
-        try{
-            const token = await api.auth.refresh(data);
-            if (token.status === 200){
-                auth.setToken(token.data);
-            }
-            console.log(token);
-        }catch (e) {
-            console.log(e.message);
-        }
-    }
+    // const handleToken = async (e) => {
+    //     e.preventDefault();
+    //     const refreshToken = localStorage.getItem('refresh');
+    //     let data = {['refresh']: refreshToken};
+    //     try{
+    //         const token = await api.auth.refresh(data);
+    //         if (token.status === 200){
+    //             auth.setToken(token.data);
+    //         }
+    //         console.log(token);
+    //     }catch (e) {
+    //         console.log(e.message);
+    //     }
+    // }
     return (
         <>
             <FiltersModal setCountryValue={setCountryValue}
@@ -141,7 +136,6 @@ function Apartments() {
             {/*<div className={'pagination'}>*/}
             {numOfPages > 1 && <CustomPagination setPage={setPage} numOfPages={numOfPages}/>}
             {/*</div>*/}
-            {/*<button onClick={handleToken}>token</button>*/}
         </>
     );
 }

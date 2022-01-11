@@ -3,8 +3,6 @@ import '../../user/User.css';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import api from "../../../services/api";
-import {choiceDate} from "../../../services/choiceDate";
-import {tokenRefresh} from "../../../services/login_services";
 
 function RentApartment({id}) {
     const [date_arrival, setDateArrival] = useState('');

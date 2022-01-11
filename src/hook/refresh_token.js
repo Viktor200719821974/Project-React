@@ -1,9 +1,7 @@
 import api from "../services/api";
-import useAuth from "./useAuth";
-import axios from "axios";
 
 const refresh = async (e) => {
-    // const auth = useAuth();
+
     const refreshToken = localStorage.getItem('refresh');
     let data = {['refresh']: refreshToken};
     try{

@@ -40,7 +40,6 @@ function CommentsModal({id, setStatusResponse, statusResponse}) {
                 onClose={handleClose}
                 aria-labelledby="child-modal-title"
                 aria-describedby="child-modal-description"
-                // disableScrollLock={true}
             >
                 <Box sx={{ ...style,}}>
                     <SendComment key={id+6} id={id} setStatusResponse={setStatusResponse} statusResponse={statusResponse}/>

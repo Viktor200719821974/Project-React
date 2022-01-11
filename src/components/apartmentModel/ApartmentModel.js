@@ -23,9 +23,6 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 600,
-    // height: 600,
-    // ,
-    // overflowX: 'hidden',
     bgcolor: '#39445a',
     border: '2px solid #000',
     boxShadow: 24,
@@ -50,7 +47,8 @@ function ChildModal({id}) {
     const handleClose = () => {
         setOpen(false);
     };
-    useEffect(async () => {
+    useEffect( () => {
+        async function fetchData(){
         setLoading(true);
         try{
             const {data} = await api.auth.getApartment(id);
@@ -64,12 +62,11 @@ function ChildModal({id}) {
         }catch (e) {
             console.log(e.message);
         }
+        }
+        fetchData();
         setLoading(false);
-    },[statusResponse, noComments])
+    },[statusResponse, noComments, id])
 
-    // const filter = comments.filter(comments => comments.apartment === id);
-    // const photo = filter.map(y => y['photo_comments_apartment']);
-    // console.log(filter);
     if (loading){
         return <div>Loading...</div>
     }
@@ -85,7 +82,6 @@ function ChildModal({id}) {
                 disableScrollLock={true}
             >
                 <Box sx={{ ...style,}}>
-                    {/*<h2 id="child-modal-title">Comments</h2>*/}
                     <div className={manyComments && noComments ? 'div_comments_apartment_modal' : 'div_comments_apartment_modal_noComments'}>
                     <CommentsApartment key={id+4} filter={comments} noComments={noComments}/>
                     <CommentsModal key={id+5} id={id} setStatusResponse={setStatusResponse}
@@ -126,9 +122,12 @@ export default function ApartmentModel({children, id, photo, rating}) {
     const handleClose = () => {
         setOpen(false)
     };
-    useEffect(async() => {
+    useEffect(() => {
+        async function fetchData (){
         const { data } = await api.auth.getApartment(id);
         setApartment(data);
+        }
+        fetchData();
         // eslint-disable-next-line
     }, [id]);
     return (

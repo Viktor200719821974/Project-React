@@ -7,7 +7,6 @@ import {useHistory} from "react-router";
 import api from "../../services/api";
 
 function Auth() {
-    // const [token, setToken] = useState({});
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -62,7 +61,6 @@ function Auth() {
     return (
         <>
             <span className={'pageTitle'}>Authorization</span>
-            {/*{isAuthenticated && <AuthModal key={email} isAuthenticated={isAuthenticated}/>}*/}
             <form className={'form_register'} onSubmit={handleSubmit}>
                 <fieldset className={'register-group'}>
                     <label htmlFor={'email'} className={!auth.isLoaded && errorEmail ?'error_label' : 'label'}>Email

@@ -12,14 +12,17 @@ const ApartmentContent = ({id, country, city, region, price, numbers_people, pho
     const filter = comments.map(comments => comments.rating);
     const rating = count(filter);
 
-    useEffect(async() => {
+    useEffect(() => {
+        async function fetchData(){
         try{
             const {data} = await api.auth.getApartment(id);
             setComments(data.comments_apartment);
         }catch (e) {
             console.log(e.message);
         }
-    },[])
+        }
+        fetchData();
+    },[id])
     return (
         <>
             <ApartmentModel  id={id} key={id} photo={photo} rating={rating}>

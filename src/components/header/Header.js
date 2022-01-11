@@ -1,7 +1,7 @@
 import "./Header.css";
 import HomeIcon from "@mui/icons-material/Home";
 import {Link} from "react-router-dom";
-import React, {useState} from "react";
+import React from "react";
 import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Button from "@mui/material/Button";
@@ -11,23 +11,14 @@ import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 
 const Header = () => {
-    // const [exit, setExit] = useState(false);
     const auth = useAuth();
     const history = useHistory();
     const onLogOut = () => {
         auth.logOut();
         history.push("/login");
-        // localStorage.removeItem('access');
-        // localStorage.removeItem('refresh');
-        // auth.isLoaded = false;
     };
     return (
         <div className={'header'}>
-
-            {/*<Link to={'/'} className={'registration_link'}>*/}
-            {/*    <HomeIcon color="success" />Home Page*/}
-            {/*</Link>*/}
-            {/*<div >*/}
                 <Button color="success" component={Link} to="/" sx={{fontWeight: 'bold', marginTop: 5}}>
                     <HomeIcon color="success" /> Home
                 </Button>

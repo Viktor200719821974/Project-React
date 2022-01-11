@@ -102,7 +102,8 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
     const handleClose = () => {
         setOpen(false)
     };
-    useEffect(async() => {
+    useEffect(() => {
+        async function fetchData (){
         try{
         const res = await api.auth.getApartment(id);
         setApartment(res.data);
@@ -117,6 +118,8 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
         }catch (e) {
             console.log(e.message);
         }
+        }
+        fetchData();
         //eslint-disable-next-line
     }, []);
 
