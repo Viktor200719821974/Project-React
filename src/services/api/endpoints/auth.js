@@ -2,6 +2,7 @@ import axios from "../axios";
 
 const endpoints = {
     // registration: (data) => axios.post("/v1/auth/email/register", data),
+    refresh: (data) => axios.post('/auth/refresh', data),
     login: (data) => axios.post("/auth", data),
     // forgotPassword: (data) => axios.post("/v1/auth/forgot/password", data),
     // getApartments: (page) => axios.get(`/apartments?page=${page}`),
@@ -28,7 +29,7 @@ const endpoints = {
     changeUserManager: (id) => axios.patch(`/users/${id}/manager`),
     sendCommentsApartment: (id, obj) => axios.post(`/apartments/${id}/comment_apartment`, obj),
     rentApartment: (id, obj) => axios.post(`/apartments/${id}/selected_date`, obj),
-    addPhotoRooms: (id, photo_rooms) => axios.patch(`/apartments/${id}/photo_rooms`, photo_rooms),
+    addPhotoRooms: (id, formData) => axios.patch(`/apartments/${id}/photo_rooms`, formData),
     getDateSelection: () => axios.get('/date_selection'),
     sendCommentUser: (id, obj) => axios.post(`/users/${id}/comment_user`, obj),
 };

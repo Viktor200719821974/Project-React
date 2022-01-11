@@ -9,6 +9,8 @@ import Button from "@mui/material/Button";
 import {Link} from "react-router-dom";
 import api from "../../services/api";
 import {tokenDecoded} from "../../hook/token_user_id";
+import {refreshToken} from "../../hook/refresh_token";
+import useAuth from "../../hook/useAuth";
 
 function User() {
     const [user, setUser] = useState({});
@@ -19,29 +21,43 @@ function User() {
     const [profile, setProfile] = useState([]);
     const [statusResponse, setStatusResponse] = useState(false);
     const [loading, setLoading] = useState(false);
-
+    const auth = useAuth();
     const token = localStorage.getItem('access');
 
     useEffect( async() => {
         setLoading(true);
         try{
         const id = tokenDecoded(token);
-        const {data} = await api.auth.getUser(id);
-        setComments(data.comments_user);
-        setApartment(data.apartment);
-        setProfile(data.profile);
-        setUser(data);
+        const res = await api.auth.getUser(id);
+        setComments(res.data.comments_user);
+        setApartment(res.data.apartment);
+        setProfile(res.data.profile);
+        setUser(res.data);
+        // console.log(res.status);
         if (statusResponse){
             setStatusResponse(false);
         }
-        if (data.is_staff === true){
+        if (res.data.is_staff === true){
             setIsStaff(true);
         }
-        if (data.is_superuser === true){
+        if (res.data.is_superuser === true){
             setIsSuperUser(true);
         }
     }catch (e) {
-            console.log(e.message);
+            if (e.request.status === 401){
+                const refreshToken = localStorage.getItem('refresh');
+                let data = {['refresh']: refreshToken};
+                try{
+                    const token = await api.auth.refresh(data);
+                    if (token.status === 200){
+                        auth.setToken(token.data);
+                    }
+                    console.log(token.status);
+                }catch (e) {
+                    console.log(e.message);
+                }
+            }
+            console.log(e.request.status);
         }
         setLoading(false);
     },[statusResponse])

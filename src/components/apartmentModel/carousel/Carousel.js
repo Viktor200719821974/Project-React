@@ -5,20 +5,35 @@ import './Carousel.css';
 import noPicture from './image/No_Picture.jpg';
 import ImageModal from "./ImageModal";
 import api from "../../../services/api";
+import {refreshToken} from "../../../hook/refresh_token";
+import useAuth from "../../../hook/useAuth";
 
 const handleDragStart = (e) => e.preventDefault();
 
 const Carousel = ({id}) => {
     const [photo, setPhoto] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const auth = useAuth();
     useEffect(async() => {
         setLoading(true);
         try{
             const { data } = await api.auth.getApartment(id);
             setPhoto(data.photo_rooms);
         }catch (e) {
-            console.log(e.message);
+            if (e.request.status === 401){
+                const refreshToken = localStorage.getItem('refresh');
+                let data = {['refresh']: refreshToken};
+                try{
+                    const token = await api.auth.refresh(data);
+                    if (token.status === 200){
+                        auth.setToken(token.data);
+                    }
+                    console.log(token.status);
+                }catch (e) {
+                    console.log(e.message);
+                }
+            }
+            console.log(e.request.status);
         }
         setLoading(false);
         // eslint-disable-next-line

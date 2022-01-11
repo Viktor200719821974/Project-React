@@ -1,15 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './Auth.css';
-import {loginUser} from "../../services/login_services";
 import {Link} from 'react-router-dom';
-import AuthModal from "./AuthModal";
 import {Button} from "@material-ui/core";
 import useAuth from "../../hook/useAuth";
 import {useHistory} from "react-router";
 import api from "../../services/api";
 
 function Auth() {
-    const [token, setToken] = useState({});
+    // const [token, setToken] = useState({});
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -26,10 +24,11 @@ function Auth() {
         let data = {email, password};
         try{
             const token = await api.auth.login(data);
-            auth.setToken(token.data);
+            // auth.setToken(token.data);
 
             if (token.status === 200){
-                setToken(token);
+                auth.setToken(token.data);
+                // setToken(token);
                 history.push("/");
             }
 

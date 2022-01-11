@@ -251,3 +251,11 @@ input{
     justify-content: center;
     margin: 40px 80px 40px 10px;
 }
+.drop-area{
+    width: 50vw;
+    height: 50vh;
+    border: 5px dashed black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

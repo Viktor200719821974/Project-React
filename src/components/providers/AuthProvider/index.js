@@ -43,7 +43,7 @@ const AuthProvider = (props) => {
     }, [setToken]);
 
     useEffect(() => {
-        loadData();
+        loadData().then(response => console.log(response));
     }, [loadData]);
 
     const contextValue = useMemo(

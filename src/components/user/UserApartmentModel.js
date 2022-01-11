@@ -20,7 +20,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 function ChildModal({id, comments, noComments, dateSelection, setStatusResponse, noDate}) {
     const [open, setOpen] = React.useState(false);
-    console.log(noDate, noComments);
+
     const handleOpen = () => {
         setOpen(true);
     };

@@ -10,7 +10,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 600,
+    // width: 600,
     bgcolor: '#39445a',
     border: '2px solid #000',
     boxShadow: 24,
@@ -22,6 +22,7 @@ const style = {
 const AddPhotoApartmentModal = ({id, setStatusResponse, statusResponse}) => {
 
     const [open, setOpen] = useState(false);
+
     const handleOpen = () => {
         setOpen(true);
     };
@@ -29,11 +30,6 @@ const AddPhotoApartmentModal = ({id, setStatusResponse, statusResponse}) => {
         setOpen(false);
     };
 
-    // useEffect(() => {
-    //     if (statusResponse){
-    //         setStatusResponse(false);
-    //     }
-    // },[])
     return (
         <React.Fragment>
             <Button onClick={handleOpen} variant="outlined" color="success"
@@ -41,16 +37,13 @@ const AddPhotoApartmentModal = ({id, setStatusResponse, statusResponse}) => {
                 Додати фото
             </Button>
             <Modal
-                hideBackdrop
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="child-modal-title"
-                aria-describedby="child-modal-description"
-                disableScrollLock={true}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
             >
-                <Box sx={{ ...style, width: 600 }}>
+                <Box sx={{ ...style }}>
                     <AddPhotoApartment key={id+567} id={id}/>
-                    <Button onClick={handleClose} variant="contained" color="success">Закрити</Button>
                 </Box>
             </Modal>
         </React.Fragment>
