@@ -3,7 +3,7 @@ import api from "../services/api";
 const refresh = async (e) => {
 
     const refreshToken = localStorage.getItem('refresh');
-    let data = {['refresh']: refreshToken};
+    let data = {refresh: refreshToken};
     try{
         const token = await api.auth.refresh(data);
         if (token.status === 200){

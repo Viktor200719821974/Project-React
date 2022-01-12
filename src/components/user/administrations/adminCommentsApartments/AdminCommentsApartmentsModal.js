@@ -9,7 +9,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import FormChangeComment from "../formChangeComments/FormChangeComment";
 import Alert from "@mui/material/Alert";
-// import AlertTitle from "@mui/material/AlertTitle";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -75,17 +74,17 @@ const AdminCommentsApartmentsModal = ({id, children, statusResponse, setStatusRe
             }
         }
     }
-    useEffect(async () => {
+    useEffect( () => {
+        async function fetchData(){
         try{
             const res = await api.auth.getCommentApartments(id);
                     setComment(res.data);
         }catch (e){
             console.log(e.message);
         }
-        if (statusResponse){
-            setStatusResponse(false);
         }
-    },[statusResponse])
+        fetchData();
+    },[statusResponse, id])
 
     return (
         <div>
@@ -99,10 +98,6 @@ const AdminCommentsApartmentsModal = ({id, children, statusResponse, setStatusRe
                 open={open}
                 onClose={handleClose}
                 closeAfterTransition
-                // BackdropComponent={Backdrop}
-                // BackdropProps={{
-                //     timeout: 500,
-                // }}
             >
                 <Fade in={open}>
                     {comment &&  (

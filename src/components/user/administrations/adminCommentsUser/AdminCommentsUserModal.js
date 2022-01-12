@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import "../../User.css";
 import {makeStyles} from "@material-ui/styles";
-import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
 import Modal from "@mui/material/Modal";
 import api from "../../../../services/api";
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AdminCommentsUserModal = ({id, children, statusResponse, setStatusResponse}) => {
+const AdminCommentsUserModal = ({id, children, setStatusResponse}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [comment, setComment] = useState([]);
@@ -75,18 +74,17 @@ const AdminCommentsUserModal = ({id, children, statusResponse, setStatusResponse
             }
         }
     }
-    useEffect(async () => {
+    useEffect(() => {
+        async function fetchData(){
         try{
             const res = await api.auth.getCommentUsers(id);
             setComment(res.data);
-            // console.log(res);
         }catch (e){
             console.log(e.message);
         }
-        if (statusResponse){
-            setStatusResponse(false);
         }
-    },[statusResponse])
+        fetchData();
+    },[id])
     return (
         <div>
             <div className={'media'} onClick={handleOpen}>
@@ -99,10 +97,6 @@ const AdminCommentsUserModal = ({id, children, statusResponse, setStatusResponse
                 open={open}
                 onClose={handleClose}
                 closeAfterTransition
-                // BackdropComponent={Backdrop}
-                // BackdropProps={{
-                //     timeout: 500,
-                // }}
             >
                 <Fade in={open}>
                     {comment &&  (

@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-
     },
     paper: {
         backgroundColor: "#39445a",

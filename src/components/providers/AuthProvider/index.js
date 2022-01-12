@@ -18,7 +18,7 @@ const AuthProvider = (props) => {
             localStorage.removeItem("access");
             localStorage.removeItem("refresh");
         }
-    }, [token]);
+    }, []);
     const logOut = useCallback(() => {
         setUser(null);
         setToken(null);
@@ -35,7 +35,9 @@ const AuthProvider = (props) => {
                 setUser(data);
                 setIsLoaded(true);
             }
-        } catch {
+        } catch (e) {
+            // console.log(e.response.status);
+            // console.log(e.request.status);
             // if (e.request.status === 401){
             //     const refreshToken = localStorage.getItem('refresh');
             //     let data = {refresh:refreshToken};
@@ -49,8 +51,8 @@ const AuthProvider = (props) => {
             //         console.log(e.message);
             //     }
             // }
-            // console.log(e.response);
-            // console.log(e.request);
+            console.log(e.response);
+            console.log(e.request);
             setToken(null);
         } finally {
 
@@ -59,7 +61,7 @@ const AuthProvider = (props) => {
 
     useEffect(() => {
         loadData();
-    }, [loadData]);
+    }, [loadData, isLoaded, token]);
 
     const contextValue = useMemo(
         () => ({

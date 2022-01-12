@@ -7,15 +7,12 @@ import Modal from "@mui/material/Modal";
 import api from "../../../../services/api";
 import Button from "@mui/material/Button";
 import BlockIcon from '@mui/icons-material/Block';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
         display: "flex",
         boxSizing: "border-box",
-        // alignItems: "center",
-        // justifyContent: "center",
         margin: "60px auto auto auto",
         width: 800,
     },
@@ -30,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const UserManagerModal = ({id, children, statusResponse, setStatusResponse}) => {
+const UserManagerModal = ({id, children, setStatusResponse}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [user, setUser] = useState([]);
@@ -64,7 +61,8 @@ const UserManagerModal = ({id, children, statusResponse, setStatusResponse}) => 
             console.log(e.message);
         }
     }
-    useEffect(async () => {
+    useEffect( () => {
+        async function fetchData (){
         try{
             const res = await api.auth.getUser(id);
             setUser(res.data);
@@ -72,10 +70,9 @@ const UserManagerModal = ({id, children, statusResponse, setStatusResponse}) => 
         }catch (e){
             console.log(e.message);
         }
-        if (statusResponse){
-            setStatusResponse(false);
-        }
-    },[statusResponse])
+    }
+    fetchData();
+    },[id])
 
     return (
         <div>

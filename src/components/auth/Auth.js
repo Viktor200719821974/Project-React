@@ -23,11 +23,9 @@ function Auth() {
         let data = {email, password};
         try{
             const token = await api.auth.login(data);
-            // auth.setToken(token.data);
 
             if (token.status === 200){
                 auth.setToken(token.data);
-                // setToken(token);
                 history.push("/");
             }
 
@@ -62,11 +60,11 @@ function Auth() {
         <>
             <span className={'pageTitle'}>Authorization</span>
             <form className={'form_register'} onSubmit={handleSubmit}>
-                <fieldset className={'register-group'}>
+                {/*<fieldset className={'register-group'}>*/}
                     <label htmlFor={'email'} className={!auth.isLoaded && errorEmail ?'error_label' : 'label'}>Email
                         <input className={!auth.isLoaded && errorEmail ? 'error_input': 'input'} name={'email'}
                                type="text" onChange={e => setEmail(e.target.value)}
-                               placeholder={errorEmail ? errorEmail : 'admin@gmail'}/>
+                               placeholder={errorEmail ? errorEmail : 'email@gmail.com'}/>
                     </label>
                     <label htmlFor={'password'} className={!auth.isLoaded && errorPassword ?'error_label' : 'label'}>
                         Гасло
@@ -75,7 +73,7 @@ function Auth() {
                                placeholder={errorPassword ? errorPassword : '************************'}/>
                     </label>
                     {errorAuth && <div className={'error_message'}>* {errorMessage}</div>}
-                </fieldset>
+                {/*</fieldset>*/}
                 <button className={'btn btn-default'} name={'submit'} type="submit"  >Save</button>
                 <Button
                     color="inherit"

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Button from "@mui/material/Button";
 import PersonIcon from '@mui/icons-material/Person';
-import useAuth from "../../../hook/useAuth";
 import api from "../../../services/api";
 import AdminBlockedContent from "./adminBlockedModal/AdminBlockedContent";
 import CustomPagination from "../../pagination/CustomPagination";
@@ -12,7 +11,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import AdminCommentsUserContent from "./adminCommentsUser/AdminCommentsUserContent";
 
 const Admin = () => {
-    const auth = useAuth();
+
     const [users, setUsers] = useState([]);
     const [commentsApartments, setCommentsApartments] = useState([]);
     const [commentsUsers, setCommentsUsers] = useState([]);
@@ -39,12 +38,15 @@ const Admin = () => {
         }
         setIsLoading(false);
     }
-    useEffect(async () => {
+    useEffect(() => {
+        async function fetchData (){
         if (loaded){
             const res = await api.auth.getUsers(page);
             setUsers(res.data.data)
         }
-    },[page, statusResponse])
+        }
+        fetchData();
+    },[page, statusResponse, loaded])
 
     const handleCommentsApartment = async(e) => {
         setIsLoading(true);
@@ -61,12 +63,15 @@ const Admin = () => {
         }
         setIsLoading(false);
     }
-    useEffect(async () => {
+    useEffect( () => {
+        async function fetchData (){
         if (loadedCommentsApartments){
             const res = await api.auth.getCommentsApartments(page);
             setCommentsApartments(res.data.data)
         }
-    },[page, statusResponse])
+        }
+        fetchData();
+    },[page, statusResponse, loadedCommentsApartments])
 
     const handleCommentsUsers = async(e) => {
         setIsLoading(true);
@@ -83,12 +88,15 @@ const Admin = () => {
         }
         setIsLoading(false);
     }
-    useEffect(async () => {
+    useEffect( () => {
+        async function fetchData(){
         if (loadedCommentsUsers){
             const res = await api.auth.getCommentsUsers(page);
-            setCommentsUsers(res.data.data)
+           setCommentsUsers(res.data.data)
         }
-    },[page, statusResponse])
+        }
+        fetchData();
+    },[page, statusResponse, loadedCommentsUsers])
 
     const handleClosed = () => {
         setLoaded(false);

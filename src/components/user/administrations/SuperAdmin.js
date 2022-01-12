@@ -10,7 +10,8 @@ const SuperAdmin = () => {
     const [numOfPages, setNumOfPages] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(async() => {
+    useEffect(() => {
+        async function fetchData(){
         setIsLoading(true);
         try{
             const res = await api.auth.getUsers(page);
@@ -19,6 +20,8 @@ const SuperAdmin = () => {
         }catch (e) {
             console.log(e.message);
         }
+        }
+        fetchData();
         setIsLoading(false);
     },[page, statusResponse])
     if (isLoading){

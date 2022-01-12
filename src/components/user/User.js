@@ -31,7 +31,6 @@ function User() {
         setApartment(res.data.apartment);
         setProfile(res.data.profile);
         setUser(res.data);
-        // console.log(res.status);
         if (statusResponse){
             setStatusResponse(false);
         }

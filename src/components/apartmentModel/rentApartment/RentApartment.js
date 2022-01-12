@@ -63,8 +63,8 @@ function RentApartment({id}) {
         setLoading(false);
     }
     if (loading){
-        return <Alert severity="success" sx={{backgroundColor: '#39445a', color: 'white'}}>Ми відправили Ваше прохання зняти житло, відповідь отримаєте
-            на електронну почту</Alert>
+        return <Alert severity="success" sx={{backgroundColor: '#39445a', color: 'white'}}>Ми відправили Ваше прохання
+            зняти житло, відповідь отримаєте на електронну пошту</Alert>
     }
     return (
         <div>

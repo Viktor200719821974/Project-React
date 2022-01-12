@@ -25,7 +25,6 @@ function App() {
                       <Route path={'/admin'} component={Admin}/>
                       <Route path={'/superAdmin'} component={SuperAdmin}/>
                   </Switch>
-              {/*    <Routes/>*/}
               </Container>
           </div>
           {/*<SimpleBottomNavigation/>*/}

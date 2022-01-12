@@ -27,7 +27,8 @@
     position: relative;
     width: 100%;
     margin: auto;
-    direction: ltr; }
+    direction: ltr;
+}
 
 .alice-carousel__wrapper {
     position: relative;
@@ -35,7 +36,8 @@
     overflow-y: hidden;
     box-sizing: border-box;
     width: 100%;
-    height: auto; }
+    height: auto;
+}
 
 .alice-carousel__stage {
     position: relative;
@@ -48,7 +50,9 @@
     transform-style: flat;
     -webkit-transform-style: flat;
     backface-visibility: hidden;
-    -webkit-backface-visibility: hidden; }
+    -webkit-backface-visibility: hidden;
+}
+
 .alice-carousel__stage-item {
     position: relative;
     display: inline-block;

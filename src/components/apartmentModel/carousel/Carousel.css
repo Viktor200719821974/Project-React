@@ -3,6 +3,7 @@
     flex-direction: column;
     object-fit: contain;
     padding: 10px;
+    height: 150px;
 }
 .carouselItem__img {
     border-radius: 10px;
@@ -11,14 +12,18 @@
 }
 .ImageModal_media{
     display: flex;
+    box-sizing: border-box;
     flex-direction: column;
-    width: 200px;
-    height: 130px;
+    width: auto;
+    max-width: 200px;
+    height: auto;
+    max-height: 200px;
     padding: 5px;
     margin: 5px 0;
     background-color: #282c34;
     border-radius: 10px;
     position: relative;
+
     /*font-family: "Montserrat", sans-serif;*/
 }
 .ImageModal_media:hover {

@@ -60,7 +60,8 @@ const AdminBlockedModal = ({id, children, statusResponse, setStatusResponse}) =>
             console.log(e.message);
         }
     }
-    useEffect(async () => {
+    useEffect( () => {
+        async function fetchData(){
         try{
         const res = await api.auth.getUser(id);
         setUser(res.data);
@@ -68,12 +69,9 @@ const AdminBlockedModal = ({id, children, statusResponse, setStatusResponse}) =>
         }catch (e){
             console.log(e.message);
         }
-    },[statusResponse])
-    useEffect(() => {
-        if (statusResponse){
-            setStatusResponse(false);
-        }
-    })
+    }
+    fetchData();
+    },[statusResponse, id])
     return (
         <div>
             <div className={'media'} onClick={handleOpen}>

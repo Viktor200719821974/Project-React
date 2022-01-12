@@ -11,6 +11,7 @@ const handleDragStart = (e) => e.preventDefault();
 const Carousel = ({id}) => {
     const [photo, setPhoto] = useState([]);
     const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         async function fetchData(){
         setLoading(true);
@@ -46,6 +47,9 @@ const Carousel = ({id}) => {
         0: {
             items: 1,
         },
+        // 512: {
+        //     items: 3,
+        // },
 
         1024: {
             items: 3,

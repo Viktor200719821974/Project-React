@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import api from "../../../services/api";
 
-const AddPhotoApartment = ({id}) => {
-    const [loadedPhoto, setLoadedPhoto] = useState(false);
+const AddPhotoApartment = ({id, setLoadedPhoto}) => {
     const [drag, setDrag] = useState(false);
 
     function dragStartHandler (e) {
@@ -21,18 +20,18 @@ const AddPhotoApartment = ({id}) => {
         try{
             const res = api.auth.addPhotoRooms(id, formData);
             if (res){
-
+               Promise.resolve(res).then(function (res){
+                   if (res.status === 200){
+                       setLoadedPhoto(true);
+                   }
+               });
             }
-            console.log(res);
         }catch (e) {
 
-            console.log(e.response.status);
+            console.log(e.message);
         }
         setDrag(false);
     }
-    useEffect(() => {
-
-    },[])
     return (
     <div>
         {drag ? <div className={'drop-area'}

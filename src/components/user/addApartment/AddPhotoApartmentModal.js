@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -10,7 +10,6 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    // width: 600,
     bgcolor: '#39445a',
     border: '2px solid #000',
     boxShadow: 24,
@@ -19,7 +18,7 @@ const style = {
     px: 4,
     pb: 3,
 };
-const AddPhotoApartmentModal = ({id, setStatusResponse, statusResponse}) => {
+const AddPhotoApartmentModal = ({id, setLoadedPhoto}) => {
 
     const [open, setOpen] = useState(false);
 
@@ -43,7 +42,7 @@ const AddPhotoApartmentModal = ({id, setStatusResponse, statusResponse}) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={{ ...style }}>
-                    <AddPhotoApartment key={id+567} id={id}/>
+                    <AddPhotoApartment key={id+567} id={id} setLoadedPhoto={setLoadedPhoto}/>
                 </Box>
             </Modal>
         </React.Fragment>

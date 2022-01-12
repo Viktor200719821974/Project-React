@@ -29,7 +29,7 @@ const UserCommentsApartmentsModal = ({children, email, comments, dateSelection, 
     const [open, setOpen] = useState(false);
     const [noComments, setNoComments] =useState(false);
     const [noDate, setNoDate] =useState(false);
-    console.log(comments);
+
     const filterComments = comments.filter(c => c.user_email === email);
     const userId = filterComments.map(c => c.user_id)[0];
     const filterDate = dateSelection.filter(c => c.user_email === email);
@@ -47,7 +47,7 @@ const UserCommentsApartmentsModal = ({children, email, comments, dateSelection, 
         if (filterDate.length !== 0){
             setNoDate(true);
         }
-    },[noComments, noDate])
+    },[noComments, noDate, filterComments.length, filterDate.length])
     return (
         <div>
             <div className={'media_comments'} onClick={handleOpen}>

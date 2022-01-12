@@ -56,13 +56,11 @@ function ChildModal({id, comments, noComments, dateSelection, setStatusResponse,
                         <UserCommentsApartmentContent key={index}
                                                       id={id}
                                                       noComments={noComments}
-                                                      dateSelection={dateSelection}
                                                       name={uniqueName}
                                                       email={c}
                                                       setStatusResponse={setStatusResponse}
                                                       comments={comments}
                                                       dateSelection={dateSelection}
-
                         />
                     )}
                         </div>
@@ -95,6 +93,7 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
     const [noComments, setNoComments] =useState(false);
     const [dateSelection, setDateSelection] = useState([]);
     const [noDate, setNoDate] = useState(false);
+    const [loadedPhoto, setLoadedPhoto] = useState(false);
 
     const handleOpen = () => {
         setOpen(true)
@@ -109,6 +108,9 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
         setApartment(res.data);
         setComments(res.data.comments_apartment);
         setDateSelection(res.data.date_selection);
+        if (loadedPhoto){
+            setLoadedPhoto(false);
+        }
         if (res.data.comments_apartment.length !== 0){
             setNoComments(true);
         }
@@ -120,8 +122,7 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
         }
         }
         fetchData();
-        //eslint-disable-next-line
-    }, []);
+    }, [loadedPhoto, id]);
 
     const delApartment = async (e) => {
         e.preventDefault();
@@ -196,8 +197,8 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
                                         </div>
                                         <div className={'UserApartmentModal__button'}>
                                             <AddPhotoApartmentModal id={id} key={id + 350}
-                                                                    setStatusResponse={setStatusResponse}
-                                                                    statusResponse={statusResponse}/>
+                                                                    setLoadedPhoto={setLoadedPhoto}
+                                            />
                                         </div>
                                     </div>
                                     </div>
