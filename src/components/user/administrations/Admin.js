@@ -9,6 +9,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import AdminCommentsApartmentsContent from "./adminCommentsApartments/AdminCommentsApartmentsContent";
 import CloseIcon from '@mui/icons-material/Close';
 import AdminCommentsUserContent from "./adminCommentsUser/AdminCommentsUserContent";
+import useAuth from "../../../hook/useAuth";
 
 const Admin = () => {
 
@@ -22,6 +23,7 @@ const Admin = () => {
     const [loadedCommentsUsers, setLoadedCommentsUsers] = useState(false);
     const [loadedCommentsApartments, setLoadedCommentsApartments] = useState(false);
     const [statusResponse, setStatusResponse] = useState(false);
+    const auth = useAuth();
 
     const handleUsers = async(e) => {
         setIsLoading(true);
@@ -34,16 +36,26 @@ const Admin = () => {
                 setLoaded(true);
             }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message)
         }
         setIsLoading(false);
     }
     useEffect(() => {
         async function fetchData (){
-        if (loaded){
-            const res = await api.auth.getUsers(page);
-            setUsers(res.data.data)
-        }
+            try{
+                if (loaded){
+                    const res = await api.auth.getUsers(page);
+                    setUsers(res.data.data)
+                }
+            }catch (e) {
+                if (e.response.status === 401){
+                    auth.setRefreshToken(true);
+                }
+                console.log(e.message);
+            }
         }
         fetchData();
     },[page, statusResponse, loaded])
@@ -59,16 +71,26 @@ const Admin = () => {
                 setLoadedCommentsApartments(true);
             }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message)
         }
         setIsLoading(false);
     }
     useEffect( () => {
         async function fetchData (){
-        if (loadedCommentsApartments){
-            const res = await api.auth.getCommentsApartments(page);
-            setCommentsApartments(res.data.data)
-        }
+            try{
+                if (loadedCommentsApartments){
+                    const res = await api.auth.getCommentsApartments(page);
+                    setCommentsApartments(res.data.data)
+                }
+            }catch (e) {
+                if (e.response.status === 401){
+                    auth.setRefreshToken(true);
+                }
+                console.log(e.message);
+            }
         }
         fetchData();
     },[page, statusResponse, loadedCommentsApartments])
@@ -84,16 +106,27 @@ const Admin = () => {
                 setLoadedCommentsUsers(true);
             }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message)
         }
         setIsLoading(false);
     }
     useEffect( () => {
         async function fetchData(){
-        if (loadedCommentsUsers){
-            const res = await api.auth.getCommentsUsers(page);
-           setCommentsUsers(res.data.data)
-        }
+            try{
+                if (loadedCommentsUsers){
+                    const res = await api.auth.getCommentsUsers(page);
+                    setCommentsUsers(res.data.data)
+                }
+            }catch (e) {
+                if (e.response.status === 401){
+                    auth.setRefreshToken(true);
+                }
+                console.log(e.message);
+            }
+
         }
         fetchData();
     },[page, statusResponse, loadedCommentsUsers])

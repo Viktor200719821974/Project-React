@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import api from "../../../services/api";
+import useAuth from "../../../hook/useAuth";
 
 const AddPhotoApartment = ({id, setLoadedPhoto}) => {
     const [drag, setDrag] = useState(false);
+    const auth = useAuth();
 
     function dragStartHandler (e) {
         e.preventDefault();
@@ -27,7 +29,9 @@ const AddPhotoApartment = ({id, setLoadedPhoto}) => {
                });
             }
         }catch (e) {
-
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message);
         }
         setDrag(false);

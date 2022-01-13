@@ -9,6 +9,7 @@ import FormChangeComment from "../formChangeComments/FormChangeComment";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Alert from "@mui/material/Alert";
+import useAuth from "../../../../hook/useAuth";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -38,6 +39,7 @@ const AdminCommentsUserModal = ({id, children, setStatusResponse}) => {
     const [error, setError] = useState();
     const [deleteStatus, setDeleteStatus] = useState(false);
     const [changeStatus, setChangeStatus] = useState(false);
+    const auth = useAuth();
 
     const handleOpen = () => {
         setOpen(true)
@@ -54,6 +56,9 @@ const AdminCommentsUserModal = ({id, children, setStatusResponse}) => {
                 setStatusResponse(true);
             }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             if (e.response.statusText){
                 setError(e.response.statusText);
             }
@@ -69,6 +74,12 @@ const AdminCommentsUserModal = ({id, children, setStatusResponse}) => {
                     setStatusResponse(true);
                 }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             if (e.message){
                 setError(e.message);
             }
@@ -80,6 +91,9 @@ const AdminCommentsUserModal = ({id, children, setStatusResponse}) => {
             const res = await api.auth.getCommentUsers(id);
             setComment(res.data);
         }catch (e){
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message);
         }
         }

@@ -3,7 +3,6 @@ import '../User.css';
 import UserCommentsApartmentsModal from "./UserCommentsApartmentModal";
 
 function CommentsApartment({id, email, name, comments, dateSelection, setStatusResponse}) {
-    console.log(comments);
     return (
 
     <UserCommentsApartmentsModal key={id+345} id={id} comments={comments} email={email} dateSelection={dateSelection}

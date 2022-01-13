@@ -5,12 +5,14 @@ import './Carousel.css';
 import noPicture from './image/No_Picture.jpg';
 import ImageModal from "./ImageModal";
 import api from "../../../services/api";
+import useAuth from "../../../hook/useAuth";
 
 const handleDragStart = (e) => e.preventDefault();
 
 const Carousel = ({id}) => {
     const [photo, setPhoto] = useState([]);
     const [loading, setLoading] = useState(false);
+    const auth = useAuth();
 
     useEffect(() => {
         async function fetchData(){
@@ -19,6 +21,9 @@ const Carousel = ({id}) => {
             const { data } = await api.auth.getApartment(id);
             setPhoto(data.photo_rooms);
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message);
         }
         setLoading(false);

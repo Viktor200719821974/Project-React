@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import FormChangeComment from "../formChangeComments/FormChangeComment";
 import Alert from "@mui/material/Alert";
+import useAuth from "../../../../hook/useAuth";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -38,6 +39,7 @@ const AdminCommentsApartmentsModal = ({id, children, statusResponse, setStatusRe
     const [error, setError] = useState();
     const [deleteStatus, setDeleteStatus] = useState(false);
     const [changeStatus, setChangeStatus] = useState(false);
+    const auth = useAuth();
 
     const handleOpen = () => {
         setOpen(true)
@@ -54,6 +56,9 @@ const AdminCommentsApartmentsModal = ({id, children, statusResponse, setStatusRe
                 setStatusResponse(true);
             }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             if (e.response.status){
                 setError(e.response.statusText);
             }
@@ -69,6 +74,9 @@ const AdminCommentsApartmentsModal = ({id, children, statusResponse, setStatusRe
                 setStatusResponse(true);
             }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             if (e.message){
                 setError(e.message);
             }
@@ -80,6 +88,9 @@ const AdminCommentsApartmentsModal = ({id, children, statusResponse, setStatusRe
             const res = await api.auth.getCommentApartments(id);
                     setComment(res.data);
         }catch (e){
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message);
         }
         }

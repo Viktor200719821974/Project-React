@@ -2,7 +2,7 @@ import React from 'react';
 import "../../User.css";
 
 const FormChangeComment = ({setChangeComment, comment, changeComment}) => {
-    console.log(comment);
+
     return (
         <div>
             {/*<form action="">*/}

@@ -17,6 +17,7 @@ import api from "../../services/api";
 import AddPhotoApartmentModal from "./addApartment/AddPhotoApartmentModal";
 import UserCommentsApartmentContent from "./userCommentsApartment/UserCommentsApartmentContent";
 import CloseIcon from '@mui/icons-material/Close';
+import useAuth from "../../hook/useAuth";
 
 function ChildModal({id, comments, noComments, dateSelection, setStatusResponse, noDate}) {
     const [open, setOpen] = React.useState(false);
@@ -94,6 +95,7 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
     const [dateSelection, setDateSelection] = useState([]);
     const [noDate, setNoDate] = useState(false);
     const [loadedPhoto, setLoadedPhoto] = useState(false);
+    const auth = useAuth();
 
     const handleOpen = () => {
         setOpen(true)
@@ -118,6 +120,9 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
             setNoDate(true);
         }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message);
         }
         }
@@ -132,6 +137,9 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
             setStatusResponse(true);
         }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message);
         }
     }

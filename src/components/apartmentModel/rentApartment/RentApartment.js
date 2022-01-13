@@ -3,6 +3,7 @@ import '../../user/User.css';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import api from "../../../services/api";
+import useAuth from "../../../hook/useAuth";
 
 function RentApartment({id}) {
     const [date_arrival, setDateArrival] = useState('');
@@ -15,6 +16,7 @@ function RentApartment({id}) {
     const [noError, setNoError] = useState();
     const [apartment, setApartment] = useState(false);
     const [loading, setLoading] = useState(false);
+    const auth = useAuth();
 
     const handleSubmit = async (e) => {
         let obj = {date_arrival, date_departure, number_peoples};
@@ -28,6 +30,9 @@ function RentApartment({id}) {
             console.log(res.status);
             console.log(res);
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message);
             console.log(e.response.data);
             setNoError(e.response.data);

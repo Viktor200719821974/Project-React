@@ -8,6 +8,7 @@ import api from "../../../../services/api";
 import Button from "@mui/material/Button";
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import useAuth from "../../../../hook/useAuth";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -31,6 +32,7 @@ const AdminBlockedModal = ({id, children, statusResponse, setStatusResponse}) =>
     const [open, setOpen] = useState(false);
     const [user, setUser] = useState([]);
     const [profile, setProfile] = useState([]);
+    const auth = useAuth();
 
     const handleOpen = () => {
         setOpen(true)
@@ -46,6 +48,9 @@ const AdminBlockedModal = ({id, children, statusResponse, setStatusResponse}) =>
                 setStatusResponse(true);
             }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message);
         }
     }
@@ -57,6 +62,9 @@ const AdminBlockedModal = ({id, children, statusResponse, setStatusResponse}) =>
             setStatusResponse(true);
         }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message);
         }
     }
@@ -67,6 +75,9 @@ const AdminBlockedModal = ({id, children, statusResponse, setStatusResponse}) =>
         setUser(res.data);
         setProfile(res.data.profile);
         }catch (e){
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message);
         }
     }

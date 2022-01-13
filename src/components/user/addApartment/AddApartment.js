@@ -3,6 +3,7 @@ import '../User.css';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import api from "../../../services/api";
+import useAuth from "../../../hook/useAuth";
 
 function AddApartment({setStatusResponse}) {
     const [country, setCountry] = useState('');
@@ -21,6 +22,7 @@ function AddApartment({setStatusResponse}) {
     const [errorPrice, setErrorPrice] = useState();
     const [noError, setNoError] = useState();
     const [apartment, setApartment] = useState(false);
+    const auth = useAuth();
     const [loading, setLoading] = useState(false);
 
     let obj = {
@@ -33,7 +35,7 @@ function AddApartment({setStatusResponse}) {
         price
     }
     const handleSubmit = async (e) => {
-        // setLoading(true);
+        setLoading(true);
         e.preventDefault();
         try{
         const res = await api.auth.addApartment(obj);
@@ -42,6 +44,9 @@ function AddApartment({setStatusResponse}) {
             setStatusResponse(true);
         }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             if (e.response.data.country){
                 setErrorCountry(e.response.data.country);
             }
@@ -65,11 +70,11 @@ function AddApartment({setStatusResponse}) {
             }
             console.log(e.message);
         }
-        // setLoading(false);
+        setLoading(false);
     }
-    // if (loading){
-    //     return <div>Loading...</div>
-    // }
+    if (loading){
+        return <div>Loading...</div>
+    }
     return (
         <div>
             {apartment && <Alert severity="success">

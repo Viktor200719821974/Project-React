@@ -19,6 +19,20 @@ const AuthProvider = (props) => {
             localStorage.removeItem("refresh");
         }
     }, []);
+    const setRefreshToken = useCallback(async(value) => {
+        if (value) {
+            const refreshToken = localStorage.getItem('refresh');
+            let data = {refresh: refreshToken};
+            try {
+                const token = await api.auth.refresh(data);
+                if (token.status === 200) {
+                    setToken(token.data);
+                }
+            } catch (e) {
+                console.log(e.message);
+            }
+        }
+    },[])
     const logOut = useCallback(() => {
         setUser(null);
         setToken(null);
@@ -35,24 +49,7 @@ const AuthProvider = (props) => {
                 setUser(data);
                 setIsLoaded(true);
             }
-        } catch (e) {
-            // console.log(e.response.status);
-            // console.log(e.request.status);
-            // if (e.request.status === 401){
-            //     const refreshToken = localStorage.getItem('refresh');
-            //     let data = {refresh:refreshToken};
-            //     try{
-            //         const token = await api.auth.refresh(data);
-            //         if (token.status === 200){
-            //            setToken(token.data);
-            //         }
-            //         console.log(token);
-            //     }catch (e) {
-            //         console.log(e.message);
-            //     }
-            // }
-            console.log(e.response);
-            console.log(e.request);
+        } catch {
             setToken(null);
         } finally {
 
@@ -71,8 +68,9 @@ const AuthProvider = (props) => {
             setUser,
             setToken,
             logOut,
+            setRefreshToken,
         }),
-        [isLoaded, user, token, setToken, logOut]
+        [isLoaded, user, token, setToken, logOut, setRefreshToken]
     );
     return (
         <AuthContext.Provider value={contextValue}>

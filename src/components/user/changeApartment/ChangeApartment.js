@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import {InputLabel, Select} from "@material-ui/core";
 import MenuItem from "@mui/material/MenuItem";
 import api from "../../../services/api";
+import useAuth from "../../../hook/useAuth";
 
 function ChangeApartment({id, setStatusResponse}) {
     const [key, setKey] = useState('');
@@ -14,6 +15,7 @@ function ChangeApartment({id, setStatusResponse}) {
     const [errorValue, setErrorValue] = useState();
     const [noError, setNoError] = useState();
     const [apartment, setApartment] = useState(false);
+    const auth = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,6 +27,9 @@ function ChangeApartment({id, setStatusResponse}) {
                 setStatusResponse(true);
             }
         }catch (e) {
+                if (e.response.status === 401){
+                    auth.setRefreshToken(true);
+                }
                 if (e.response.data.country) {
                     setErrorValue(e.response.data.country);
                 }

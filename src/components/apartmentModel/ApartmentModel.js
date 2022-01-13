@@ -40,6 +40,7 @@ function ChildModal({id}) {
     const [noComments, setNoComments] = useState(false);
     const [manyComments, setManyComments] = useState(false);
     const [statusResponse, setStatusResponse] = useState(false);
+    const auth = useAuth();
 
     const handleOpen = () => {
         setOpen(true);
@@ -60,6 +61,9 @@ function ChildModal({id}) {
                 setManyComments(true);
             }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message);
         }
         }
@@ -124,8 +128,15 @@ export default function ApartmentModel({children, id, photo, rating}) {
     };
     useEffect(() => {
         async function fetchData (){
-        const { data } = await api.auth.getApartment(id);
-        setApartment(data);
+            try{
+                const { data } = await api.auth.getApartment(id);
+                setApartment(data);
+            }catch (e) {
+                if (e.response.status === 401){
+                    auth.setRefreshToken(true);
+                    console.log(e.message);
+                }
+            }
         }
         fetchData();
         // eslint-disable-next-line

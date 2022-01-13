@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 
-export default function StarsRating({id, rating}) {
+export default function StarsRating({rating}) {
     return (
             <>
                   <Box

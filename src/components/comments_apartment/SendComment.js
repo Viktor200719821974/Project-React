@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import api from "../../services/api";
+import useAuth from "../../hook/useAuth";
 
-function SendComment({id, setStatusResponse, statusResponse}) {
+function SendComment({id, setStatusResponse}) {
 
     const [comments, setComments] = useState('');
     const [rating, setRating] = useState();
@@ -11,6 +12,7 @@ function SendComment({id, setStatusResponse, statusResponse}) {
     const [errorComments, setErrorComments] = useState();
     const [noError, setNoError] = useState();
     const [commentsOk, setCommentsOk] = useState(false);
+    const auth = useAuth();
 
     const handleSubmit = async (e) => {
         let obj = {comments, rating};
@@ -22,6 +24,9 @@ function SendComment({id, setStatusResponse, statusResponse}) {
                 setStatusResponse(true);
             }
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             if (e.response.data.comments){
                 setErrorComments(e.response.data.comments);
             }

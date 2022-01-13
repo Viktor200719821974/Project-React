@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import api from "../../../services/api";
 import UserManagerContent from "./userManager/UserManagerContent";
 import CustomPagination from "../../pagination/CustomPagination";
+import useAuth from "../../../hook/useAuth";
 
 const SuperAdmin = () => {
     const [users, setUsers] = useState([]);
@@ -9,6 +10,7 @@ const SuperAdmin = () => {
     const [page, setPage] = useState(1);
     const [numOfPages, setNumOfPages] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    const auth = useAuth();
 
     useEffect(() => {
         async function fetchData(){
@@ -18,6 +20,9 @@ const SuperAdmin = () => {
             setUsers(res.data.data);
             setNumOfPages(res.data.total_pages)
         }catch (e) {
+            if (e.response.status === 401){
+                auth.setRefreshToken(true);
+            }
             console.log(e.message);
         }
         }
