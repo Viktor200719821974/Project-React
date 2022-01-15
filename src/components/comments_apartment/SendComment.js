@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
+import "./CommentsApartment.css";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import api from "../../services/api";
 import useAuth from "../../hook/useAuth";
+import AddPhotoCommentApartmentModal from "./AddPhotoCommentApartmentModal";
 
 function SendComment({id, setStatusResponse}) {
 
@@ -12,7 +14,9 @@ function SendComment({id, setStatusResponse}) {
     const [errorComments, setErrorComments] = useState();
     const [noError, setNoError] = useState();
     const [commentsOk, setCommentsOk] = useState(false);
+    const [returnComment, setReturnComment] = useState([]);
     const auth = useAuth();
+
 
     const handleSubmit = async (e) => {
         let obj = {comments, rating};
@@ -21,8 +25,10 @@ function SendComment({id, setStatusResponse}) {
             const res = await api.auth.sendCommentsApartment(id, obj);
             if (res.status === 201){
                 setCommentsOk(true);
+                setReturnComment(res.data);
                 setStatusResponse(true);
             }
+            console.log(res);
         }catch (e) {
             if (e.response.status === 401){
                 auth.setRefreshToken(true);
@@ -59,8 +65,11 @@ function SendComment({id, setStatusResponse}) {
                     </label>
                 </fieldset>
                 <button className={'btn btn-default'} name={'submit'} type="submit">Відправити</button>
-
             </form>
+            {commentsOk && <div className={'div_sendComment_apartment_button'}>
+                  <AddPhotoCommentApartmentModal id={returnComment.id} key={returnComment.id + 76}/>
+            </div>
+            }
         </div>
     );
 }

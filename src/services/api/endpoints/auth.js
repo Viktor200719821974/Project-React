@@ -32,6 +32,7 @@ const endpoints = {
     addPhotoRooms: (id, formData) => axios.patch(`/apartments/${id}/photo_rooms`, formData),
     getDateSelection: () => axios.get('/date_selection'),
     sendCommentUser: (id, obj) => axios.post(`/users/${id}/comment_user`, obj),
+    addPhotoCommentApartment: (id, formData) => axios.patch(`/comments_apartment/${id}/addPhoto`, formData),
 };
 
 export default endpoints;

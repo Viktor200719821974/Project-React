@@ -27,7 +27,7 @@ const ApartmentContent = ({id, country, city, region, price, numbers_people, pho
         }
         }
         fetchData();
-    },[id])
+    },[id, auth])
     return (
         <>
             <ApartmentModel  id={id} key={id} photo={photo} rating={rating}>
