@@ -69,7 +69,7 @@ function ChildModal({id}) {
         }
         fetchData();
         setLoading(false);
-    },[statusResponse, noComments, id])
+    },[statusResponse, noComments, id, auth])
 
     if (loading){
         return <div>Loading...</div>
@@ -140,7 +140,7 @@ export default function ApartmentModel({children, id, photo, rating}) {
         }
         fetchData();
         // eslint-disable-next-line
-    }, [id]);
+    }, [id, auth]);
     return (
         <>
             <div className={'media'} onClick={handleOpen}>

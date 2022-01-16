@@ -11,7 +11,8 @@ export default function SendCommentUserModal({id, setStatusResponse}) {
 
     return (
         <div>
-            <Button onClick={handleOpen} variant="outlined" color="success" sx={{fontWeight: 800}} startIcon={<AddCommentIcon />}>
+            <Button onClick={handleOpen} variant="outlined" color="success" sx={{fontWeight: 800}}
+                    startIcon={<AddCommentIcon />}>
                 Write Comment
             </Button>
             <Modal

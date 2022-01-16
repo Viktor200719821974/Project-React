@@ -28,7 +28,7 @@ const SuperAdmin = () => {
         }
         fetchData();
         setIsLoading(false);
-    },[page, statusResponse])
+    },[page, statusResponse, auth])
     if (isLoading){
         return <div>Loading...</div>
     }

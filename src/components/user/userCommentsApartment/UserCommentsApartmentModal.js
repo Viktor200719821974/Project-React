@@ -31,8 +31,8 @@ const UserCommentsApartmentsModal = ({children, email, comments, dateSelection, 
     const [noDate, setNoDate] =useState(false);
 
     const filterComments = comments.filter(c => c.user_email === email);
-    const userId = filterComments.map(c => c.user_id)[0];
     const filterDate = dateSelection.filter(c => c.user_email === email);
+    const userId = filterDate.map(c => c.user_id)[0];
 
     const handleOpen = () => {
         setOpen(true)
@@ -97,7 +97,7 @@ const UserCommentsApartmentsModal = ({children, email, comments, dateSelection, 
                                 </div>
                             ) : <h3 className={'noDate_comment_user'}>No comments</h3>}
                         <div className={'UserCommentsApartmentModal_button_sendComment'}>
-                            <SendCommentUserModal key={userId + 567} id={userId} setStatusResponse={ setStatusResponse}/>
+                            <SendCommentUserModal key={userId + 567} id={userId} setStatusResponse={setStatusResponse}/>
                         </div>
                         </div>
                     )}

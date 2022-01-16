@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import api from "../../../services/api";
 import useAuth from "../../../hook/useAuth";
 
-const AddPhotoApartment = ({id, setLoadedPhoto}) => {
+const AddPhotoApartment = ({id, setLoadedPhoto, setStatusResponse}) => {
     const [drag, setDrag] = useState(false);
     const auth = useAuth();
 
@@ -25,6 +25,7 @@ const AddPhotoApartment = ({id, setLoadedPhoto}) => {
                Promise.resolve(res).then(function (res){
                    if (res.status === 200){
                        setLoadedPhoto(true);
+                       setStatusResponse(true);
                    }
                });
             }

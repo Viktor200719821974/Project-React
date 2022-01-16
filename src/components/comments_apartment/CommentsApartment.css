@@ -30,9 +30,21 @@
     display: block;
     margin: 5px 0 27px 0;
     padding: 5px 8px;
-    width: 98%;
+    width: 100px;
 }
 .div_sendComment_apartment_button{
     display: flex;
     justify-content: right;
+}
+.div_image_comment_apartment_main{
+    display: flex;
+    flex-wrap: wrap;
+}
+.div_image_comment_apartment{
+    margin: 5px ;
+    cursor: pointer;
+}
+.image_comment_apartment{
+    width: auto;
+    height: 40px;
 }

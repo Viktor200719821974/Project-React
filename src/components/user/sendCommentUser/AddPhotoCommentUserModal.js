@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import AddPhotoCommentApartment from "./AddPhotoCommentApartment";
+import AddPhotoCommentUser from "./AddPhotoCommentUser";
 
 const style = {
     position: 'absolute',
@@ -18,7 +18,7 @@ const style = {
     px: 4,
     pb: 3,
 };
-const AddPhotoCommentApartmentModal = ({id, setLoadedPhoto, setStatusResponse}) => {
+const AddPhotoCommentUserModal = ({id, setLoadedPhoto, setStatusResponse}) => {
 
     const [open, setOpen] = useState(false);
 
@@ -42,12 +42,13 @@ const AddPhotoCommentApartmentModal = ({id, setLoadedPhoto, setStatusResponse}) 
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={{ ...style }}>
-                    <AddPhotoCommentApartment key={id+767} id={id} setLoadedPhoto={setLoadedPhoto}
-                                              setStatusResponse={setStatusResponse}/>
+                   <AddPhotoCommentUser key={id + 999} id={id} setLoadedPhoto={setLoadedPhoto}
+                                        setStatusResponse={setStatusResponse}
+                   />
                 </Box>
             </Modal>
         </React.Fragment>
     );
 };
 
-export default AddPhotoCommentApartmentModal;
+export default AddPhotoCommentUserModal;

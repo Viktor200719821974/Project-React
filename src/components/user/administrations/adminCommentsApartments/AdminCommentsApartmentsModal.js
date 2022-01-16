@@ -95,7 +95,7 @@ const AdminCommentsApartmentsModal = ({id, children, statusResponse, setStatusRe
         }
         }
         fetchData();
-    },[statusResponse, id])
+    },[statusResponse, id, auth])
 
     return (
         <div>

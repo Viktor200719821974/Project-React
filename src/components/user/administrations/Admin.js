@@ -58,7 +58,7 @@ const Admin = () => {
             }
         }
         fetchData();
-    },[page, statusResponse, loaded])
+    },[page, statusResponse, loaded, auth])
 
     const handleCommentsApartment = async(e) => {
         setIsLoading(true);
@@ -93,7 +93,7 @@ const Admin = () => {
             }
         }
         fetchData();
-    },[page, statusResponse, loadedCommentsApartments])
+    },[page, statusResponse, loadedCommentsApartments, auth])
 
     const handleCommentsUsers = async(e) => {
         setIsLoading(true);
@@ -129,7 +129,7 @@ const Admin = () => {
 
         }
         fetchData();
-    },[page, statusResponse, loadedCommentsUsers])
+    },[page, statusResponse, loadedCommentsUsers, auth])
 
     const handleClosed = () => {
         setLoaded(false);

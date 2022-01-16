@@ -18,7 +18,7 @@ const style = {
     px: 4,
     pb: 3,
 };
-const AddPhotoApartmentModal = ({id, setLoadedPhoto}) => {
+const AddPhotoApartmentModal = ({id, setLoadedPhoto, setStatusResponse}) => {
 
     const [open, setOpen] = useState(false);
 
@@ -42,7 +42,10 @@ const AddPhotoApartmentModal = ({id, setLoadedPhoto}) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={{ ...style }}>
-                    <AddPhotoApartment key={id+567} id={id} setLoadedPhoto={setLoadedPhoto}/>
+                    <AddPhotoApartment key={id+567} id={id}
+                                       setLoadedPhoto={setLoadedPhoto}
+                                       setStatusResponse={setStatusResponse}
+                    />
                 </Box>
             </Modal>
         </React.Fragment>

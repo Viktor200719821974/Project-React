@@ -33,17 +33,18 @@ function CommentsModal({id, setStatusResponse, statusResponse}) {
 
     return (
         <React.Fragment>
-            {auth.isLoaded && <Button onClick={handleOpen} variant="contained" color="success">Залишити відгук</Button>}
+            {auth.isLoaded && <Button onClick={handleOpen} sx={{marginRight: "200px"}} variant="contained"
+                                      color="success">Залишити відгук</Button>}
             <Modal
-                hideBackdrop
+
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="child-modal-title"
                 aria-describedby="child-modal-description"
+                closeAfterTransition
             >
                 <Box sx={{ ...style,}}>
                     <SendComment key={id+6} id={id} setStatusResponse={setStatusResponse} statusResponse={statusResponse}/>
-                    <Button onClick={handleClose} variant="contained" color="success">Закрити</Button>
                 </Box>
             </Modal>
         </React.Fragment>

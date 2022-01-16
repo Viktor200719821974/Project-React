@@ -15,8 +15,8 @@ function SendComment({id, setStatusResponse}) {
     const [noError, setNoError] = useState();
     const [commentsOk, setCommentsOk] = useState(false);
     const [returnComment, setReturnComment] = useState([]);
+    const [loadedPhoto, setLoadedPhoto] = useState(false);
     const auth = useAuth();
-
 
     const handleSubmit = async (e) => {
         let obj = {comments, rating};
@@ -26,9 +26,9 @@ function SendComment({id, setStatusResponse}) {
             if (res.status === 201){
                 setCommentsOk(true);
                 setReturnComment(res.data);
-                setStatusResponse(true);
+                setStatusResponse(false);
+
             }
-            console.log(res);
         }catch (e) {
             if (e.response.status === 401){
                 auth.setRefreshToken(true);
@@ -45,29 +45,34 @@ function SendComment({id, setStatusResponse}) {
 
     return (
         <div>
-            {commentsOk && <Alert severity="success">
+            {!loadedPhoto && commentsOk && <Alert severity="success">
                 <AlertTitle>Вітаємо</AlertTitle>
                 <strong>Ваш відгук був добавлений!!!</strong>
             </Alert>}
+            {loadedPhoto && <Alert severity="success">
+                <strong>Фото було додано до відгуку!!!</strong>
+            </Alert>}
             {noError && !commentsOk && <div className={'noError'}>*{noError}</div>}
             <form className={'form_register'} onSubmit={handleSubmit}>
-                <fieldset className={'register-group'}>
-                    <legend>Залиште свій коментар</legend>
                     <label htmlFor={'comments'} className={!commentsOk && errorComments ? 'error_label': 'label'}>
                         Коментар {errorComments && errorComments}
-                        <input className={!commentsOk && errorComments ?'error_input' : 'input'} name={'comments'} type="text" onChange={e =>
-                            setComments(e.target.value)} placeholder={'Напишіть щось...'}/>
+                        <textarea name="comments" id="text_box" cols="80" rows="7" value={comments}
+                                  onChange={e => setComments(e.target.value)}/>
                     </label>
-                    <label htmlFor="rating" className={!commentsOk && errorRating ? 'error_label': 'label'}>Оцінка
+                    <br/>
+                    <label htmlFor="rating" className={!commentsOk && errorRating ? 'error_label': 'label'}>
+                        Поставте оцінку
                         {errorRating && errorRating}
-                        <input className={!commentsOk && errorRating ?'error_input' : 'input'} name={'rating'}  type="number" onChange={e =>
-                            setRating(e.target.value)} placeholder={'Поставте оцінку від 1 до 10'}/>
+                        <input className={!commentsOk && errorRating ?'error_input' : 'input_commentUser'}
+                               name={'rating'}
+                               type="number" onChange={e =>
+                            setRating(e.target.value)} placeholder={'від 1 до 10'}/>
                     </label>
-                </fieldset>
-                <button className={'btn btn-default'} name={'submit'} type="submit">Відправити</button>
+                {!commentsOk && <button className={'btn btn-default'} name={'submit'} type="submit">Відправити</button>}
             </form>
             {commentsOk && <div className={'div_sendComment_apartment_button'}>
-                  <AddPhotoCommentApartmentModal id={returnComment.id} key={returnComment.id + 76}/>
+                  <AddPhotoCommentApartmentModal id={returnComment.id} key={returnComment.id + 76}
+                                                 setLoadedPhoto={setLoadedPhoto} setStatusResponse={setStatusResponse}/>
             </div>
             }
         </div>

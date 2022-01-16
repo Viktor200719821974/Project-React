@@ -74,12 +74,6 @@ const AdminCommentsUserModal = ({id, children, setStatusResponse}) => {
                     setStatusResponse(true);
                 }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             if (e.message){
                 setError(e.message);
             }
@@ -98,7 +92,7 @@ const AdminCommentsUserModal = ({id, children, setStatusResponse}) => {
         }
         }
         fetchData();
-    },[id])
+    },[id, auth])
     return (
         <div>
             <div className={'media'} onClick={handleOpen}>

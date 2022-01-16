@@ -83,7 +83,7 @@ const UserManagerModal = ({id, children, setStatusResponse}) => {
         }
     }
     fetchData();
-    },[id])
+    },[id, auth])
 
     return (
         <div>

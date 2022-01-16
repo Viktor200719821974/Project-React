@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import useAuth from "../../hook/useAuth";
-import api from "../../services/api";
+import api from "../../../services/api";
+import useAuth from "../../../hook/useAuth";
 
-const AddPhotoCommentApartment = ({id, setLoadedPhoto, setStatusResponse}) => {
+const AddPhotoCommentUser = ({id, setLoadedPhoto, setStatusResponse}) => {
     const [drag, setDrag] = useState(false);
     const auth = useAuth();
 
@@ -19,16 +19,16 @@ const AddPhotoCommentApartment = ({id, setLoadedPhoto, setStatusResponse}) => {
         let files = [...e.dataTransfer.files];
 
         const formData = new FormData();
-        formData.append('photo_comments_apartment', files[0]);
+        formData.append('photo_comments_user', files[0]);
         try{
-            const res = api.auth.addPhotoCommentApartment(id, formData);
-                Promise.resolve(res).then(function (res){
-                    if (res.status === 200){
-                        console.log(res);
-                        setLoadedPhoto(true);
-                        setStatusResponse(true);
-                    }
-                });
+            const res = api.auth.addPhotoCommentUser(id, formData);
+            Promise.resolve(res).then(function (res){
+                if (res.status === 200){
+                    console.log(res);
+                    setLoadedPhoto(true);
+                    setStatusResponse(true);
+                }
+            });
         }catch (e) {
             if (e.response.status === 401){
                 auth.setRefreshToken(true);
@@ -55,4 +55,4 @@ const AddPhotoCommentApartment = ({id, setLoadedPhoto, setStatusResponse}) => {
     );
 };
 
-export default AddPhotoCommentApartment;
+export default AddPhotoCommentUser;

@@ -2,14 +2,13 @@ import React, {useState, useEffect} from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import './Carousel.css';
-import noPicture from './image/No_Picture.jpg';
 import ImageModal from "./ImageModal";
 import api from "../../../services/api";
 import useAuth from "../../../hook/useAuth";
 
 const handleDragStart = (e) => e.preventDefault();
 
-const Carousel = ({id}) => {
+const Carousel = ({id, setLoadedPhoto, loadedPhoto}) => {
     const [photo, setPhoto] = useState([]);
     const [loading, setLoading] = useState(false);
     const auth = useAuth();
@@ -20,6 +19,9 @@ const Carousel = ({id}) => {
         try{
             const { data } = await api.auth.getApartment(id);
             setPhoto(data.photo_rooms);
+            if (loadedPhoto){
+                setLoadedPhoto(false);
+            }
         }catch (e) {
             if (e.response.status === 401){
                 auth.setRefreshToken(true);
@@ -30,7 +32,7 @@ const Carousel = ({id}) => {
     }
     fetchData();
         // eslint-disable-next-line
-    }, []);
+    }, [loadedPhoto, auth]);
 
     if (loading){
         return <div>Loading...</div>
@@ -40,7 +42,7 @@ const Carousel = ({id}) => {
         <div className={'carouselItem'}>
             <ImageModal image={c.url} key={c.id + 1100}>
             <img
-                src={c.url || noPicture}
+                src={c.url}
                 alt='photo_rooms'
                 onDragStart={handleDragStart}
                 className={'carouselItem_img'}
@@ -52,12 +54,11 @@ const Carousel = ({id}) => {
         0: {
             items: 1,
         },
-        // 512: {
-        //     items: 3,
-        // },
-
-        1024: {
+        512: {
             items: 3,
+        },
+        1024: {
+            items: 5,
         },
     };
     return (

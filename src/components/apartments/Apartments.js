@@ -72,8 +72,7 @@ function Apartments() {
         }
         setLoading(false);
     },[page, country, countryValue, city, cityValue, region, regionValue, numbers_people, numbersPeopleValue,
-        numbers_rooms, numbersRoomsValue, numbers_squares, numbersSquaresValue, price, priceValue
-    ])
+        numbers_rooms, numbersRoomsValue, numbers_squares, numbersSquaresValue, price, priceValue, auth])
     if(apartments?.length === 0 || undefined){
         return filtersBlock && <div>
             <Button onClick={delFilters} variant="outlined" color="success" startIcon={<ClearIcon/> }

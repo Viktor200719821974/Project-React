@@ -19,6 +19,13 @@ const AuthProvider = (props) => {
             localStorage.removeItem("refresh");
         }
     }, []);
+
+    const logOut = useCallback(() => {
+        setUser(null);
+        setToken(null);
+        setIsLoaded(false);
+    }, [setToken]);
+
     const setRefreshToken = useCallback(async(value) => {
         if (value) {
             const refreshToken = localStorage.getItem('refresh');
@@ -29,16 +36,16 @@ const AuthProvider = (props) => {
                     setToken(token.data);
                 }
             } catch (e) {
+                // if (e.response.status === 401){
+                //     // logOut();
+                //     // setUser(null);
+                //     setToken(null);
+                //     setIsLoaded(false);
+                // }
                 console.log(e.message);
             }
         }
     },[])
-    const logOut = useCallback(() => {
-        setUser(null);
-        setToken(null);
-        setIsLoaded(false);
-    }, [setToken]);
-
     const loadData = useCallback(async () => {
         const tokenData = localStorage.getItem("access");
         setTokenData(tokenData);

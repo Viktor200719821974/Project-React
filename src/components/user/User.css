@@ -259,3 +259,8 @@ input{
     align-items: center;
     justify-content: center;
 }
+.div_comments_user_overflow{
+    height: 500px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}

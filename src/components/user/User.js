@@ -10,6 +10,7 @@ import {Link} from "react-router-dom";
 import api from "../../services/api";
 import {tokenDecoded} from "../../hook/token_user_id";
 import useAuth from "../../hook/useAuth";
+import ImageCommentUser from "./userCommentsApartment/imageCommentUser/ImageCommentUser";
 
 function User() {
     const [user, setUser] = useState({});
@@ -51,7 +52,7 @@ function User() {
         }
         fetchData();
         setLoading(false);
-    },[statusResponse, token])
+    },[statusResponse, token, auth])
 
     if (loading){
         return <div>Loading...</div>
@@ -85,8 +86,9 @@ function User() {
                                    setStatusResponse={setStatusResponse}/>
             </div>)}
 
-            <div>
+            <div >
                 <span className={'pageTitle'}>Коментарі:</span>
+                <div className={'div_comments_user_overflow'}>
                 {comments && comments.map((c) => <div key={c.id +900}>
                    <div className={'div_comments_user_main'}>
                        <div className={'div_comments_user_name'}>
@@ -95,12 +97,16 @@ function User() {
 
                         <div className={'div_comments_user'}>
                             {c.comments}
+                            <div>
+                                <ImageCommentUser id={c.id}/>
+                            </div>
                             <div className={'div_comments_user_rating'}>
                              Rating: {c.rating}
                             </div>
                         </div>
                    </div>
                 </div>)}
+            </div>
             </div>
         </div>
                 );

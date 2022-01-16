@@ -127,7 +127,7 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
         }
         }
         fetchData();
-    }, [loadedPhoto, id]);
+    }, [loadedPhoto, id, auth, statusResponse]);
 
     const delApartment = async (e) => {
         e.preventDefault();
@@ -188,8 +188,7 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
                                     <div>
                                         <div className={'UserApartmentModal__button'}>
                                             <ChangeApartmentModal key={id + 400} id={id}
-                                                                  setStatusResponse={setStatusResponse}
-                                                                  statusResponse={statusResponse}/>
+                                                                  setStatusResponse={setStatusResponse}/>
                                         </div>
                                         <div className={'UserApartmentModal__button'}>
                                             <Button onClick={delApartment} variant="outlined" color="success"
@@ -200,18 +199,20 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
 
                                         <div className={'UserApartmentModal__button'}>
                                        <ChangeAllApartmentModal id={id} key={id + 250}
-                                                                setStatusResponse={setStatusResponse}
-                                                                statusResponse={statusResponse}/>
+                                                                setStatusResponse={setStatusResponse}/>
                                         </div>
                                         <div className={'UserApartmentModal__button'}>
                                             <AddPhotoApartmentModal id={id} key={id + 350}
                                                                     setLoadedPhoto={setLoadedPhoto}
-                                            />
+                                                                    setStatusResponse={setStatusResponse}/>
                                         </div>
                                     </div>
                                     </div>
                                     <StarsRating id={apartment.id} key={apartment.id + 7}/>
-                                    <Carousel id={id} key={id+2}/>
+                                    <Carousel id={id} key={id+2}
+                                              setLoadedPhoto={setLoadedPhoto}
+                                              loadedPhoto={loadedPhoto}
+                                    />
                                     <ChildModal key={id+456} id={id}
                                                 comments={comments}
                                                 dateSelection={dateSelection}
