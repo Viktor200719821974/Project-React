@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./CommentsApartment.css";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
@@ -27,7 +27,6 @@ function SendComment({id, setStatusResponse}) {
                 setCommentsOk(true);
                 setReturnComment(res.data);
                 setStatusResponse(false);
-
             }
         }catch (e) {
             if (e.response.status === 401){
@@ -42,6 +41,11 @@ function SendComment({id, setStatusResponse}) {
             setNoError(e.message);
         }
     }
+    useEffect(() => {
+        if (loadedPhoto){
+            setLoadedPhoto(false);
+        }
+    },[loadedPhoto, id])
 
     return (
         <div>
@@ -52,7 +56,8 @@ function SendComment({id, setStatusResponse}) {
             {loadedPhoto && <Alert severity="success">
                 <strong>Фото було додано до відгуку!!!</strong>
             </Alert>}
-            {noError && !commentsOk && <div className={'noError'}>*{noError}</div>}
+            {noError && !commentsOk && <Alert severity="error">{noError}</Alert>}
+            {/*{noError && !commentsOk && <div className={'noError'}>*{noError}</div>}*/}
             <form className={'form_register'} onSubmit={handleSubmit}>
                     <label htmlFor={'comments'} className={!commentsOk && errorComments ? 'error_label': 'label'}>
                         Коментар {errorComments && errorComments}

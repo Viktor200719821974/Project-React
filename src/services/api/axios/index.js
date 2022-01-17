@@ -7,17 +7,13 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     (config) => {
         const authToken = localStorage.getItem("access");
-        // console.log(authToken)
         if (authToken) {
             config.headers.authorization = `Bearer ${authToken}`;
         }
-        // console.log(authToken);
         return config;
     },
     (error) => {
-        Promise.reject(error);
-        console.log(error);
-        console.log(error.response.status);
+        Promise.reject(error).then(r => console.log(r)) ;
     }
 );
 

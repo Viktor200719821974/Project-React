@@ -36,16 +36,13 @@ const AuthProvider = (props) => {
                     setToken(token.data);
                 }
             } catch (e) {
-                // if (e.response.status === 401){
-                //     // logOut();
-                //     // setUser(null);
-                //     setToken(null);
-                //     setIsLoaded(false);
-                // }
+                if (e.response.status === 401){
+                    logOut();
+                }
                 console.log(e.message);
             }
         }
-    },[])
+    },[isLoaded, setToken])
     const loadData = useCallback(async () => {
         const tokenData = localStorage.getItem("access");
         setTokenData(tokenData);
@@ -56,7 +53,8 @@ const AuthProvider = (props) => {
                 setUser(data);
                 setIsLoaded(true);
             }
-        } catch {
+        } catch (e) {
+            console.log(e);
             setToken(null);
         } finally {
 
@@ -64,7 +62,7 @@ const AuthProvider = (props) => {
     }, [setToken]);
 
     useEffect(() => {
-        loadData();
+        loadData().then(r => console.log(r) );
     }, [loadData, isLoaded, token]);
 
     const contextValue = useMemo(

@@ -43,7 +43,7 @@ const Header = () => {
                     : (
                 <>
 
-                    <div className={'div_name'}>{auth.user.profile.name}
+                    <div className={'div_name'}>{auth.user?.profile.name}
                     <IconButton aria-label="add an alarm" size="large" sx={{ color: "green" }} onClick={onLogOut}>
                     <LogoutIcon />
                     </IconButton></div>

@@ -22,13 +22,20 @@ const AddPhotoCommentApartment = ({id, setLoadedPhoto, setStatusResponse}) => {
         formData.append('photo_comments_apartment', files[0]);
         try{
             const res = api.auth.addPhotoCommentApartment(id, formData);
-                Promise.resolve(res).then(function (res){
+           new Promise((resolve) => {
+                resolve(res.then(function (res){
                     if (res.status === 200){
-                        console.log(res);
                         setLoadedPhoto(true);
                         setStatusResponse(true);
                     }
-                });
+                    console.log(res.status);
+                }));
+            }).catch(e =>{
+                if (e.response.status === 401){
+                    auth.setRefreshToken(true);
+                }
+                console.log(e.response.status);
+            })
         }catch (e) {
             if (e.response.status === 401){
                 auth.setRefreshToken(true);

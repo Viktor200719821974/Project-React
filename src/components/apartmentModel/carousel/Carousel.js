@@ -23,9 +23,9 @@ const Carousel = ({id, setLoadedPhoto, loadedPhoto}) => {
                 setLoadedPhoto(false);
             }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
+            // if (e.response.status === 401){
+            //     auth.setRefreshToken(true);
+            // }
             console.log(e.message);
         }
         setLoading(false);

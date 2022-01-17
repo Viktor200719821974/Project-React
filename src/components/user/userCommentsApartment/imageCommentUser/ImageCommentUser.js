@@ -11,14 +11,21 @@ const ImageCommentUser = ({id}) => {
     useEffect(() => {
         try{
             const res = api.auth.getCommentUsers(id);
-            Promise.resolve(res).then(function (res){
-                setPhoto(res.data.photo_comments_user);
-            });
-
+            // Promise.resolve(res).then(function (res){
+            //     setPhoto(res.data.photo_comments_user);
+            // });
+            new Promise((resolve) => {
+                resolve(res.then(function (res){
+                    if (res.status === 200){
+                        setPhoto(res.data.photo_comments_user);
+                    }
+                }));
+            }).catch(e =>{
+                if (e.response.status === 401){
+                    auth.setRefreshToken(true);
+                }
+            })
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             console.log(e.message);
         }
     },[auth, id])

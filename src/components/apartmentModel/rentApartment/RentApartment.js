@@ -13,7 +13,7 @@ function RentApartment({id}) {
     const [errorDateDeparture, setErrorDateDeparture] = useState();
     const [errorNumberPeoples, setErrorNumberPeoples] = useState();
     const [errorDate, setErrorDate] = useState();
-    const [noError, setNoError] = useState();
+    // const [noError, setNoError] = useState();
     const [apartment, setApartment] = useState(false);
     const [loading, setLoading] = useState(false);
     const auth = useAuth();
@@ -25,46 +25,24 @@ function RentApartment({id}) {
         try{
             const res = await api.auth.rentApartment(id, obj);
             if (res.status === 201){
-
+                setApartment(true);
             }
-            console.log(res.status);
-            console.log(res);
         }catch (e) {
             if (e.response.status === 401){
                 auth.setRefreshToken(true);
             }
-            console.log(e.message);
+            if (e.response.data.date_arrival){
+                setErrorDateArrival(e.response.data.date_arrival);
+            }
+            if (e.response.data.date_departure){
+                setErrorDateDeparture(e.response.data.date_departure);
+            }
+            if (e.response.data.number_peoples){
+                setErrorNumberPeoples(e.response.data.number_peoples);
+            }
+            setErrorDate(e.message);
             console.log(e.response.data);
-            setNoError(e.response.data);
         }
-        // const rentApartment = await choiceDate ({
-        //     date_arrival,
-        //     date_departure,
-        //     number_peoples,
-        //     id
-        // });
-        // try{
-        //     if (rentApartment.code === 'token_not_valid'){
-        //        const token = tokenRefresh();
-        //     }
-        //     if (rentApartment){
-        //         setErrorDateArrival(rentApartment.date_arrival);
-        //     }
-        //     if (rentApartment.date_departure){
-        //         setErrorDateDeparture(rentApartment.date_departure);
-        //     }
-        //     if (rentApartment.number_peoples){
-        //         setNumberPeoples(rentApartment.number_peoples);
-        //     }
-        //     if (typeof (rentApartment) === "string"){
-        //         setErrorDate(rentApartment);
-        //     }
-        //
-        // }catch (e){
-        //     setNoError(e.message);
-        // }if (rentApartment['id']) {
-        //     setApartment(true);
-        // }
         setLoading(false);
     }
     if (loading){
@@ -78,25 +56,25 @@ function RentApartment({id}) {
                 <strong>Ви орендували квартиру !!!</strong>
             </Alert>}
             {errorDate && <Alert severity="error">{errorDate}</Alert>}
-            {noError && !apartment && <div className={'noError'}>*{noError}</div>}
+            {/*{noError && !apartment && <div className={'noError'}>*{noError}</div>}*/}
             <form className={'form_register'} onSubmit={handleSubmit}>
                 <fieldset className={'register-group'}>
                     <legend>Виберіть дати</legend>
                     <label htmlFor={' Дата заселення'} className={!apartment && errorDateArrival ? 'error_label': 'label'}>
                         Дата заселення {errorDateArrival && errorDateArrival}
-                        <input className={!apartment && errorDateArrival ?'error_input' : 'input'} name={'date_arrival'}
+                        <input className={!apartment && errorDateArrival ? 'error_input' : 'input'} name={'date_arrival'}
                                type="date" onChange={e =>
                             setDateArrival(e.target.value)} placeholder={'Дата заселення'}/>
                     </label>
                     <label htmlFor={' Дата виїзду'} className={!apartment && errorDateDeparture ? 'error_label': 'label'}>
                         Дата виїзду {errorDateDeparture && errorDateDeparture}
-                        <input className={!apartment && errorDateDeparture ?'error_input' : 'input'} name={'date_departure'}
+                        <input className={!apartment && errorDateDeparture ? 'error_input' : 'input'} name={'date_departure'}
                                type="date" onChange={e =>
                             setDateDeparture(e.target.value)} placeholder={'Дата виїзду'}/>
                     </label>
                     <label htmlFor={'Кількість гостей'} className={!apartment && errorNumberPeoples ? 'error_label': 'label'}>
                         Кількість гостей {errorNumberPeoples && errorNumberPeoples}
-                        <input className={!apartment && errorNumberPeoples ?'error_input' : 'input'} name={'date_departure'}
+                        <input className={!apartment && errorNumberPeoples ? 'error_input' : 'input'} name={'date_departure'}
                                type="number" onChange={e =>
                             setNumberPeoples(e.target.value)} placeholder={'Кількість гостей'}/>
                     </label>

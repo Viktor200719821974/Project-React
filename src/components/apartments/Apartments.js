@@ -71,8 +71,8 @@ function Apartments() {
             console.log(e.message);
         }
         setLoading(false);
-    },[page, country, countryValue, city, cityValue, region, regionValue, numbers_people, numbersPeopleValue,
-        numbers_rooms, numbersRoomsValue, numbers_squares, numbersSquaresValue, price, priceValue, auth])
+    },[page, auth, country, countryValue, city, cityValue, region, regionValue, numbers_people, numbersPeopleValue,
+        numbers_rooms, numbersRoomsValue, numbers_squares, numbersSquaresValue, price, priceValue])
     if(apartments?.length === 0 || undefined){
         return filtersBlock && <div>
             <Button onClick={delFilters} variant="outlined" color="success" startIcon={<ClearIcon/> }

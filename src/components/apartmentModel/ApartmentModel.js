@@ -129,13 +129,14 @@ export default function ApartmentModel({children, id, photo, rating}) {
     useEffect(() => {
         async function fetchData (){
             try{
-                const { data } = await api.auth.getApartment(id);
-                setApartment(data);
+                const res = await api.auth.getApartment(id);
+                setApartment(res.data);
+
             }catch (e) {
-                if (e.response.status === 401){
+                if (e.response.status === 401) {
                     auth.setRefreshToken(true);
-                    console.log(e.message);
                 }
+                console.log(e.message);
             }
         }
         fetchData();

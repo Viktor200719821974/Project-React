@@ -22,17 +22,20 @@ const AddPhotoApartment = ({id, setLoadedPhoto, setStatusResponse}) => {
         try{
             const res = api.auth.addPhotoRooms(id, formData);
             if (res){
-               Promise.resolve(res).then(function (res){
-                   if (res.status === 200){
-                       setLoadedPhoto(true);
-                       setStatusResponse(true);
-                   }
-               });
+                new Promise((resolve) => {
+                        resolve(res.then(function (res){
+                            if (res.status === 200){
+                                        setLoadedPhoto(true);
+                                        setStatusResponse(true);
+                                    }
+                        }));
+                }).catch(e =>{
+                    if (e.response.status === 401){
+                        auth.setRefreshToken(true);
+                    }
+                })
             }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             console.log(e.message);
         }
         setDrag(false);

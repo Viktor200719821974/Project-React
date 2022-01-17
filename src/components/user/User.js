@@ -44,9 +44,9 @@ function User() {
             setIsSuperUser(true);
         }
     }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
+            // if (e.response.status === 401){
+            //     auth.setRefreshToken(true);
+            // }
             console.log(e.message);
         }
         }

@@ -20,7 +20,7 @@ const ImageCommentApartment = ({id}) => {
             }
             console.log(e.message);
         }
-    },[auth])
+    },[auth, id])
     return (
         <div className={'div_image_comment_apartment_main'}>
             {
