@@ -9,7 +9,6 @@ import Button from "@mui/material/Button";
 import {Link} from "react-router-dom";
 import api from "../../services/api";
 import {tokenDecoded} from "../../hook/token_user_id";
-import useAuth from "../../hook/useAuth";
 import ImageCommentUser from "./userCommentsApartment/imageCommentUser/ImageCommentUser";
 
 function User() {
@@ -21,7 +20,6 @@ function User() {
     const [profile, setProfile] = useState([]);
     const [statusResponse, setStatusResponse] = useState(false);
     const [loading, setLoading] = useState(false);
-    const auth = useAuth();
     const token = localStorage.getItem('access');
 
     useEffect( () => {
@@ -44,15 +42,12 @@ function User() {
             setIsSuperUser(true);
         }
     }catch (e) {
-            // if (e.response.status === 401){
-            //     auth.setRefreshToken(true);
-            // }
             console.log(e.message);
         }
         }
         fetchData();
         setLoading(false);
-    },[statusResponse, token, auth])
+    },[statusResponse, token])
 
     if (loading){
         return <div>Loading...</div>

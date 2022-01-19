@@ -9,7 +9,6 @@ import CommentIcon from '@mui/icons-material/Comment';
 import AdminCommentsApartmentsContent from "./adminCommentsApartments/AdminCommentsApartmentsContent";
 import CloseIcon from '@mui/icons-material/Close';
 import AdminCommentsUserContent from "./adminCommentsUser/AdminCommentsUserContent";
-import useAuth from "../../../hook/useAuth";
 
 const Admin = () => {
 
@@ -23,7 +22,6 @@ const Admin = () => {
     const [loadedCommentsUsers, setLoadedCommentsUsers] = useState(false);
     const [loadedCommentsApartments, setLoadedCommentsApartments] = useState(false);
     const [statusResponse, setStatusResponse] = useState(false);
-    const auth = useAuth();
 
     const handleUsers = async(e) => {
         setIsLoading(true);
@@ -32,13 +30,10 @@ const Admin = () => {
             const res = await api.auth.getUsers(page);
             setUsers(res.data.data);
             setNumOfPages(res.data.total_pages);
-            if (res){
+            if (res.status === 200){
                 setLoaded(true);
             }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             console.log(e.message)
         }
         setIsLoading(false);
@@ -48,17 +43,17 @@ const Admin = () => {
             try{
                 if (loaded){
                     const res = await api.auth.getUsers(page);
-                    setUsers(res.data.data)
+                    setUsers(res.data.data);
+                }
+                if (statusResponse){
+                    setStatusResponse(false);
                 }
             }catch (e) {
-                if (e.response.status === 401){
-                    auth.setRefreshToken(true);
-                }
                 console.log(e.message);
             }
         }
         fetchData();
-    },[page, statusResponse, loaded, auth])
+    },[page, statusResponse, loaded])
 
     const handleCommentsApartment = async(e) => {
         setIsLoading(true);
@@ -67,13 +62,10 @@ const Admin = () => {
             const res = await api.auth.getCommentsApartments(page);
             setCommentsApartments(res.data.data);
             setNumOfPages(res.data.total_pages);
-            if (res){
+            if (res.status === 200){
                 setLoadedCommentsApartments(true);
             }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             console.log(e.message)
         }
         setIsLoading(false);
@@ -83,17 +75,17 @@ const Admin = () => {
             try{
                 if (loadedCommentsApartments){
                     const res = await api.auth.getCommentsApartments(page);
-                    setCommentsApartments(res.data.data)
+                    setCommentsApartments(res.data.data);
+                    if (statusResponse){
+                        setStatusResponse(false);
+                    }
                 }
             }catch (e) {
-                if (e.response.status === 401){
-                    auth.setRefreshToken(true);
-                }
                 console.log(e.message);
             }
         }
         fetchData();
-    },[page, statusResponse, loadedCommentsApartments, auth])
+    },[page, statusResponse, loadedCommentsApartments])
 
     const handleCommentsUsers = async(e) => {
         setIsLoading(true);
@@ -102,13 +94,10 @@ const Admin = () => {
             const res = await api.auth.getCommentsUsers(page);
             setCommentsUsers(res.data.data);
             setNumOfPages(res.data.total_pages);
-            if (res){
+            if (res.status === 200){
                 setLoadedCommentsUsers(true);
             }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             console.log(e.message)
         }
         setIsLoading(false);
@@ -118,18 +107,18 @@ const Admin = () => {
             try{
                 if (loadedCommentsUsers){
                     const res = await api.auth.getCommentsUsers(page);
-                    setCommentsUsers(res.data.data)
+                    setCommentsUsers(res.data.data);
+                }
+                if (statusResponse){
+                    setStatusResponse(false);
                 }
             }catch (e) {
-                if (e.response.status === 401){
-                    auth.setRefreshToken(true);
-                }
                 console.log(e.message);
             }
 
         }
         fetchData();
-    },[page, statusResponse, loadedCommentsUsers, auth])
+    },[page, statusResponse, loadedCommentsUsers])
 
     const handleClosed = () => {
         setLoaded(false);
@@ -184,7 +173,6 @@ const Admin = () => {
                     apartment={c.apartment}
                     comments={c.comments}
                     name_user={c.name_user}
-                    photo_comments={c.photo_comments}
                     rating={c.rating}
                     statusResponse={statusResponse}
                     setStatusResponse={setStatusResponse}
@@ -196,7 +184,6 @@ const Admin = () => {
                         user={c.user}
                         comments={c.comments}
                         name_user={c.user_name}
-                        photo_comments={c.photo_comments_user}
                         rating={c.rating}
                         statusResponse={statusResponse}
                         setStatusResponse={setStatusResponse}

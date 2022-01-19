@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import api from "../../../services/api";
-import useAuth from "../../../hook/useAuth";
 
 const AddPhotoCommentUser = ({id, setLoadedPhoto, setStatusResponse}) => {
     const [drag, setDrag] = useState(false);
-    const auth = useAuth();
 
     function dragStartHandler (e) {
         e.preventDefault();
@@ -24,15 +22,11 @@ const AddPhotoCommentUser = ({id, setLoadedPhoto, setStatusResponse}) => {
             const res = api.auth.addPhotoCommentUser(id, formData);
             Promise.resolve(res).then(function (res){
                 if (res.status === 200){
-                    console.log(res);
                     setLoadedPhoto(true);
                     setStatusResponse(true);
                 }
             });
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             console.log(e.message);
         }
         setDrag(false);

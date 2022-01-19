@@ -2,10 +2,6 @@
     width: 70px;
     height: 70px;
 }
-/*.span_comments_apartment{*/
-/*    width: 90%;*/
-
-/*}*/
 .h4_text{
     width: 90%;
 }
@@ -47,4 +43,8 @@
 .image_comment_apartment{
     width: auto;
     height: 40px;
+}
+.ImageCommentApartmentModal__portrait{
+    width: auto;
+    max-height: 700px;
 }

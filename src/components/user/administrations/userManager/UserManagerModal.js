@@ -8,7 +8,6 @@ import api from "../../../../services/api";
 import Button from "@mui/material/Button";
 import BlockIcon from '@mui/icons-material/Block';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import useAuth from "../../../../hook/useAuth";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -33,7 +32,6 @@ const UserManagerModal = ({id, children, setStatusResponse}) => {
     const [open, setOpen] = useState(false);
     const [user, setUser] = useState([]);
     const [profile, setProfile] = useState([]);
-    const auth = useAuth();
 
     const handleOpen = () => {
         setOpen(true)
@@ -49,9 +47,6 @@ const UserManagerModal = ({id, children, setStatusResponse}) => {
                 setStatusResponse(true);
             }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             console.log(e.message);
         }
     }
@@ -63,9 +58,6 @@ const UserManagerModal = ({id, children, setStatusResponse}) => {
                 setStatusResponse(true);
             }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             console.log(e.message);
         }
     }
@@ -76,14 +68,11 @@ const UserManagerModal = ({id, children, setStatusResponse}) => {
             setUser(res.data);
             setProfile(res.data.profile);
         }catch (e){
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             console.log(e.message);
         }
     }
     fetchData();
-    },[id, auth])
+    },[id])
 
     return (
         <div>

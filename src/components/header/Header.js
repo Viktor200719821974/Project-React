@@ -25,7 +25,6 @@ const Header = () => {
             {auth.isLoaded && <Button color="success" component={Link} to="/user" sx={{fontWeight: 'bold', marginTop: 5}}>
                  My page
             </Button>}
-            {/*</div>*/}
             <span className={'header_span'} onClick={() => window.scroll(0, 0)}>
                 ЗНАЙДИ СОБІ ЖИТЛО
            </span>

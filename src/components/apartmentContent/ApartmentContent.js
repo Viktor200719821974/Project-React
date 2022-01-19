@@ -5,13 +5,11 @@ import noPicture from './image/No_Picture.jpg';
 import {useEffect, useState} from "react";
 import {count} from "../../hook/count";
 import api from "../../services/api";
-import useAuth from "../../hook/useAuth";
 
 const ApartmentContent = ({id, country, city, region, price, numbers_people, photo}) => {
 
     const  [comments, setComments] = useState([]);
     const filter = comments.map(comments => comments.rating);
-    const auth = useAuth();
     const rating = count(filter);
 
     useEffect(() => {
@@ -20,14 +18,11 @@ const ApartmentContent = ({id, country, city, region, price, numbers_people, pho
             const {data} = await api.auth.getApartment(id);
             setComments(data.comments_apartment);
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             console.log(e.message);
         }
         }
         fetchData();
-    },[id, auth])
+    },[id])
     return (
         <>
             <ApartmentModel  id={id} key={id} photo={photo} rating={rating}>

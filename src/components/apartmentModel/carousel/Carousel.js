@@ -4,14 +4,12 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import './Carousel.css';
 import ImageModal from "./ImageModal";
 import api from "../../../services/api";
-import useAuth from "../../../hook/useAuth";
 
 const handleDragStart = (e) => e.preventDefault();
 
 const Carousel = ({id, setLoadedPhoto, loadedPhoto}) => {
     const [photo, setPhoto] = useState([]);
     const [loading, setLoading] = useState(false);
-    const auth = useAuth();
 
     useEffect(() => {
         async function fetchData(){
@@ -23,16 +21,13 @@ const Carousel = ({id, setLoadedPhoto, loadedPhoto}) => {
                 setLoadedPhoto(false);
             }
         }catch (e) {
-            // if (e.response.status === 401){
-            //     auth.setRefreshToken(true);
-            // }
             console.log(e.message);
         }
         setLoading(false);
     }
     fetchData();
         // eslint-disable-next-line
-    }, [loadedPhoto, auth]);
+    }, [loadedPhoto, id]);
 
     if (loading){
         return <div>Loading...</div>

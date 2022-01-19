@@ -13,8 +13,34 @@ axiosInstance.interceptors.request.use(
         return config;
     },
     (error) => {
-        Promise.reject(error).then(r => console.log(r)) ;
+       return Promise.reject(error);
     }
 );
+
+axiosInstance.interceptors.response.use(
+        (res) => {
+            return res;
+        },
+        async (err) => {
+            const originalConfig = err.config;
+            if (originalConfig.url !== "/auth" && err.response ){
+                if (err.response.status === 401 && !originalConfig._retry){
+                    originalConfig._retry = true;
+
+                    try{
+                        const rs = await axiosInstance.post("/auth/refresh",{
+                            refresh: localStorage.getItem('refresh'),
+                        });
+                        localStorage.setItem('access', rs.data.access);
+                        localStorage.setItem('refresh', rs.data.refresh);
+                        return axiosInstance(originalConfig);
+                    }catch (_error) {
+                        return Promise.reject(_error);
+                    }
+                }
+            }
+            return Promise.reject(err);
+        }
+    );
 
 export default axiosInstance;

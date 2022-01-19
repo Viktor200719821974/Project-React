@@ -2,7 +2,6 @@ import React from 'react';
 import './CommentsApartment.css';
 import ImageCommentApartment from "./imageCommentsApartment/ImageCommentApartment";
 
-
 function CommentsApartment({filter, noComments}) {
     return (
         <div>

@@ -24,32 +24,32 @@ export default function FiltersModal({country, setCountry, setCountryValue, setC
                                          setRegion, setRegionValue, setNumbersPeopleValue, numbers_people,
                                          setNumbersPeople, numbers_rooms, setNumbersRooms, setNumbersRoomsValue,
                                          numbers_squares, setNumbersSquares, setNumbersSquaresValue, price, setPrice,
-                                         setPriceValue,  setFilterBlock}) {
+                                         setPriceValue,  setFilterBlock, filterBlock, delFilters}) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const delFilters = () => {
-        setCountry('');
-        setCountryValue('');
-        setCity('');
-        setCityValue('');
-        setRegion('');
-        setRegionValue('');
-        setNumbersPeople('');
-        setNumbersPeopleValue('');
-        setNumbersRooms('');
-        setNumbersRoomsValue('');
-        setNumbersSquares('');
-        setNumbersSquaresValue('');
-        setPrice('');
-        setPriceValue('');
-        setFilterBlock(false);
-    }
+    // const delFilters = () => {
+    //     setCountry('');
+    //     setCountryValue('');
+    //     setCity('');
+    //     setCityValue('');
+    //     setRegion('');
+    //     setRegionValue('');
+    //     setNumbersPeople('');
+    //     setNumbersPeopleValue('');
+    //     setNumbersRooms('');
+    //     setNumbersRoomsValue('');
+    //     setNumbersSquares('');
+    //     setNumbersSquaresValue('');
+    //     setPrice('');
+    //     setPriceValue('');
+    //     setFilterBlock(false);
+    // }
     return (
         <div>
-            <Button onClick={handleOpen} variant="outlined" color="success" startIcon={<FilterListIcon /> }
-                    sx={{fontWeight:800}}>
+             <Button onClick={handleOpen} variant="outlined" color="success" startIcon={<FilterListIcon/>}
+                     sx={{fontWeight: 800}}>
                 Filters
             </Button>
             <Modal

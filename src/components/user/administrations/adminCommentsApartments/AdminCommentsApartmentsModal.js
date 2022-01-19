@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import "../../User.css";
 import {makeStyles} from "@material-ui/styles";
 import Fade from "@mui/material/Fade";
@@ -9,7 +9,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import FormChangeComment from "../formChangeComments/FormChangeComment";
 import Alert from "@mui/material/Alert";
-import useAuth from "../../../../hook/useAuth";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -17,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center",
         width: "600px",
-        height: "300px",
+        height: "auto",
+        maxHeight: "500px",
         margin: "auto",
     },
     paper: {
@@ -31,15 +31,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AdminCommentsApartmentsModal = ({id, children, statusResponse, setStatusResponse}) => {
+const AdminCommentsApartmentsModal = ({id, children, setStatusResponse, comment}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
-    const [comment, setComment] = useState([]);
     const [changeComment, setChangeComment] = useState('');
     const [error, setError] = useState();
     const [deleteStatus, setDeleteStatus] = useState(false);
     const [changeStatus, setChangeStatus] = useState(false);
-    const auth = useAuth();
 
     const handleOpen = () => {
         setOpen(true)
@@ -56,9 +54,6 @@ const AdminCommentsApartmentsModal = ({id, children, statusResponse, setStatusRe
                 setStatusResponse(true);
             }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             if (e.response.status){
                 setError(e.response.statusText);
             }
@@ -74,28 +69,11 @@ const AdminCommentsApartmentsModal = ({id, children, statusResponse, setStatusRe
                 setStatusResponse(true);
             }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             if (e.message){
                 setError(e.message);
             }
         }
     }
-    useEffect( () => {
-        async function fetchData(){
-        try{
-            const res = await api.auth.getCommentApartments(id);
-                    setComment(res.data);
-        }catch (e){
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
-            console.log(e.message);
-        }
-        }
-        fetchData();
-    },[statusResponse, id, auth])
 
     return (
         <div>
@@ -122,13 +100,13 @@ const AdminCommentsApartmentsModal = ({id, children, statusResponse, setStatusRe
                             {deleteStatus && <Alert severity="success">
                                 <strong>No content</strong>
                             </Alert>}
-                            <FormChangeComment setChangeComment={setChangeComment} key={id + 65}
+                            <FormChangeComment setChangeComment={setChangeComment} key={id + 65} id={id}
                                                comment={comment.comments} changeComment={changeComment}/>
                             <div>
                                 <Button onClick={handleChangeComment} variant="outlined" color="success" startIcon={<ChangeCircleIcon/> }
-                                        sx={{fontWeight:800, margin: '60px 0 0 10px'}}>Change Comment </Button>
+                                        sx={{fontWeight:800, margin: '40px 120px 0 10px'}}>Change Comment </Button>
                                 <Button onClick={handleDeletedComment} variant="outlined" color="error" startIcon={<DeleteIcon/> }
-                                        sx={{fontWeight:800, margin: '60px 0 0 10px'}}>Deleted Comment </Button>
+                                        sx={{fontWeight:800, margin: '40px 0 0 10px'}}>Deleted Comment </Button>
                             </div>
                         </div>
                     )}

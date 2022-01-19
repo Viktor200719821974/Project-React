@@ -26,23 +26,6 @@ const AuthProvider = (props) => {
         setIsLoaded(false);
     }, [setToken]);
 
-    const setRefreshToken = useCallback(async(value) => {
-        if (value) {
-            const refreshToken = localStorage.getItem('refresh');
-            let data = {refresh: refreshToken};
-            try {
-                const token = await api.auth.refresh(data);
-                if (token.status === 200) {
-                    setToken(token.data);
-                }
-            } catch (e) {
-                if (e.response.status === 401){
-                    logOut();
-                }
-                console.log(e.message);
-            }
-        }
-    },[isLoaded, setToken])
     const loadData = useCallback(async () => {
         const tokenData = localStorage.getItem("access");
         setTokenData(tokenData);
@@ -53,8 +36,7 @@ const AuthProvider = (props) => {
                 setUser(data);
                 setIsLoaded(true);
             }
-        } catch (e) {
-            console.log(e);
+        } catch {
             setToken(null);
         } finally {
 
@@ -62,7 +44,7 @@ const AuthProvider = (props) => {
     }, [setToken]);
 
     useEffect(() => {
-        loadData().then(r => console.log(r) );
+        loadData();
     }, [loadData, isLoaded, token]);
 
     const contextValue = useMemo(
@@ -73,9 +55,8 @@ const AuthProvider = (props) => {
             setUser,
             setToken,
             logOut,
-            setRefreshToken,
         }),
-        [isLoaded, user, token, setToken, logOut, setRefreshToken]
+        [isLoaded, user, token, setToken, logOut]
     );
     return (
         <AuthContext.Provider value={contextValue}>

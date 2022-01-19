@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import api from "../../../services/api";
-import useAuth from "../../../hook/useAuth";
 
 const AddPhotoApartment = ({id, setLoadedPhoto, setStatusResponse}) => {
     const [drag, setDrag] = useState(false);
-    const auth = useAuth();
 
     function dragStartHandler (e) {
         e.preventDefault();
@@ -22,18 +20,12 @@ const AddPhotoApartment = ({id, setLoadedPhoto, setStatusResponse}) => {
         try{
             const res = api.auth.addPhotoRooms(id, formData);
             if (res){
-                new Promise((resolve) => {
-                        resolve(res.then(function (res){
-                            if (res.status === 200){
-                                        setLoadedPhoto(true);
-                                        setStatusResponse(true);
-                                    }
-                        }));
-                }).catch(e =>{
-                    if (e.response.status === 401){
-                        auth.setRefreshToken(true);
+                Promise.resolve(res).then(function (res){
+                    if (res.status === 200){
+                        setLoadedPhoto(true);
+                        setStatusResponse(true);
                     }
-                })
+                });
             }
         }catch (e) {
             console.log(e.message);

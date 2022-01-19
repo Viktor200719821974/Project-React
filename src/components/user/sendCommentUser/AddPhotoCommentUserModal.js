@@ -31,10 +31,12 @@ const AddPhotoCommentUserModal = ({id, setLoadedPhoto, setStatusResponse}) => {
 
     return (
         <React.Fragment>
+            <div className={'AddPhotoCommentUser_div_button'}>
             <Button onClick={handleOpen} variant="outlined" color="success"
                     startIcon={<AddAPhotoIcon/> }>
                 Додати фото
             </Button>
+            </div>
             <Modal
                 open={open}
                 onClose={handleClose}

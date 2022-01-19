@@ -32,15 +32,13 @@ const style = {
     pb: 3,
 };
 
-function ChildModal({id}) {
+function ChildModal({id, statusResponse, setStatusResponse}) {
 
     const [open, setOpen] = React.useState(false);
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(false);
     const [noComments, setNoComments] = useState(false);
     const [manyComments, setManyComments] = useState(false);
-    const [statusResponse, setStatusResponse] = useState(false);
-    const auth = useAuth();
 
     const handleOpen = () => {
         setOpen(true);
@@ -54,6 +52,9 @@ function ChildModal({id}) {
         try{
             const {data} = await api.auth.getApartment(id);
             setComments(data.comments_apartment);
+            if (statusResponse){
+                setStatusResponse(false);
+            }
             if (data.comments_apartment.length !== 0){
                 setNoComments(true);
             }
@@ -61,15 +62,12 @@ function ChildModal({id}) {
                 setManyComments(true);
             }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             console.log(e.message);
         }
         }
         fetchData();
         setLoading(false);
-    },[statusResponse, noComments, id, auth])
+    },[statusResponse, noComments, id])
 
     if (loading){
         return <div>Loading...</div>
@@ -118,8 +116,8 @@ export default function ApartmentModel({children, id, photo, rating}) {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [apartment, setApartment] = useState([]);
+    const [statusResponse, setStatusResponse] = useState(false);
     const auth = useAuth();
-
     const handleOpen = () => {
         setOpen(true)
     };
@@ -131,17 +129,16 @@ export default function ApartmentModel({children, id, photo, rating}) {
             try{
                 const res = await api.auth.getApartment(id);
                 setApartment(res.data);
-
-            }catch (e) {
-                if (e.response.status === 401) {
-                    auth.setRefreshToken(true);
+                if (statusResponse){
+                    setStatusResponse(false);
                 }
+            }catch (e) {
                 console.log(e.message);
             }
         }
         fetchData();
         // eslint-disable-next-line
-    }, [id, auth]);
+    }, [id, statusResponse]);
     return (
         <>
             <div className={'media'} onClick={handleOpen}>
@@ -189,7 +186,9 @@ export default function ApartmentModel({children, id, photo, rating}) {
                                     </div>
                             <StarsRating id={apartment.id} key={apartment.id + 7} rating={rating}/>
                                    <Carousel id={id} key={id+2}/>
-                                    <ChildModal key={id+1} id={id}/>
+                                    <ChildModal key={id+1} id={id}
+                                                setStatusResponse={setStatusResponse}
+                                                statusResponse={statusResponse}/>
                                 </div>
                             </div>
                         </div>

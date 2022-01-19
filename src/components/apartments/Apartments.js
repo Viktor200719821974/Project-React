@@ -6,7 +6,6 @@ import "./Apartments.css";
 import FiltersModal from "../filters/FiltersModal";
 import ClearIcon from '@mui/icons-material/Clear';
 import Button from "@mui/material/Button";
-import useAuth from "../../hook/useAuth";
 
 function Apartments() {
     const [apartments, setApartments] = useState([]);
@@ -27,9 +26,13 @@ function Apartments() {
     const [numbersSquaresValue, setNumbersSquaresValue] = useState('');
     const [price, setPrice] = useState('');
     const [priceValue, setPriceValue] = useState('');
-    const [filtersBlock, setFilterBlock] = useState(false);
-    const auth = useAuth();
-
+    const [filterBlock, setFilterBlock] = useState(false);
+    // const [noFilters, setNoFilters] = useState(false);
+    const [noApartments, setNoApartments] = useState(false);
+    console.log(filterBlock);
+    console.log(noApartments);
+    // console.log(city, cityValue);
+    // console.log(page, noFilters);
     const delFilters = () => {
         setCountry('');
         setCountryValue('');
@@ -47,12 +50,18 @@ function Apartments() {
         setPriceValue('');
         setFilterBlock(false);
     }
-    useEffect(()=> {
-        if (countryValue || cityValue || regionValue || numbersPeopleValue || numbersRoomsValue || numbersSquaresValue
-            || priceValue ){
-            setFilterBlock(true);
-        }
-    }, [countryValue, cityValue, regionValue, numbersPeopleValue, numbersRoomsValue, numbersSquaresValue, priceValue])
+    // useEffect(()=> {
+    //     if (countryValue || cityValue || regionValue || numbersPeopleValue || numbersRoomsValue || numbersSquaresValue
+    //         || priceValue ){
+    //         setFilterBlock(true);
+    //     }
+    //     if(apartments.length === 0 || undefined){
+    //         setNoApartments(true);
+    //         console.log(apartments.length);
+    //     }
+    //
+    // }, [countryValue, cityValue, regionValue, numbersPeopleValue, numbersRoomsValue, numbersSquaresValue,
+    //     priceValue, filterBlock, noApartments])
 
     useEffect(()=> {
         setLoading(true);
@@ -63,30 +72,37 @@ function Apartments() {
         ).then(value => {
             setApartments(value.data);
             setNumOfPages(value.total_pages);
+
         });
-        }catch (e){
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
+            if(apartments?.length === 0 || undefined){
+                setNoApartments(true);
             }
+            if (countryValue || cityValue || regionValue || numbersPeopleValue || numbersRoomsValue || numbersSquaresValue
+                || priceValue ){
+                setFilterBlock(true);
+            }
+        }catch (e){
             console.log(e.message);
         }
         setLoading(false);
-    },[page, auth, country, countryValue, city, cityValue, region, regionValue, numbers_people, numbersPeopleValue,
-        numbers_rooms, numbersRoomsValue, numbers_squares, numbersSquaresValue, price, priceValue])
-    if(apartments?.length === 0 || undefined){
-        return filtersBlock && <div>
-            <Button onClick={delFilters} variant="outlined" color="success" startIcon={<ClearIcon/> }
-                    sx={{fontWeight:800, marginTop: '20px'}}>
-                Очистити фільтр
-            </Button>
-            <div className={'div_notFound'}>Not found</div>
-        </div>
-    }
+    },[page, country, countryValue, city, cityValue, region, regionValue, numbers_people, numbersPeopleValue,
+        numbers_rooms, numbersRoomsValue, numbers_squares, numbersSquaresValue, price, priceValue, noApartments, filterBlock])
+
+    // if(apartments?.length === 0 || undefined){
+    //     return filterBlock && <div>
+    //         <Button onClick={delFilters} variant="outlined" color="success" startIcon={<ClearIcon/> }
+    //                 sx={{fontWeight:800, marginTop: '20px'}}>
+    //             Очистити фільтр
+    //         </Button>
+    //         <div className={'div_notFound'}>Not found</div>
+    //     </div>
+    // }
     if (loading){
         return <div>Loading...</div>
     }
     return (
         <>
+            <div className={'Apartments_div_filters_modal'}>
             <FiltersModal setCountryValue={setCountryValue}
                           setCountry={setCountry}
                           country={country}
@@ -109,7 +125,18 @@ function Apartments() {
                           setPrice={setPrice}
                           setPriceValue={setPriceValue}
                           setFilterBlock={setFilterBlock}
+                          filterBlock={filterBlock}
+                          delFilters={delFilters}
+
             />
+                {filterBlock && <div>
+                    <Button onClick={delFilters} variant="outlined" color="success" startIcon={<ClearIcon/> }
+                            sx={{fontWeight:800, marginLeft: "10px"}}>
+                        Очистити фільтр
+                    </Button>
+                </div>}
+            </div>
+            {noApartments && filterBlock && <div className={'div_notFound'}>Not found</div>}
             <div className={'trending'}>
             {apartments && apartments.map((c, index)=><ApartmentContent
                 key={index}

@@ -3,7 +3,6 @@ import '../User.css';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import api from "../../../services/api";
-import useAuth from "../../../hook/useAuth";
 
 function AddApartment({setStatusResponse}) {
     const [country, setCountry] = useState('');
@@ -22,7 +21,6 @@ function AddApartment({setStatusResponse}) {
     const [errorPrice, setErrorPrice] = useState();
     const [noError, setNoError] = useState();
     const [apartment, setApartment] = useState(false);
-    const auth = useAuth();
     const [loading, setLoading] = useState(false);
 
     let obj = {
@@ -44,9 +42,6 @@ function AddApartment({setStatusResponse}) {
             setStatusResponse(true);
         }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             if (e.response.data.country){
                 setErrorCountry(e.response.data.country);
             }
@@ -68,7 +63,7 @@ function AddApartment({setStatusResponse}) {
             if (e.response.data.price){
                 setErrorPrice(e.response.data.price);
             }
-            console.log(e.message);
+            setNoError(e.message);
         }
         setLoading(false);
     }

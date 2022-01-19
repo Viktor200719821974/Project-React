@@ -20,15 +20,12 @@ const SuperAdmin = () => {
             setUsers(res.data.data);
             setNumOfPages(res.data.total_pages)
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             console.log(e.message);
         }
         }
         fetchData();
         setIsLoading(false);
-    },[page, statusResponse, auth])
+    },[page, statusResponse])
     if (isLoading){
         return <div>Loading...</div>
     }

@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import api from "../../../services/api";
-import useAuth from "../../../hook/useAuth";
 import AddPhotoCommentUserModal from "./AddPhotoCommentUserModal";
 
 const SendCommentUser = ({id, setStatusResponse}) => {
@@ -15,7 +14,6 @@ const SendCommentUser = ({id, setStatusResponse}) => {
     const [commentsOk, setCommentsOk] = useState(false);
     const [returnComment, setReturnComment] = useState([]);
     const [loadedPhoto, setLoadedPhoto] = useState(false);
-    const auth = useAuth();
 
     const handleSubmit = async (e) => {
         let obj = {comments, rating};
@@ -28,9 +26,6 @@ const SendCommentUser = ({id, setStatusResponse}) => {
                 setStatusResponse(true);
             }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             if (e.response.data.comments){
                 setErrorComments(e.response.data.comments);
             }

@@ -12,3 +12,7 @@
     color: white;
     margin-top: 100px;
 }
+.Apartments_div_filters_modal{
+    display: flex;
+    margin: 10px;
+}

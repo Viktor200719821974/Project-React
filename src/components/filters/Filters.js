@@ -51,7 +51,7 @@ const Filters = ({setCountry, setCountryValue, country, city, setCityValue, setC
                         </FormControl>
                     </Box>
                     <label htmlFor={'value'} className={'label'}>
-                       {/*Value*/}
+
                         <input className={'filter_input'} name={'value'}
                                type="text" onChange={e =>
                             setCountryValue(e.target.value)} placeholder={'Що шукати?'}/>
@@ -74,7 +74,6 @@ const Filters = ({setCountry, setCountryValue, country, city, setCityValue, setC
             </FormControl>
         </Box>
         <label htmlFor={'value'} className={'label'}>
-            {/*Value*/}
             <input className={'filter_input'} name={'value'}
                    type="text" onChange={e =>
                 setCityValue(e.target.value)} placeholder={'Що шукати?'}/>
@@ -97,7 +96,6 @@ const Filters = ({setCountry, setCountryValue, country, city, setCityValue, setC
                     </FormControl>
                 </Box>
                 <label htmlFor={'value'} className={'label'}>
-                    {/*Value*/}
                     <input className={'filter_input'} name={'value'}
                            type="text" onChange={e =>
                         setRegionValue(e.target.value)} placeholder={'Що шукати?'}/>
@@ -120,7 +118,6 @@ const Filters = ({setCountry, setCountryValue, country, city, setCityValue, setC
                     </FormControl>
                 </Box>
                 <label htmlFor={'value'} className={'label'}>
-                    {/*Value*/}
                     <input className={'filter_input'} name={'value'}
                            type="text" onChange={e =>
                         setNumbersPeopleValue(e.target.value)} placeholder={'Що шукати?'}/>
@@ -143,7 +140,6 @@ const Filters = ({setCountry, setCountryValue, country, city, setCityValue, setC
                     </FormControl>
                 </Box>
                 <label htmlFor={'value'} className={'label'}>
-                    {/*Value*/}
                     <input className={'filter_input'} name={'value'}
                            type="text" onChange={e =>
                         setNumbersRoomsValue(e.target.value)} placeholder={'Що шукати?'}/>
@@ -166,7 +162,6 @@ const Filters = ({setCountry, setCountryValue, country, city, setCityValue, setC
                     </FormControl>
                 </Box>
                 <label htmlFor={'value'} className={'label'}>
-                    {/*Value*/}
                     <input className={'filter_input'} name={'value'}
                            type="text" onChange={e =>
                         setNumbersSquaresValue(e.target.value)} placeholder={'Що шукати?'}/>
@@ -189,7 +184,6 @@ const Filters = ({setCountry, setCountryValue, country, city, setCityValue, setC
                     </FormControl>
                 </Box>
                 <label htmlFor={'value'} className={'label'}>
-                    {/*Value*/}
                     <input className={'filter_input'} name={'value'}
                            type="text" onChange={e =>
                         setPriceValue(e.target.value)} placeholder={'Що шукати?'}/>

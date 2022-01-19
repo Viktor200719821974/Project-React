@@ -3,7 +3,6 @@ import "./CommentsApartment.css";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import api from "../../services/api";
-import useAuth from "../../hook/useAuth";
 import AddPhotoCommentApartmentModal from "./AddPhotoCommentApartmentModal";
 
 function SendComment({id, setStatusResponse}) {
@@ -16,7 +15,6 @@ function SendComment({id, setStatusResponse}) {
     const [commentsOk, setCommentsOk] = useState(false);
     const [returnComment, setReturnComment] = useState([]);
     const [loadedPhoto, setLoadedPhoto] = useState(false);
-    const auth = useAuth();
 
     const handleSubmit = async (e) => {
         let obj = {comments, rating};
@@ -29,9 +27,6 @@ function SendComment({id, setStatusResponse}) {
                 setStatusResponse(false);
             }
         }catch (e) {
-            if (e.response.status === 401){
-                auth.setRefreshToken(true);
-            }
             if (e.response.data.comments){
                 setErrorComments(e.response.data.comments);
             }
@@ -57,7 +52,6 @@ function SendComment({id, setStatusResponse}) {
                 <strong>Фото було додано до відгуку!!!</strong>
             </Alert>}
             {noError && !commentsOk && <Alert severity="error">{noError}</Alert>}
-            {/*{noError && !commentsOk && <div className={'noError'}>*{noError}</div>}*/}
             <form className={'form_register'} onSubmit={handleSubmit}>
                     <label htmlFor={'comments'} className={!commentsOk && errorComments ? 'error_label': 'label'}>
                         Коментар {errorComments && errorComments}
