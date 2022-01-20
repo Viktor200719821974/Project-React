@@ -7,8 +7,8 @@ import api from "../../../../services/api";
 import Button from "@mui/material/Button";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
-import FormChangeComment from "../formChangeComments/FormChangeComment";
 import Alert from "@mui/material/Alert";
+import FormChangeCommentApartment from "../formChangeComments/FormChangeCommentApartment";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -100,8 +100,10 @@ const AdminCommentsApartmentsModal = ({id, children, setStatusResponse, comment}
                             {deleteStatus && <Alert severity="success">
                                 <strong>No content</strong>
                             </Alert>}
-                            <FormChangeComment setChangeComment={setChangeComment} key={id + 65} id={id}
-                                               comment={comment.comments} changeComment={changeComment}/>
+                            <FormChangeCommentApartment setChangeComment={setChangeComment} key={id + 65} id={id}
+                                                   comment={comment.comments} changeComment={changeComment}
+                                                        setStatusResponse={setStatusResponse}
+                            />
                             <div>
                                 <Button onClick={handleChangeComment} variant="outlined" color="success" startIcon={<ChangeCircleIcon/> }
                                         sx={{fontWeight:800, margin: '40px 120px 0 10px'}}>Change Comment </Button>

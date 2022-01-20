@@ -1,8 +1,8 @@
 import React from 'react';
 import "../../User.css";
-import ImageCommentUser from "../../userCommentsApartment/imageCommentUser/ImageCommentUser";
+import AdminImageCommentUser from "../adminCommentsUser/imageCommentUser/AdminImageCommentUser";
 
-const FormChangeComment = ({setChangeComment, comment, changeComment, id}) => {
+const FormChangeCommentUser = ({setChangeComment, comment, changeComment, id, setStatusResponse}) => {
 
     return (
         <div>
@@ -13,9 +13,9 @@ const FormChangeComment = ({setChangeComment, comment, changeComment, id}) => {
                 <div className={'changeComment_div'}>
                     {comment}
                 </div>
-            <ImageCommentUser key={id + 301} id={id}/>
+            <AdminImageCommentUser key={id + 301} id={id} setStatusResponse={setStatusResponse}/>
         </div>
     );
 };
 
-export default FormChangeComment;
+export default FormChangeCommentUser;

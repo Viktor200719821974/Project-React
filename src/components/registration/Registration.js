@@ -56,11 +56,8 @@ function Registration() {
             <span className={'pageTitle'}>Registration</span>
             {noError && !youRegistration && <div className={'noError'}>*{noError}</div>}
             {youRegistration && <YouRegistration key={email} youRegistration={youRegistration}/>}
-            {/*{youRegistration && <div>Вітаємо, Ви зареєструвались. Підтвердіть електрону адресу!!!</div>}*/}
             <form className={'form_register'} onSubmit={handleSubmit}>
-                {/*method={'Link'} action={'http://localhost:3000'}*/}
                 <fieldset className={'register-group'}>
-                    {/*<legend>Registration</legend>*/}
                 <label htmlFor={'email'} className={!youRegistration && errorEmail ?'error_label' : 'label'}>Email
                     <input className={!youRegistration && errorEmail ? 'error_input': 'input'} name={'email'}
                            type="text" onChange={e => setEmail(e.target.value)}

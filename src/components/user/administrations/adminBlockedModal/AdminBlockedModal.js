@@ -74,7 +74,7 @@ const AdminBlockedModal = ({id, children, statusResponse, setStatusResponse}) =>
         }
     }
     fetchData();
-    },[statusResponse, id])
+    },[statusResponse, id, setStatusResponse])
     return (
         <div>
             <div className={'media'} onClick={handleOpen}>

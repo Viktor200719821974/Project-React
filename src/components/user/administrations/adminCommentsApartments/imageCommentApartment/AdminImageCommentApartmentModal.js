@@ -3,7 +3,12 @@ import Modal from '@mui/material/Modal';
 import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
 import {makeStyles} from "@material-ui/styles";
-import "../../../comments_apartment/CommentsApartment.css";
+import "../../../../comments_apartment/CommentsApartment.css";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {useState} from "react";
+import api from "../../../../../services/api";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -19,13 +24,27 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ImageCommentUserModal({children, image, id}){
+export default function AdminImageCommentApartmentModal({children, image, setStatusResponse, setDeletePhoto, id}){
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
+    const [error, setError] = useState();
     const classes = useStyles();
 
+    const delPhoto = async(e) => {
+        e.preventDefault();
+        try{
+            const res = await api.auth.deletePhotoCommentApartment(id);
+            if (res.status === 204){
+                setStatusResponse(true);
+                setDeletePhoto(true);
+            }
+        }catch (e) {
+            if (e.message){
+                setError(e.message);
+            }
+        }
+    }
     return (
         <>
             <div className={'ImageCommentApartmentModal_media'} onClick={handleOpen}>
@@ -44,12 +63,19 @@ export default function ImageCommentUserModal({children, image, id}){
                 }}
             >
                 <Fade in={open}>
-
+                    <div className={'ImagePhotoApartment_div_main'}>
+                        {error && <Alert severity="error">{error}</Alert>}
+                        <div className={'ImagePhotoApartment_div_button'}>
+                            <Button onClick={delPhoto} variant="contained" color="error"
+                                    startIcon={<DeleteIcon /> }>
+                                Видалити
+                            </Button>
+                        </div>
                     <img src={image}
                          alt='photo_comment_apartment'
                          className={'ImageCommentApartmentModal__portrait'}
                     />
-
+                    </div>
                 </Fade>
             </Modal>
 

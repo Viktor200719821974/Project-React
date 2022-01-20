@@ -22,7 +22,7 @@ const AdminCommentsUserContent = ({id, user, comments, name_user, rating, status
             }
         }
         fetchData();
-    },[statusResponse, id])
+    },[statusResponse, id, setStatusResponse])
     return (
         <AdminCommentsUserModal key={id + 55} id={id} statusResponse={statusResponse}
                                 setStatusResponse={setStatusResponse} comment={comment}>

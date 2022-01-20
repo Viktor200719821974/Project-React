@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import "../../User.css";
 import {makeStyles} from "@material-ui/styles";
 import Fade from "@mui/material/Fade";
 import Modal from "@mui/material/Modal";
 import api from "../../../../services/api";
 import Button from "@mui/material/Button";
-import FormChangeComment from "../formChangeComments/FormChangeComment";
+import FormChangeCommentUser from "../formChangeComments/FormChangeCommentUser";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Alert from "@mui/material/Alert";
@@ -100,8 +100,12 @@ const AdminCommentsUserModal = ({id, children, setStatusResponse, comment}) => {
                             {deleteStatus && <Alert severity="success">
                                 <strong>No content</strong>
                             </Alert>}
-                            <FormChangeComment setChangeComment={setChangeComment} key={id + 65}
-                                               comment={comment.comments} changeComment={changeComment} id={comment.id}/>
+                            <FormChangeCommentUser setChangeComment={setChangeComment} key={id + 65}
+                                                   comment={comment.comments}
+                                                   changeComment={changeComment}
+                                                   id={comment.id}
+                                                   setStatusResponse={setStatusResponse}
+                            />
                             <div>
                                 <Button onClick={handleChangeComment} variant="outlined" color="success"
                                         startIcon={<ChangeCircleIcon/> }

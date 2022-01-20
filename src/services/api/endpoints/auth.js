@@ -30,10 +30,13 @@ const endpoints = {
     sendCommentsApartment: (id, obj) => axios.post(`/apartments/${id}/comment_apartment`, obj),
     rentApartment: (id, obj) => axios.post(`/apartments/${id}/selected_date`, obj),
     addPhotoRooms: (id, formData) => axios.patch(`/apartments/${id}/photo_rooms`, formData),
-    getDateSelection: () => axios.get('/date_selection'),
+    // getDateSelection: () => axios.get('/date_selection'),
     sendCommentUser: (id, obj) => axios.post(`/users/${id}/comment_user`, obj),
     addPhotoCommentApartment: (id, formData) => axios.patch(`/comments_apartment/${id}/addPhoto`, formData),
     addPhotoCommentUser: (id, obj) => axios.patch(`/comments_user/${id}/addPhoto`, obj),
+    deleteApartmentPhotoRooms: (id) => axios.delete(`/apartments/photo_rooms/${id}`),
+    deletePhotoCommentApartment: (id) => axios.delete(`/comments_apartment/deletePhoto/${id}`),
+    deletePhotoCommentUser: (id) => axios.delete(`/comments_user/deletePhoto/${id}`),
 };
 
 export default endpoints;

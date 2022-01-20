@@ -31,5 +31,15 @@
 .ImageModal__portrait{
     display: flex;
     width: auto;
-    height: 80%;
+    max-height: 600px;
+}
+.ImagePhotoApartment_div_main{
+    position: absolute;
+}
+.ImagePhotoApartment_div_button{
+    display: flex;
+    justify-content: right;
+    margin-right: 20px;
+    position: relative;
+    top: 50px;
 }

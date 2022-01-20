@@ -3,7 +3,8 @@ import "../CommentsApartment.css";
 import api from "../../../services/api";
 import ImageCommentApartmentModal from "./ImageCommentApartmentModal";
 
-const ImageCommentApartment = ({id}) => {
+
+const AdminImageCommentApartment = ({id}) => {
     const [photo, setPhoto] = useState([]);
 
     useEffect(() => {
@@ -19,7 +20,7 @@ const ImageCommentApartment = ({id}) => {
     return (
         <div className={'div_image_comment_apartment_main'}>
             {
-                photo && photo.map((c, index) => <ImageCommentApartmentModal key={index} image={c.url}>
+                photo && photo.map((c, index) => <ImageCommentApartmentModal key={index} image={c.url} >
                     <div  className={'div_image_comment_apartment'}>
                     <img className={'image_comment_apartment'} src={c.url} alt="photo_comment_apartment"/>
                 </div>
@@ -29,4 +30,4 @@ const ImageCommentApartment = ({id}) => {
     );
 };
 
-export default ImageCommentApartment;
+export default AdminImageCommentApartment;

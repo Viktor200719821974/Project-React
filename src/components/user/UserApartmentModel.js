@@ -6,7 +6,6 @@ import Fade from '@mui/material/Fade';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import {unavailable} from "../../constans/constans";
-import Carousel from "../apartmentModel/carousel/Carousel";
 import noPicture from "../apartmentModel/carousel/image/No_Picture.jpg";
 import StarsRating from "../starsRating/StarsRating";
 import Button from '@mui/material/Button';
@@ -17,6 +16,7 @@ import api from "../../services/api";
 import AddPhotoApartmentModal from "./addApartment/AddPhotoApartmentModal";
 import UserCommentsApartmentContent from "./userCommentsApartment/UserCommentsApartmentContent";
 import CloseIcon from '@mui/icons-material/Close';
+import CarouselUser from "./carouselUser/CarouselUser";
 
 function ChildModal({id, comments, noComments, dateSelection, setStatusResponse, noDate}) {
     const [open, setOpen] = React.useState(false);
@@ -28,9 +28,19 @@ function ChildModal({id, comments, noComments, dateSelection, setStatusResponse,
         setOpen(false);
     };
     const  filterEmail = dateSelection.map(c => c.user_email);
-    const filterName = comments.map(c => c.name_user);
+    const filterName = dateSelection.map(c => c.name_user);
     let uniqueEmail = [...new Set(filterEmail)];
     let uniqueName = [...new Set(filterName)];
+    // console.log(filterName);
+    // console.log(filterEmail);
+    // const twoArray = () => {
+    //     const array = {};
+    //     for (let i = 0; i++; i< filterName.length){
+    //         array['name'] = filterName[i];
+    //     }
+    //     return array;
+    // }
+    // console.log(twoArray());
 
     return (
         <React.Fragment>
@@ -201,9 +211,10 @@ export default function UserApartmentModel({children, id, photo, setStatusRespon
                                     </div>
                                     </div>
                                     <StarsRating id={apartment.id} key={apartment.id + 7}/>
-                                    <Carousel id={id} key={id+2}
+                                    <CarouselUser id={id} key={id+2}
                                               setLoadedPhoto={setLoadedPhoto}
                                               loadedPhoto={loadedPhoto}
+                                              setStatusResponse={setStatusResponse}
                                     />
                                     <ChildModal key={id+456} id={id}
                                                 comments={comments}

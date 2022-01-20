@@ -1,30 +1,33 @@
 import React, {useState, useEffect} from 'react';
+import "../../apartmentModel/carousel/Carousel.css";
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import './Carousel.css';
-import ImageModal from "./ImageModal";
+import ImageUserModal from "../deletePhotoRoom/ImageUserModal";
 import api from "../../../services/api";
 
 const handleDragStart = (e) => e.preventDefault();
 
-const Carousel = ({id}) => {
+const CarouselUser = ({id, setLoadedPhoto, loadedPhoto, setStatusResponse}) => {
     const [photo, setPhoto] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         async function fetchData(){
-        setLoading(true);
-        try{
-            const { data } = await api.auth.getApartment(id);
-            setPhoto(data.photo_rooms);
-        }catch (e) {
-            console.log(e.message);
+            setLoading(true);
+            try{
+                const { data } = await api.auth.getApartment(id);
+                setPhoto(data.photo_rooms);
+                if (loadedPhoto){
+                    setLoadedPhoto(false);
+                }
+            }catch (e) {
+                console.log(e.message);
+            }
+            setLoading(false);
         }
-        setLoading(false);
-    }
-    fetchData();
+        fetchData();
         // eslint-disable-next-line
-    }, [id]);
+    }, [loadedPhoto, id]);
 
     if (loading){
         return <div>Loading...</div>
@@ -32,14 +35,15 @@ const Carousel = ({id}) => {
 
     const items =(photo && photo.map((c) => (
         <div className={'carouselItem'}>
-            <ImageModal image={c.url} key={c.id + 1100} id={c.id}>
-            <img
-                src={c.url}
-                alt='photo_rooms'
-                onDragStart={handleDragStart}
-                className={'carouselItem_img'}
-            />
-        </ImageModal>
+            <ImageUserModal image={c.url} key={c.id + 1100} id={c.id} setStatusResponse={setStatusResponse}
+                            setLoadedPhoto={setLoadedPhoto}>
+                <img
+                    src={c.url}
+                    alt='photo_rooms'
+                    onDragStart={handleDragStart}
+                    className={'carouselItem_img'}
+                />
+            </ImageUserModal>
         </div>
     )));
     const responsive = {
@@ -66,4 +70,4 @@ const Carousel = ({id}) => {
     );
 }
 
-export default Carousel;
+export default CarouselUser;

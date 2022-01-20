@@ -19,7 +19,8 @@ const ImageCommentUser = ({id}) => {
     return (
         <div className={'div_image_comment_apartment_main'}>
             {
-                photo && photo.map((c, index) => <ImageCommentUserModal key={index} image={c.url}>
+                photo && photo.map((c, index) => <ImageCommentUserModal key={index} image={c.url}
+                                                                  id={id} >
                     <div  className={'div_image_comment_apartment'}>
                         <img className={'image_comment_apartment'} src={c.url} alt="photo_comment_user"/>
                     </div>

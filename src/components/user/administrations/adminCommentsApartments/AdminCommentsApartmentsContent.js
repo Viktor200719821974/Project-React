@@ -22,7 +22,7 @@ const AdminCommentsApartmentsContent = ({id, apartment, comments, name_user, rat
             }
         }
         fetchData();
-    },[statusResponse, id])
+    },[statusResponse, id, setStatusResponse])
 
     return (
 

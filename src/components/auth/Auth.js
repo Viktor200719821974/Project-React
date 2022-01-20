@@ -60,7 +60,6 @@ function Auth() {
         <>
             <span className={'pageTitle'}>Authorization</span>
             <form className={'form_register'} onSubmit={handleSubmit}>
-                {/*<fieldset className={'register-group'}>*/}
                     <label htmlFor={'email'} className={!auth.isLoaded && errorEmail ?'error_label' : 'label'}>Email
                         <input className={!auth.isLoaded && errorEmail ? 'error_input': 'input'} name={'email'}
                                type="text" onChange={e => setEmail(e.target.value)}
@@ -73,7 +72,6 @@ function Auth() {
                                placeholder={errorPassword ? errorPassword : '************************'}/>
                     </label>
                     {errorAuth && <div className={'error_message'}>* {errorMessage}</div>}
-                {/*</fieldset>*/}
                 <button className={'btn btn-default'} name={'submit'} type="submit"  >Save</button>
                 <Button
                     color="inherit"
