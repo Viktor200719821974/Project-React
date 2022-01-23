@@ -27,20 +27,7 @@ function ChildModal({id, comments, noComments, dateSelection, setStatusResponse,
     const handleClose = () => {
         setOpen(false);
     };
-    const  filterEmail = dateSelection.map(c => c.user_email);
-    const filterName = dateSelection.map(c => c.name_user);
-    let uniqueEmail = [...new Set(filterEmail)];
-    let uniqueName = [...new Set(filterName)];
-    // console.log(filterName);
-    // console.log(filterEmail);
-    // const twoArray = () => {
-    //     const array = {};
-    //     for (let i = 0; i++; i< filterName.length){
-    //         array['name'] = filterName[i];
-    //     }
-    //     return array;
-    // }
-    // console.log(twoArray());
+    let uniqueDateSelection = [...new Set(dateSelection)];
 
     return (
         <React.Fragment>
@@ -62,15 +49,16 @@ function ChildModal({id, comments, noComments, dateSelection, setStatusResponse,
                         </Button>
                         </div>
                         <div className={'UserApartmentModal_child_div'}>
-                    {uniqueEmail && uniqueEmail.map((c, index) =>
+                    {uniqueDateSelection && uniqueDateSelection.map((c, index) =>
                         <UserCommentsApartmentContent key={index}
                                                       id={id}
                                                       noComments={noComments}
-                                                      name={uniqueName}
-                                                      email={c}
+                                                      name={c.name_user}
+                                                      email={c.user_email}
                                                       setStatusResponse={setStatusResponse}
                                                       comments={comments}
                                                       dateSelection={dateSelection}
+                                                      surname={c.surname_user}
                         />
                     )}
                         </div>
