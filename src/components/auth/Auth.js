@@ -18,6 +18,7 @@ function Auth() {
     const history = useHistory();
 
     const handleSubmit = async (e) => {
+        let abortController = new AbortController();
         e.preventDefault();
         setLoading(true);
         let data = {email, password};
@@ -51,6 +52,9 @@ function Auth() {
             console.log(e.message);
         } finally {
             setLoading(false);
+        }
+        return () => {
+            abortController.abort();
         }
     }
     if (loading){
