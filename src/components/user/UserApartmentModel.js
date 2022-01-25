@@ -19,7 +19,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import CarouselUser from "./carouselUser/CarouselUser";
 
 function ChildModal({id, comments, noComments, dateSelection, setStatusResponse, noDate}) {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [lengthArray, setLengthArray] = useState(false);
 
     const handleOpen = () => {
         setOpen(true);
@@ -27,8 +28,17 @@ function ChildModal({id, comments, noComments, dateSelection, setStatusResponse,
     const handleClose = () => {
         setOpen(false);
     };
-    let uniqueDateSelection = [...new Set(dateSelection)];
-
+    let emailMap = dateSelection.map(c => c.user_email);
+    let uniqueEmail = [...new Set(emailMap)];
+    let nameMap = dateSelection.map(c => c.name_user);
+    let uniqueName = [...new Set(nameMap)];
+    let surnameMap = dateSelection.map(c => c.surname_user);
+    let uniquesurname = [...new Set(surnameMap)];
+    useEffect(() => {
+        if (uniqueEmail.length === 1){
+            setLengthArray(true);
+        }
+        },[lengthArray])
     return (
         <React.Fragment>
 
@@ -49,18 +59,17 @@ function ChildModal({id, comments, noComments, dateSelection, setStatusResponse,
                         </Button>
                         </div>
                         <div className={'UserApartmentModal_child_div'}>
-                    {uniqueDateSelection && uniqueDateSelection.map((c, index) =>
-                        <UserCommentsApartmentContent key={index}
+                        <UserCommentsApartmentContent
                                                       id={id}
                                                       noComments={noComments}
-                                                      name={c.name_user}
-                                                      email={c.user_email}
+                                                      name={uniqueName}
+                                                      email={uniqueEmail}
                                                       setStatusResponse={setStatusResponse}
                                                       comments={comments}
                                                       dateSelection={dateSelection}
-                                                      surname={c.surname_user}
+                                                      surname={uniquesurname}
+                                                      lengthArray={lengthArray}
                         />
-                    )}
                         </div>
                 </div>
             </Modal>

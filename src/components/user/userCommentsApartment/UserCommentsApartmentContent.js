@@ -2,17 +2,45 @@ import React from 'react';
 import '../User.css';
 import UserCommentsApartmentsModal from "./UserCommentsApartmentModal";
 
-function CommentsApartment({id, email, name, comments, dateSelection, setStatusResponse, surname}) {
+function UserCommentsApartmentContent({id, email, name, comments, dateSelection, setStatusResponse, surname, lengthArray}) {
     return (
+        <>
 
-    <UserCommentsApartmentsModal key={id+345} id={id} comments={comments} email={email} dateSelection={dateSelection}
-                                 setStatusResponse={setStatusResponse} >
-             <div>
-                 <span >{name} {surname}</span>
-            </div>
-        </UserCommentsApartmentsModal>
+            {!lengthArray ?
+                (dateSelection && dateSelection.map((c, index) => <UserCommentsApartmentsModal
+                    key={index}
+                    id={id}
+                    comments={comments}
+                    email={c.user_email}
+                    dateSelection={dateSelection}
+                    setStatusResponse={setStatusResponse}
+                    lengthArray={lengthArray}
+                    >
+                <div>
+               <span>{c.name_user} {c.surname_user}</span>
+                </div>
+            </UserCommentsApartmentsModal>
+            ))
+                :
+                (
+                    <UserCommentsApartmentsModal
+                        id={id}
+                        comments={comments}
+                        email={email}
+                        dateSelection={dateSelection}
+                        setStatusResponse={setStatusResponse}
+                        lengthArray={lengthArray}>
 
+                        <div>
+                            <span>{name} {surname}</span>
+                        </div>
+                    </UserCommentsApartmentsModal>
+                )
+
+            }
+
+</>
     );
 }
 
-export default CommentsApartment;
+export default UserCommentsApartmentContent;

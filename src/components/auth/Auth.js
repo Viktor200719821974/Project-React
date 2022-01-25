@@ -14,17 +14,23 @@ function Auth() {
     const [errorMessage, setErrorMessage] = useState();
     const [errorEmail, setErrorEmail] = useState();
     const [errorPassword, setErrorPassword] = useState();
+    const [value, setValue] = useState('checking value...');
     const auth = useAuth();
     const history = useHistory();
+    console.log(value);
 
     const handleSubmit = async (e) => {
-        let abortController = new AbortController();
+
+        // let abortController = new AbortController();
         e.preventDefault();
+        let isMounted = true;
         setLoading(true);
         let data = {email, password};
         try{
             const token = await api.auth.login(data);
-
+            if(isMounted ){
+                setValue("done!"); // no more error
+            }
             if (token.status === 200){
                 auth.setToken(token.data);
                 history.push("/");
@@ -53,10 +59,14 @@ function Auth() {
         } finally {
             setLoading(false);
         }
+        // return () => {
+        //     abortController.abort();
+        // }
         return () => {
-            abortController.abort();
-        }
+            isMounted = false;
+        };
     }
+
     if (loading){
         return <div>Loading...</div>
     }

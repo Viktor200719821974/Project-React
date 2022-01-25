@@ -48,6 +48,7 @@ function ChildModal({id, statusResponse, setStatusResponse}) {
     };
     useEffect( () => {
         async function fetchData(){
+            let abortController = new AbortController();
         setLoading(true);
         try{
             const {data} = await api.auth.getApartment(id);
@@ -64,9 +65,13 @@ function ChildModal({id, statusResponse, setStatusResponse}) {
         }catch (e) {
             console.log(e.message);
         }
+            return () => {
+                abortController.abort();
+            }
         }
         fetchData();
         setLoading(false);
+
     },[statusResponse, noComments, id])
 
     if (loading){

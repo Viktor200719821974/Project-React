@@ -24,14 +24,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const UserCommentsApartmentsModal = ({children, email, comments, dateSelection, setStatusResponse}) => {
+const UserCommentsApartmentsModal = ({children, email, comments, dateSelection, setStatusResponse, lengthArray}) => {
+
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [noComments, setNoComments] =useState(false);
     const [noDate, setNoDate] =useState(false);
 
-    const filterComments = comments.filter(c => c.user_email === email);
-    const filterDate = dateSelection.filter(c => c.user_email === email);
+    const filterComments = comments.filter(c => c.user_email === lengthArray ? email[0] : email);
+    const filterDate = dateSelection.filter(c => c.user_email === lengthArray ? email[0] : email);
     const userId = filterDate.map(c => c.user_id)[0];
 
     const handleOpen = () => {
