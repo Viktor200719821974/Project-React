@@ -33,7 +33,23 @@ function ChildModal({id, comments, noComments, dateSelection, setStatusResponse,
     let nameMap = dateSelection.map(c => c.name_user);
     let uniqueName = [...new Set(nameMap)];
     let surnameMap = dateSelection.map(c => c.surname_user);
-    let uniquesurname = [...new Set(surnameMap)];
+    let uniqueSurname = [...new Set(surnameMap)];
+    // console.log(uniqueName);
+    // let obj = {};
+    // let list = [];
+    // for (let i = 0; i < uniqueName.length; i++){
+    //     list.push('name', uniqueName[i]);
+    // }
+    //
+    // for (let j = 0; j < uniqueSurname.length; j++){
+    //     list.push('surname', uniqueSurname[j]);
+    // }
+    // for (let x = 0; x < uniqueSurname.length; x++){
+    //     list.push('email', uniqueEmail[x]);
+    // }
+    // const obj2 = Object.fromEntries(list);
+    // console.log(list);
+
     useEffect(() => {
         if (uniqueEmail.length === 1){
             setLengthArray(true);
@@ -67,7 +83,7 @@ function ChildModal({id, comments, noComments, dateSelection, setStatusResponse,
                                                       setStatusResponse={setStatusResponse}
                                                       comments={comments}
                                                       dateSelection={dateSelection}
-                                                      surname={uniquesurname}
+                                                      surname={uniqueSurname}
                                                       lengthArray={lengthArray}
                         />
                         </div>
