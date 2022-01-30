@@ -271,3 +271,63 @@ input{
 .changeComment_div{
     margin: 10px;
 }
+.button_rent{
+    display: flex;
+    justify-content: right;
+    margin: 10px;
+}
+.button_my_rent{
+    margin-right: 20px;
+}
+.button_my_rent_close{
+    display: flex;
+    justify-content: right;
+}
+.div_RentBlockApartment{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    max-width: 400px;
+}
+.span_RentBlockApartment{
+    margin: 5px;
+}
+.div_RentBlock{
+    margin: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+.div_RentBlock_main{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    max-width: 400px;
+    border: solid 2px white;
+    margin: 5px;
+    border-radius: 5px;
+}
+.div_active_rent{
+    border: solid 2px white;
+    background-color: green;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 40px;
+    right: 20px;
+}
+.div_no_active_rent{
+    border: solid 2px white;
+    background-color: red;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 40px;
+    right: 20px;
+}
+.button_my_rent_details{
+    margin: 10px;
+}

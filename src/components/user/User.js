@@ -10,6 +10,8 @@ import {Link} from "react-router-dom";
 import api from "../../services/api";
 import {tokenDecoded} from "../../hook/token_user_id";
 import ImageCommentUser from "./userCommentsApartment/imageCommentUser/ImageCommentUser";
+import MyRent from "./myRent/MyRent";
+import UserRent from "./userRent/UserRent";
 
 function User() {
     const [user, setUser] = useState({});
@@ -20,8 +22,11 @@ function User() {
     const [profile, setProfile] = useState([]);
     const [statusResponse, setStatusResponse] = useState(false);
     const [loading, setLoading] = useState(false);
-    const token = localStorage.getItem('access');
 
+    const token = localStorage.getItem('access');
+    const date = apartment.map(c => c.date_selection);
+    console.log(apartment);
+    console.log(date);
     useEffect( () => {
         async function fetchData(){
         setLoading(true);
@@ -80,6 +85,12 @@ function User() {
                 <AddApartmentModal key={user.id + 700} id={user.id} statusResponse={statusResponse}
                                    setStatusResponse={setStatusResponse}/>
             </div>)}
+            <div className={'button_rent'}>
+                <div className={'button_my_rent'}>
+                    {user && <MyRent key={user.id + 233} id={user.id}/>}
+                </div>
+                {user && <UserRent key={user.id + 222} date={date}/>}
+            </div>
 
             <div >
                 <span className={'pageTitle'}>Коментарі:</span>
