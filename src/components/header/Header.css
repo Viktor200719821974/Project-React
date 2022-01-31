@@ -30,6 +30,18 @@
 .div_name{
     color: green;
 }
+.div_NotFound_main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    font-size: 46px;
+    color: rgba(236, 9, 62, 0.63);
+}
+.div_NotFound_error{
+    display: flex;
+    justify-content: center;
+}
 @media (max-width: 1000px) {
     .header{
         padding-top: 15px;

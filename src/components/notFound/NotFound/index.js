@@ -1,27 +1,13 @@
-import { Grid, Container, Typography } from "@material-ui/core";
-
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//         padding: theme.spacing(3),
-//     },
-// }));
+import "../../header/Header.css";
 
 function NotFound() {
-    // const classes = useStyles();
-
     return (
-        <Container maxWidth="sm" >
-            <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <Typography variant="h2" gutterBottom>
-                        404
-                    </Typography>
-                    <Typography variant="h3" gutterBottom>
-                        Page not found.
-                    </Typography>
-                </Grid>
-            </Grid>
-        </Container>
+            <div className={'div_NotFound_main'}>
+                <div>
+                <div className={'div_NotFound_error'}>404</div>
+                <div className={'div_NotFound_page'}>Page not found.</div>
+            </div>
+            </div>
     );
 }
 

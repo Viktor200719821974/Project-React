@@ -331,3 +331,9 @@ input{
 .button_my_rent_details{
     margin: 10px;
 }
+.div_NoRent{
+    margin: 10px;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+}

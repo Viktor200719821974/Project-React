@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "@mui/material/Button";
 import api from '../../../services/api';
 import RentBlock from "./RentBlock";
@@ -6,6 +6,7 @@ import RentBlock from "./RentBlock";
 const MyRent = ({id}) => {
     const [date, setDate] = useState([]);
     const [openClose, setOpenClose] = useState(false);
+    const [noRent, setNoRent] = useState(false);
 
     const handleOpen = async (e) => {
         e.preventDefault();
@@ -24,12 +25,18 @@ const MyRent = ({id}) => {
     }
     const filterDate = date.filter(c => c.user_id === id);
 
+    useEffect(() => {
+        if (filterDate.length !== 0){
+          setNoRent(true);
+        }
+    },[filterDate, noRent])
     return (
         <div className={'button_my_rent_open'}>
             {!openClose && <Button onClick={handleOpen} variant="contained" color="success">My rent</Button>}
             <div className={'button_my_rent_close'}>
                 {openClose && <Button onClick={handleClose} variant="contained" color="success">Close</Button>}
             </div>
+            {openClose && !noRent && <div className={'div_NoRent'}>No rent</div>}
             {openClose && <div className={'div_RentBlock'}>
                 {filterDate && filterDate.map(c => <RentBlock key={c.id}
                                                           date_arrival={c.date_arrival}
@@ -40,7 +47,6 @@ const MyRent = ({id}) => {
                                                           number_peoples={c.number_peoples}
             />)}
             </div>}
-
         </div>
     );
 };

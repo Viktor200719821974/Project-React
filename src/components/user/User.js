@@ -25,8 +25,7 @@ function User() {
 
     const token = localStorage.getItem('access');
     const date = apartment.map(c => c.date_selection);
-    console.log(apartment);
-    console.log(date);
+
     useEffect( () => {
         async function fetchData(){
         setLoading(true);

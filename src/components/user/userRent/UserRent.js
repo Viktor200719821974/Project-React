@@ -1,25 +1,34 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "@mui/material/Button";
-import UserRentBlock from "./UserRentBlock";
+import UserRentBlockActive from "./UserRentBlockActive";
 
 const UserRent = ({date}) => {
-    const [open, setOpen] = useState(false);
+    const [openClose, setOpenClose] = useState(false);
+    const [noRent, setNoRent] = useState(false);
 
     const handleOpen = () => {
-        setOpen(true);
+        setOpenClose(true);
     }
     const handleClose = () => {
-        setOpen(false);
+        setOpenClose(false);
     }
+    const x = date.map(c => c.length).filter(c => c !== 0).length;
+
+    useEffect(() => {
+        if (x !== 0){
+            setNoRent(true);
+        }
+    },[x, noRent])
+
     return (
         <div>
-            {!open && <Button onClick={handleOpen} variant="contained" color="success">User rent</Button>}
+            {!openClose && <Button onClick={handleOpen} variant="contained" color="success">User rent</Button>}
             <div className={'button_my_rent_close'}>
-                {open && <Button onClick={handleClose} variant="contained" color="success">Close</Button>}
+                {openClose && <Button onClick={handleClose} variant="contained" color="success">Close</Button>}
             </div>
-            {open && <div className={'div_RentBlock'}>
-                {date && date.map((c, index) => <UserRentBlock key={index} date_selection={c}
-                                                               date_departure={c.map(c=>c.date_departure)}/>
+            {openClose && !noRent && <div className={'div_NoRent'}>No rent</div>}
+            {openClose && <div className={'div_RentBlock'}>
+                {date && date.map((c, index) => <UserRentBlockActive key={index} date_selection={c}/>
                 )}
             </div>}
         </div>

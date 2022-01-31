@@ -5,6 +5,7 @@ const RentBlockApartment = ({id}) => {
 
     const [apartment, setApartment] = useState([]);
     const [rentBlock, setRentBlock] = useState(false);
+
     const datailsDate = async (e) => {
         e.preventDefault();
         try{
