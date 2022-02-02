@@ -39,7 +39,7 @@ function ChildModal({id, comments, noComments, dateSelection, setStatusResponse,
         if (uniqueEmail.length === 1){
             setLengthArray(true);
         }
-        },[lengthArray])
+        },[lengthArray, uniqueEmail.length])
     return (
         <React.Fragment>
 

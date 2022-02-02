@@ -10,7 +10,7 @@ const UserRentBlock = ({date_arrival, apartment_id, date_departure, cost, number
         if (date_departure >= date) {
             setActive(true);
         }
-    },[active, date])
+    },[active, date, date_departure])
     return (
         <div>
                 <div className={'div_RentBlock_main' }>

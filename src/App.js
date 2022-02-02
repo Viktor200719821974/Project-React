@@ -1,7 +1,7 @@
 import './App.css';
+import React from 'react';
 import Header from "./components/header/Header";
-// import SimpleBottomNavigation from "./components/menNav/MenNav";
-import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Container} from "@mui/material";
 import Apartments from "./components/apartments/Apartments";
 import Registration from "./components/registration/Registration";
@@ -9,7 +9,6 @@ import User from "./components/user/User";
 import Auth from "./components/auth/Auth";
 import Admin from "./components/user/administrations/Admin";
 import SuperAdmin from "./components/user/administrations/SuperAdmin";
-import GuestRoute from "./routes/components/GuestRoute";
 import PrivateRoute from "./routes/components/PrivateRoute";
 import NotFound from "./components/notFound/NotFound";
 
@@ -20,22 +19,20 @@ function App() {
       <BrowserRouter>
           <Header/>
           <div className={'app'}>
-
               <Container>
-                  <Switch>
-                      <GuestRoute restricted={false} component={Apartments} path="/" exact />
-                      <GuestRoute restricted={true} component={Auth} path="/login" exact />
-                      <GuestRoute restricted={false} path={'/registration'} component={Registration}/>
-                      <PrivateRoute component={User} path="/user" exact />
-                      <PrivateRoute path={'/admin'} component={Admin} exact/>
-                      <PrivateRoute path={'/superAdmin'} component={SuperAdmin} exact/>
-                      <Route path="*">
-                          <NotFound />
-                      </Route>
-                  </Switch>
+                  <Routes>
+                      <Route restricted={false} element={<Apartments/>} path="/" exact />
+                      <Route restricted={true} element={<Auth/>} path="/login" exact />
+                      <Route restricted={false} path={'/registration'} element={<Registration/>} exact/>
+
+                      <Route element={<PrivateRoute><User/></PrivateRoute>} path="/user" exact />
+                      <Route path={'/admin'} element={<PrivateRoute><Admin/></PrivateRoute>} exact/>
+                      <Route path={'/superAdmin'} element={<PrivateRoute><SuperAdmin/></PrivateRoute>} exact/>
+
+                      <Route path={'*'} element={<NotFound />}/>
+                  </Routes>
               </Container>
           </div>
-          {/*<SimpleBottomNavigation/>*/}
       </BrowserRouter>
       </>
   );

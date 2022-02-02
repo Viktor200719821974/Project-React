@@ -72,7 +72,7 @@ function ChildModal({id, statusResponse, setStatusResponse}) {
         fetchData();
         setLoading(false);
 
-    },[statusResponse, noComments, id])
+    },[statusResponse, noComments, id, setStatusResponse])
 
     if (loading){
         return <div>Loading...</div>
