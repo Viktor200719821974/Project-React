@@ -3,7 +3,7 @@ import './Auth.css';
 import {Link} from 'react-router-dom';
 import {Button} from "@material-ui/core";
 import useAuth from "../../hook/useAuth";
-import {useHistory} from "react-router";
+import {useNavigate} from "react-router-dom";
 import api from "../../services/api";
 
 function Auth() {
@@ -14,10 +14,9 @@ function Auth() {
     const [errorMessage, setErrorMessage] = useState();
     const [errorEmail, setErrorEmail] = useState();
     const [errorPassword, setErrorPassword] = useState();
-    const [value, setValue] = useState('checking value...');
+    const [setValue] = useState('checking value...');
     const auth = useAuth();
-    const history = useHistory();
-    console.log(value);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
 
@@ -33,7 +32,7 @@ function Auth() {
             }
             if (token.status === 200){
                 auth.setToken(token.data);
-                history.push("/");
+                navigate("/");
             }
 
         }catch (e) {
@@ -45,20 +44,21 @@ function Auth() {
                     });
                 });
             }
-            if (e.response.data.email){
+            if (e.response.data.email) {
                 setErrorEmail(e.response.data.email);
             }
-            if (e.response.data.password){
+            if (e.response.data.password) {
                 setErrorPassword(e.response.data.password);
             }
-            if (e.response.data.detail){
+            if (e.response.data.detail) {
                 setErrorMessage(e.response.data.detail);
                 setErrorAuth(true);
             }
             console.log(e.message);
-        } finally {
+        }finally {
             setLoading(false);
         }
+
         // return () => {
         //     abortController.abort();
         // }

@@ -6,16 +6,16 @@ import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Button from "@mui/material/Button";
 import useAuth from "../../hook/useAuth";
-import {useHistory} from "react-router";
+import {useNavigate} from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 
 const Header = () => {
     const auth = useAuth();
-    const history = useHistory();
+    const navigate = useNavigate();
     const onLogOut = () => {
         auth.logOut();
-        history.push("/login");
+        navigate("/login");
     };
     return (
         <div className={'header'}>
