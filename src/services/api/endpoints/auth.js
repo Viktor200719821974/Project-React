@@ -1,7 +1,7 @@
 import axios from "../axios";
 
 const endpoints = {
-    // registration: (data) => axios.post("/v1/auth/email/register", data),
+    registration: (data) => axios.post("/users", data),
     refresh: (data) => axios.post('/auth/refresh', data),
     login: (data) => axios.post("/auth", data),
     // forgotPassword: (data) => axios.post("/v1/auth/forgot/password", data),

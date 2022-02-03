@@ -7,4 +7,5 @@ export const AuthContext = createContext({
     setUser: () => {},
     setToken: () => {},
     logOut: () => {},
+    blockRegistration: () => {},
 });

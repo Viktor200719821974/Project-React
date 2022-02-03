@@ -86,7 +86,7 @@ function Auth() {
                                placeholder={errorPassword ? errorPassword : '************************'}/>
                     </label>
                     {errorAuth && <div className={'error_message'}>* {errorMessage}</div>}
-                <button className={'btn btn-default'} name={'submit'} type="submit"  >Save</button>
+                <button className={'btn btn-default'} name={'submit'} type="submit" >Save</button>
                 <Button
                     color="inherit"
                     type="submit"

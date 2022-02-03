@@ -8,6 +8,7 @@ const AuthProvider = (props) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [user, setUser] = useState(null);
     const [token, setTokenData] = useState(null);
+    const [registration, setRegistration] = useState(false);
 
     const setToken = useCallback((tokenData) => {
         setTokenData(tokenData);
@@ -19,6 +20,12 @@ const AuthProvider = (props) => {
             localStorage.removeItem("refresh");
         }
     }, []);
+
+    const blockRegistration = useCallback((registration) => {
+        if (registration){
+            setRegistration(false);
+        }
+    },[registration])
 
     const logOut = useCallback(() => {
         setUser(null);
@@ -55,8 +62,9 @@ const AuthProvider = (props) => {
             setUser,
             setToken,
             logOut,
+            blockRegistration,
         }),
-        [isLoaded, user, token, setToken, logOut]
+        [isLoaded, user, token, setToken, logOut, blockRegistration]
     );
     return (
         <AuthContext.Provider value={contextValue}>
