@@ -4,7 +4,6 @@ import './Registration.css'
 import api from "../../services/api";
 import Alert from "@mui/material/Alert";
 // import {useNavigate} from "react-router-dom";
-import useAuth from "../../hook/useAuth";
 import {useHistory} from "react-router-dom";
 
 function Registration() {
@@ -31,29 +30,29 @@ function Registration() {
         const data = {email, password, profile:{name, surname, age, phone}}
         try{
             const res = await api.auth.registration(data);
+            console.log(res);
             if (res.status === 201){
                 setYouRegistration(true);
                 // navigate('/');
                 history.push('/');
             }
         }catch (e) {
-                console.log(e.response.data);
-                if (e.response.data.email){
-                    setErrorEmail(e.response.data.email);
-                }if (e.response.data.password){
-                    setErrorPassword(e.response.data.password);
-                }if (e.response.data.profile?.name){
-                    setErrorName(e.response.data.profile?.name);
-                }if (e.response.data.profile?.surname){
-                    setErrorSurname(e.response.data.profile?.surname);
-                }if (e.response.data.profile?.age){
-                    setErrorAge(e.response.data.profile?.age);
-                }if (e.response.data.profile?.phone){
-                    setErrorPhone(e.response.data.profile?.phone);
-                }
-                if (e.message){
-                        setNoError(e.response.statusText);
-                }
+                // if (e.response.data.email){
+                //     setErrorEmail(e.response.data.email);
+                // }if (e.response.data.password){
+                //     setErrorPassword(e.response.data.password);
+                // }if (e.response.data.profile?.name){
+                //     setErrorName(e.response.data.profile?.name);
+                // }if (e.response.data.profile?.surname){
+                //     setErrorSurname(e.response.data.profile?.surname);
+                // }if (e.response.data.profile?.age){
+                //     setErrorAge(e.response.data.profile?.age);
+                // }if (e.response.data.profile?.phone){
+                //     setErrorPhone(e.response.data.profile?.phone);
+                // }
+                // if (e.message){
+                //         setNoError(e.response.statusText);
+                // }
             console.log(e.message);
         }
     }

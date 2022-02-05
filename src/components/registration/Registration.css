@@ -63,3 +63,9 @@ input{
 .div_Registration_noError{
     margin: 10px 273px;
 }
+.div_register{
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+    margin-top: 70px;
+}

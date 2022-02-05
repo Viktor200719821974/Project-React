@@ -11,6 +11,7 @@ import Admin from "./components/user/administrations/Admin";
 import SuperAdmin from "./components/user/administrations/SuperAdmin";
 import PrivateRoute from "./routes/components/PrivateRoute";
 import NotFound from "./components/notFound/NotFound";
+import Register from "./components/registration/Register";
 
 function App() {
 
@@ -21,17 +22,17 @@ function App() {
           <div className={'app'}>
               <Container>
                   <Switch>
+                      <Route path="/register/activate/:uid/:token" component={Register}/>
                       <Route component={Apartments} path="/" exact/>
                       <Route  component={Auth} path="/login" exact/>
                       <Route path="/registration" component={Registration} exact/>
-
                       <PrivateRoute>
                           <Route component={User} path="/user"  />
                           <Route path="/admin" component={Admin} />
                           <Route path="/superAdmin" component={SuperAdmin}/>
                       </PrivateRoute>
 
-                      <Route path='*' ><NotFound/></Route>
+                      <Route path={'*'} ><NotFound/></Route>
                       {/*<Route restricted={false} element={<Apartments/>} path="/" exact />*/}
                       {/*<Route restricted={true} element={<Auth/>} path="/login" exact />*/}
                       {/*<Route restricted={false} path={'/registration'} element={<Registration/>} exact/>*/}

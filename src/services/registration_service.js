@@ -1,5 +1,5 @@
 async function registrationUser(credentials) {
-    return fetch('http://localhost:8000/api/v1/users', {
+    return fetch('http://localhost:8000/auth/users/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
