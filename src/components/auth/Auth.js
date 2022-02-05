@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import './Auth.css';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {Button} from "@material-ui/core";
 import useAuth from "../../hook/useAuth";
-import {useNavigate} from "react-router-dom";
+// import {useNavigate} from "react-router-dom";
 import api from "../../services/api";
 
 function Auth() {
@@ -14,9 +14,10 @@ function Auth() {
     const [errorMessage, setErrorMessage] = useState();
     const [errorEmail, setErrorEmail] = useState();
     const [errorPassword, setErrorPassword] = useState();
-    const [setValue] = useState('checking value...');
+    const [value, setValue] = useState('checking value...');
     const auth = useAuth();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
+    const history = useHistory();
 
     const handleSubmit = async (e) => {
 
@@ -27,12 +28,14 @@ function Auth() {
         let data = {email, password};
         try{
             const token = await api.auth.login(data);
+
             if(isMounted ){
                 setValue("done!"); // no more error
             }
             if (token.status === 200){
                 auth.setToken(token.data);
-                navigate("/");
+                // navigate("/");
+                history.push("/");
             }
 
         }catch (e) {

@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import './Registration.css'
-import YouRegistration from "./YouRegistration";
+// import YouRegistration from "./YouRegistration";
 import api from "../../services/api";
 import Alert from "@mui/material/Alert";
-import {useNavigate} from "react-router-dom";
+// import {useNavigate} from "react-router-dom";
 import useAuth from "../../hook/useAuth";
+import {useHistory} from "react-router-dom";
 
 function Registration() {
     const [email, setEmail] = useState('');
@@ -21,8 +22,8 @@ function Registration() {
     const [errorPhone, setErrorPhone] = useState();
     const [noError, setNoError] = useState();
     const [youRegistration, setYouRegistration] = useState(false);
-    const auth = useAuth();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
+    const history = useHistory();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,8 +33,8 @@ function Registration() {
             const res = await api.auth.registration(data);
             if (res.status === 201){
                 setYouRegistration(true);
-                navigate('/');
-                auth.blockRegistration(true);
+                // navigate('/');
+                history.push('/');
             }
         }catch (e) {
                 console.log(e.response.data);

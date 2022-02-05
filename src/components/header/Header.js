@@ -1,21 +1,23 @@
 import "./Header.css";
 import HomeIcon from "@mui/icons-material/Home";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import React from "react";
 import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Button from "@mui/material/Button";
 import useAuth from "../../hook/useAuth";
-import {useNavigate} from "react-router-dom";
+// import {useNavigate} from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 
 const Header = () => {
     const auth = useAuth();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
+    const history = useHistory();
     const onLogOut = () => {
         auth.logOut();
-        navigate("/login");
+        // navigate("/login");
+        history.push('/');
     };
     return (
         <div className={'header'}>

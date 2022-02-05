@@ -30,6 +30,7 @@
     "react-moment": "^1.1.1",
     "react-redux": "^7.2.4",
     "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
@@ -51,7 +52,6 @@
     "mobx": "^6.3.8",
     "prop-types": "^15.7.2",
     "react-hook-form": "^7.22.5",
-    "react-router-dom": "^6.2.1",
     "use-debounce": "^7.0.1",
     "yup": "^0.32.11"
   },
