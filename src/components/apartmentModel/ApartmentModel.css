@@ -65,7 +65,18 @@
 .ApartmentModal__description::-webkit-scrollbar {
     display: none;
 }
-
+.div_ApartmentBlock_main{
+    display: flex;
+}
+.img_ApartmentBlock{
+    width: 300px;
+    height: 400px;
+    margin-top: 30px;
+}
+.div_ApartmentBlock_li{
+    margin: 30px 0 10px 20px;
+    font-size: 20px;
+}
 @media (min-width: 835px) {
     .ApartmentModal__landscape {
         display: none;

@@ -42,6 +42,7 @@ function RentApartment({id}) {
         return <Alert severity="success" sx={{backgroundColor: '#39445a', color: 'white'}}>Ми відправили Ваше прохання
             зняти житло, відповідь отримаєте на електронну пошту</Alert>
     }
+
     return (
         <div>
             {apartment && <Alert severity="success">
