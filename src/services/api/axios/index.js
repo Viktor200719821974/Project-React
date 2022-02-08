@@ -22,8 +22,9 @@ axiosInstance.interceptors.response.use(
             return res;
         },
         async (err) => {
+            const authToken = localStorage.getItem("refresh");
             const originalConfig = err.config;
-            if (originalConfig.url !== "/auth" && err.response ){
+            if (authToken && originalConfig.url !== "/auth" && err.response ){
                 if (err.response.status === 401 && !originalConfig._retry){
                     originalConfig._retry = true;
 
