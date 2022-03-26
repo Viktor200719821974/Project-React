@@ -15,7 +15,8 @@
     font-family: "Montserrat" , sans-serif;
     font-size: 5vw;
     margin-left: 200px;
-    color: white;
+    font-weight: bold;
+    color: slategrey;
     z-index: 100;
 }
 .registration_link{
